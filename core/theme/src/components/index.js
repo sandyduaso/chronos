@@ -1,5 +1,6 @@
 import './sidebar/sidebar.js'
 import './modal/modal.js'
+import './file/file.js'
 import './dynamic-data/dynamic-data.js'
 import './sticky/sticky.js'
 import './datatables/datatables.js'

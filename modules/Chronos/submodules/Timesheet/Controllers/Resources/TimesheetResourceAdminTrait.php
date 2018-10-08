@@ -30,8 +30,6 @@ trait TimesheetResourceAdminTrait
      */
     public function create(Request $request)
     {
-        // $resources = null; // $request;
-
         return view('Timesheet::admin.create');
     }
 

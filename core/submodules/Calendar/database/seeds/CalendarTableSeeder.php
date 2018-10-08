@@ -1,9 +1,9 @@
 <?php
 
 use Calendar\Models\Calendar;
-use Phinx\Seed\AbstractSeed;
+use Pluma\Support\Database\Seeder;
 
-class CalendarTableSeeder extends AbstractSeed
+class CalendarTableSeeder extends Seeder
 {
     /**
      * Run Method.

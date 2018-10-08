@@ -53,6 +53,9 @@ class TimesheetRepository extends Repository
         return [
             'name' => 'required',
             'data' => 'sometimes|required',
+            'file' => 'sometimes|file|required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ];
     }
 
@@ -92,6 +95,8 @@ class TimesheetRepository extends Repository
         // Timesheet
         $timesheet = $this->model->create([
             'name' => $data['name'],
+            'start_date' => date('Y-m-d', strtotime($data['start_date'])),
+            'end_date' => date('Y-m-d', strtotime($data['end_date'])),
             'user_id' => user()->id,
         ]);
 
@@ -141,6 +146,7 @@ class TimesheetRepository extends Repository
                 'under_time' => date('H:i:s', strtotime($set['under_time'])),
                 'over_time' => date('H:i:s', strtotime($set['over_time'])),
                 'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
+                'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
                 'user_id' => $set['user'] ? $set['user']->id : null,
                 'timesheet_id' => $timesheet->id,
                 'metadata' => json_encode(collect($set)->except(['date','time_in','time_out','total_am','total_pm','total_time','tardy_time','under_time','over_time','offset_hours','user'])),

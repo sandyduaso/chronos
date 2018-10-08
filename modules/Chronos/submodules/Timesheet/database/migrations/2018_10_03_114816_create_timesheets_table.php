@@ -27,6 +27,8 @@ class CreateTimesheetsTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();

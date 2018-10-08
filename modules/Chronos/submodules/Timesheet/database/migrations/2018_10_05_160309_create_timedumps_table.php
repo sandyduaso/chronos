@@ -27,6 +27,7 @@ class CreateTimedumpsTable extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
+            $table->string('key')->index();
             $table->time('time_in');
             $table->time('time_out');
             $table->time('total_am');

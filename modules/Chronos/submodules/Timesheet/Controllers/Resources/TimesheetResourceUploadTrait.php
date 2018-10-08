@@ -19,11 +19,12 @@ trait TimesheetResourceUploadTrait
     public function process(TimesheetRequest $request)
     {
         $resources = $this->repository->process($request->file('file'))->toArray();
-        $name = $request->input('name');
 
         return back()->with([
             'data' => $resources,
-            'name' => $name,
+            'name' => $request->input('name'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
     }
 

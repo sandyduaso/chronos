@@ -3,6 +3,7 @@
 namespace Timesheet\Models;
 
 use Frontier\Support\Breadcrumbs\Accessors\Breadcrumable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Pluma\Models\Model;
 use Timesheet\Support\Accessors\TimesheetAccessor;
@@ -26,6 +27,8 @@ class Timesheet extends Model
 
     protected $fillable = [
         'name',
+        'start_date',
+        'end_date',
         'user_id',
     ];
 
