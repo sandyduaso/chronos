@@ -1,0 +1,9 @@
+TODO:
+ ☐ core/API/
+
+Activity:
+  -- mv core/Frontier/User core/User
+  -- Deleted Grants classes from Role/
+  -- renamed Role/.../AuthenticateUserRole to Role/.../AuthenticateUserPermission
+  -- renamed Role/.../Traits/BelongsToManyRoles to Role/.../Traits/UserPermissibleTrait
+  -- moved Role/.../Relations all appropriate relational classes/traits

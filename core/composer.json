@@ -1,0 +1,8 @@
+{
+  "autoload": {
+    "files": [
+      "helpers/helpers.php",
+      "helpers/functions.php"
+    ]
+  }
+}

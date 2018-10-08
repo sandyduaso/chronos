@@ -1,0 +1,21 @@
+**Arrays**
+
+
+Arrays should be formatted using short array syntax with a space separating each
+element (after the comma), and spaces around the `=>` key association operator,
+if applicable.
+  ` Example:
+      $someArray = [12, 'twelve', 'type' => 'monkeys'];
+
+If the line declaring an array spans longer than 80 characters (often the case with form and menu declarations), each element should be broken into its own line, and indented one level.
+  ` Example:
+      $someArray = [
+        'type' => 'monkeys',
+        'quantity' => 'twelve',
+        'quotes' => [
+          "All I see are dead people",
+          "There's the television. It's all right there — all right there. Look, listen, kneel, pray..."
+        ],
+      ];
+
+

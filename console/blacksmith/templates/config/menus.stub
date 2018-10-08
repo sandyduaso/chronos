@@ -1,0 +1,58 @@
+<?php
+
+return [
+    /**
+     *--------------------------------------------------------------------------
+     * $names Menus
+     *--------------------------------------------------------------------------
+     *
+     * Specify here the menus to appear on the sidebar.
+     *
+     */
+    '$code' => [
+        'name' => '$code',
+        'order' => 51,
+        'slug' => route('$slug.index'),
+        'always_viewable' => false,
+        'icon' => '',
+        'labels' => [
+            'title' => __('$names'),
+            'description' => __('Manage $slug'),
+        ],
+        'children' => [
+            'view-$slug' => [
+                'name' => 'view-$slug',
+                'order' => 1,
+                'slug' => route('$slug.index'),
+                'code' => '$slug.index',
+                'always_viewable' => false,
+                'labels' => [
+                    'title' => __('All $names'),
+                    'description' => __('View the list of all $slug'),
+                ],
+            ],
+            'create-$code' => [
+                'name' => 'create-$code',
+                'order' => 2,
+                'slug' => route('$slug.create'),
+                'code' => '$slug.create',
+                'always_viewable' => false,
+                'labels' => [
+                    'title' => __('Create $name'),
+                    'description' => __('Create a $name'),
+                ],
+            ],
+            'trashed-$code' => [
+                'name' => 'trashed-$code',
+                'order' => 3,
+                'slug' => route('$slug.trashed'),
+                'code' => '$slug.trashed',
+                'always_viewable' => false,
+                'labels' => [
+                    'title' => __('Trashed $names'),
+                    'description' => __('View list of all $slug moved to trash'),
+                ],
+            ],
+        ],
+    ],
+];

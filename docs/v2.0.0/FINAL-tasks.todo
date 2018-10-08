@@ -1,0 +1,71 @@
+v2.0.1:
+
+Issues:
+  ✔ @high Packages @done
+  ✔ @high Form Builder (Locking from courses) @done
+  ✔ @high Mediabox @done
+  ✔ @low Email (sending, notification) @done
+  ☐ Form builder (chartjs)
+    - display statistics of submission results
+
+Oreo:
+  ✔ Create account for SG employees (based on email attached) @done (18-03-22 15:26) @done (18-03-22 16:58)
+
+Forum:
+  ✔ @low solved / unsolved @done (18-03-08 10:16)
+
+
+Content:
+  ✔ resize issue @done (18-03-08 10:16)
+
+Course:
+  ✔ role based -> all, My, bookmaked courses @done (18-03-12 10:35)
+  ✔ Enroll / Student @done (18-03-08 10:16)
+
+Form Builder:
+  ✔ @critical Model Attachment (e.g. CourseHasManyForms) @done (18-03-19 08:25)
+  ✔ Overall/Total Score @done (18-03-08 10:16)
+  ✔ chart long labels @done (18-03-09 15:37)
+
+  Submission:
+    code->name for fields/edit-fields
+    unique display for submission index and show
+
+Registration:
+  ✔ Email template @done (18-03-22 16:58)
+  ✔ Email Settings Management @done (18-03-01 14:57)
+
+
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ change course title (single.blade show.blade) to 'page-title' @done (18-03-01 10:43) @project(Course)
+ ✔ List view of students (per courses) -> data tablex @done (18-03-01 10:43) @project(Course)
+  course.index
+  add action -> view list of students
+  views -> students (edit, index, show)
+ ✔ fix layout for swf file @done (18-03-01 10:24) @project(Content)
+ ✔ Add Evaluation (AnswerChecking) @done (18-03-01 10:18) @project(Form Builder)
+ ✔ sorting (index.blade) @done (18-03-01 10:17) @project(Package)
+ ✔ single view layout @done (18-03-01 10:17) @project(Lesson)
+ ✔ partials/pagination, limit pagination numbers @done (18-03-01 10:17) @project(Frontier Frontend Components)
+ ✔ lock, order number, done icon @done (18-03-01 10:17) @project(Lesson)
+ ✔ User theming @done (18-03-01 10:13) @project(Long Ago)
+ ✔ @low hide other replybox on click @done (18-03-01 10:10) @project(Comment)
+ ✔ @critical CRUD @done (18-03-01 10:10) @project(Comment)
+ ✔ Account Details -> move settings to my-profile-group @done (18-02-27 10:39) @project(Profile)
+ ✔ add subdomain oread.rippl3s.com @done (18-02-26 18:36) @project(Server)
+ ✔ show.blade -> list of users (-> examinees) @done (18-02-21 10:49) @project(Form Builder / Submission)
+ ✔ index.blade -> list of Form::paginate @done (18-02-21 10:49) @project(Form Builder / Submission)
+ ✔ graph @done (18-02-21 10:49) @project(Form Builder / Submission)
+ ✔ profile @done (18-02-17 14:07) @project(Dashboard / widgets: / superadmin)
+ ✔ replace comment layout @done (18-02-17 00:18) @project(Forum)
+ ✔ sidebar icon, maintain white icon status when active @done (18-02-17 00:16) @project(FE)
+ ✔ trashed.blade as is @done (18-02-16 23:51) @project(Frontier Frontend Components)
+ ✔ toolbar layout (index) @done (18-02-16 23:51) @project(Frontier Frontend Components)
+ ✔ layout for all create.blade @done (18-02-16 23:51) @project(Frontier Frontend Components)
+ ✔ change breadcrumbs NEW to CREATE @done (18-02-16 23:51) @project(Frontier Frontend Components)
+ ✔ Dialog (error, success) on trashed pages @done (18-02-16 23:51) @project(Frontier Frontend Components)
+ ✔ CanViewResultTrait @done (18-02-07 11:54) @project(Form Builder / Submission)
+ ✔ CanExportResultTrait export report generation @done (18-02-07 11:54) @project(Form Builder / Submission)
+ ✔ index (change author to submitted by) @done (18-02-06 16:32) @project(Form Builder / Submission)

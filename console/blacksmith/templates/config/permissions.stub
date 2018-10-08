@@ -1,0 +1,76 @@
+<?php
+/**
+ *------------------------------------------------------------------------------
+ * Permissions Array
+ *------------------------------------------------------------------------------
+ *
+ * Here we define our permissions that you can attach to roles.
+ *
+ * These permissions corresponds to a counterpart
+ * route (found in <this module>/routes/<route-files>.php).
+ * All permissionable routes should have a `name` (e.g. 'roles.store')
+ * for the role authentication middleware to work.
+ *
+ */
+return [
+    /**
+     *--------------------------------------------------------------------------
+     * $name Permissions
+     *--------------------------------------------------------------------------
+     *
+     */
+    'view-$slug' => [
+        'name' =>  'view-$slug',
+        'code' => '$slug.index',
+        'description' => 'Ability to view list of $slug',
+        'group' => '$code',
+    ],
+    'show-$code' => [
+        'name' => 'show-$code',
+        'code' => '$slug.show',
+        'description' => 'Ability to show a single $code',
+        'group' => '$code',
+    ],
+    'create-$code' => [
+        'name' => 'create-$code',
+        'code' => '$slug.create',
+        'description' => 'Ability to create new $code',
+        'group' => '$code',
+    ],
+    'store-$code' => [
+        'name' => 'store-$code',
+        'code' => '$slug.store',
+        'description' => 'Ability to save the $code',
+        'group' => '$code',
+    ],
+    'update-$code' => [
+        'name' => 'update-$code',
+        'code' => '$slug.update',
+        'description' => 'Ability to update the $code',
+        'group' => '$code',
+    ],
+    'destroy-$code' => [
+        'name' => 'destroy-$code',
+        'code' =>  '$slug.destroy',
+        'description' => 'Ability to move the $code to trash',
+        'group' => '$code',
+    ],
+    'delete-$code' => [
+        'name' => 'delete-$code',
+        'code' =>  '$slug.delete',
+        'description' => 'Ability to permanently delete the $code',
+        'group' => '$code',
+    ],
+    'trashed-$slug' => [
+        'name' => 'trashed-$slug',
+        'code' =>  '$slug.trashed',
+        'description' => 'Ability to view the list of all trashed $slug',
+        'group' => '$code',
+    ],
+    'restore-$code' => [
+        'name' => 'restore-$code',
+        'code' => '$slug.restore',
+        'description' => 'Ability to restore the $code from trash',
+        'group' => '$code',
+    ],
+];

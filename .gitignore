@@ -1,0 +1,22 @@
+# ignore files in folder storage
+storage/*
+tests/build/
+**/tests/build/
+.sass-cache/
+vendor/
+
+# but please keep the folder
+!storage/**/.keep
+!storage/framework/*/.keep
+!storage/.keep
+!**/.keep
+
+# ignore files
+bower_components/
+node_modules/
+.phan/*.log
+**/*.zip
+*.log
+*.sh
+.php_cs.cache
+.env

@@ -1,0 +1,97 @@
+FORM BUILDER:
+	Module name: Form
+	Namespace: Form
+	location: /core/submodules/Form
+	config/permissions.php
+	Support:
+		Relations:
+			Form\Support\Relations\BelongsToForm.php
+			Form\Support\Relations\BelongsToManyForms.php
+			Form\Support\Relations\HasManySubmission.php
+		Scopes:
+			Form\Support\Scopes\TypeTrait.php
+		Traits
+			Form\Support\Traits\FormResourceApiTrait.php
+			Form\Support\Traits\FormResourcePublicTrait.php
+			Form\Support\Traits\FormResourceSoftDeleteTrait.php
+		Form:
+			Form\Support\Form\FormBuilder.php
+			Form\Support\Form\FormSubmitter.php
+			Form\Support\Form\FormValidator.php
+		Widget:
+			Form\Support\Widget\FormWidget.php
+
+	submodules:
+		Field:
+			Module name: Field
+			Namespace: Form\Field
+			location: /modules/Form/submodules/Field
+			Support:
+				Relations:
+					Form\Field\Support\Relations\HasManyFields.php
+		Submission:
+			Module name: Submission
+			Namespace: Form\Submission
+			location: /modules/Form/submodules/Submission
+			Support:
+				Scopes:
+					Form\Submission\Support\Scopes\TypeTrait.php
+				Relations:
+					Form\Submission\Support\Relations\HasManySubmissions.php
+					Form\Submission\Support\Relations\BelongsToManySubmissions.php
+
+DATABASE_STRUCTURE:
+
+Form/database/migrations TABLE `forms`
+	INT id AUTOINCREMENT,
+	STRING name,
+	STRING code UNIQUE,
+	STRING action NULLABLE,
+	STRING method NULLABLE,
+	STRING type NULLABLE,
+	TEXT attributes NULLABLE,
+	TEXT body NULLABLE,
+	TEXT delta NULLABLE,
+	TEXT success_message NULLABLE,
+	TEXT error_message NULLABLE,
+	INT user_id UNSIGNED REFERENCES id ON users,
+	INT template_id UNSIGNED REFERENCES id ON templates NULLABLE,
+	*timestamps*
+	*softdeletes*
+
+Form/database/migrations TABLE `submissions`
+	INT id AUTOINCREMENT,
+	TEXT results NULLABLE,
+	INT form_id UNSIGNED REFERENCES id ON forms,
+
+	INT user_id UNSIGNED REFERENCES id ON users NULLABLE,
+	*timestamps*
+	*softdeletes*
+
+Field/database/migrations TABLE `fieldtypes`
+	INT id AUTOINCREMENT
+	STRING name
+	STRING code UNIQUE
+
+Field/database/migrations TABLE `fields`
+	INT id AUTOINCREMENT,
+	STRING name,
+	STRING code UNIQUE,
+	STRING label NULLABLE,
+	STRING placeholder NULLABLE,
+	STRING type NULLABLE,
+	TEXT value NULLABLE,
+	TEXT attributes NULLABLE,
+	INT fieldtype_id UNSIGNED REFERENCES id ON fieldtypes,
+	INT form_id UNSIGNED REFERENCES id ON forms,
+	*timestamps*
+
+
+
+-------------------------
+
+Evaluation
+	extends Form
+	type: 'evaluation'
+	config/menus.php
+	inherits permissions from Form

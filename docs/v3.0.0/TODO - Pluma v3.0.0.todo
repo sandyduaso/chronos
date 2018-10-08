@@ -1,0 +1,157 @@
+# v2.5.0 -> v3.0.0
+
+Misc:
+  ☐ @high refactor frontend code.
+    - A.K.A walang uwian sessions 1, 2, ...n
+
+  ☐ @high change header.blade -> head.blade
+  ☐ @high change footer.blade -> foot.blade
+
+  ☐ Upgrade vuetify to v1.
+    - update all components
+
+Core:
+  Role:
+    ☐ @high refactor grants, permissions
+      - @see http://demo.antaresproject.io/frontend/acl.html
+  Assistant:
+    - this module will handle the browser installation of the app
+    ☐ move all Installation files to this module
+  Taxonomy:
+    ☐ Add empty module Taxonomy
+  Taxonomy/Category:
+    ☐ move Category to Taxonomy
+  Taxonomy/Tag:
+    ☐ Add Tag Module
+  Comment:
+    ☐ move comment module to core
+  User:
+    ☐ move User module to top-level core
+  Blog:
+    ☐ @low Add Blog Module
+    ☐ Integrate Comment module
+
+Blacksmith:
+
+Module:
+
+Theme:
+
+Nice to Have's:
+  ☐ Multilingual support
+    - uhm...
+
+Comment:
+  ☐ Downvote/Upvote
+
+Search Module:
+  ☐ global search UI.
+  ☐ global search BE.
+
+Page:
+  ☐ Templating: add conditional cards e.g. if home == code include (home cards)
+
+Profile:
+  ☐ My Activity
+
+Frontier Frontend Components:
+  ☐ write Mediabox to support multiple instance.
+  ☐ grid / list view support
+  ☐ mediabox: pagination support
+  ☐ mediabox to dialog modal
+  ☐ support for default pluma icon set
+  ☐ theme generator
+  ☐ data-table filter
+  ☐ save widgets positions / switch state
+<<<<<<< HEAD
+  ☐ sweetAlertjs2 dialog
+
+
+ Form Builder:
+       ☐ widgets
+
+ Dashboard:
+    widgets front-end (layout):
+        superadmin:
+          at a glance
+            ✔ manage modules to sys conf @done (18-03-08 12:01)
+=======
+  ✔ sweetAlertjs2 dialog @done (18-03-09 15:36)
+
+
+  Dashboard:
+    create a widget:
+      make a widget folder on views
+      create config (widgets.php)
+
+    widgets::
+        superadmin:
+          at a glance
+            ☐ manage modules to sys conf
+>>>>>>> master
+            ☐ # of users (per role) - chartjs
+
+          dashboard 1.xx
+            ☐ disable cpu usage
+            ☐ activities/change logs
+
+          except
+            ☐ announcement
+
+       admin:
+         at a glance
+           ☐ same as super admin
+
+         dashboard
+           except
+             ☐ sys conf
+
+       super trainer:
+         at a glance
+            (same as trainer) ->except my courses
+
+         dashboard
+           ☐ Top 3 Most Courses Enrolled
+           ☐ Courses with Low Trainer Ratings
+           ☐ top 5 trainers (v-list) -> link to profile.show
+           ☐ ???
+
+       trainer:
+         at a glance
+           ☐ my courses
+           ☐ list of students (overall)
+           ☐ Top 3 Most Courses Enrolled
+           ☐
+
+         except
+           ☐ sys conf
+           ☐ theme
+
+         dashboard
+           ☐ lists of students enrolled per course
+           ☐ latest assignment submission
+           ☐ top students
+
+      students:
+        at a glance
+          ☐ # of courses enrolled
+          ☐ # of bookmarked courses
+          ☐ # of forum qs asked
+          ☐ # of pending assignment
+
+        dashboard
+          ☐ badge
+          ☐ current courses
+          ☐ assignment
+          ☐ activities
+
+        except
+          ☐ sys conf
+          ☐ theme
+
+       right sidebar:
+           ✔ widget management @done (18-03-06 09:11)
+
+To Upgrade:
+  ☐ permissions use `pages.index` as the code to check
+  ☐ config/menus.php use `pages.index` as name to reflect permissions

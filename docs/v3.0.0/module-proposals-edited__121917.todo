@@ -1,0 +1,103 @@
+The following Modules are recommended for v3.
+
+
+Core Modules (MUST DEVELOP):
+  Dashboard:
+    @upgrade
+    ☐ Widgets Management
+    ☐ support charts
+
+  Page:
+    @upgrade
+    ☐ Section submodule: add support for sectioning content
+    ☐ Add live edit support
+       _inline edit or edit button on Single Page (if logged in)_
+
+  Blog:
+    @develop
+    ☐ Develop Pluma's default Blog Module
+
+  Search:
+    @develop
+    ☐ Develop Search Engine module
+    ☐ (Optional integrate third-party app e.g. Algolia)
+
+  Menu:
+    @upgrade
+    ☐ Enable modules to add widgets to the menu generator, similar to wordpress
+
+  User:
+    @upgrade
+    * Scopes
+       ☐ add `is` function; Checks if user has that given array of roles
+         _e.g. $user = User::withRole(['admin'])->get();_
+    ☐ Registration
+       * oAuth Integration
+       ☐ support for google login
+       ☐ (OPTIONAL) for fb, linkedin, etc.
+  Role (ACL):
+    ☐ add a role_permission table, make grants table only a grouping table.
+    ☐ ammend all affected class upon adding the role_permission table
+
+Pre-develop Modules (OPTIONAL MODULES):
+
+  Yggdrasil:
+    @upgrade
+    @definition LMS Solution
+    * submodules
+      ☐ Course
+         * to upgrade
+         ☐ support ExperienceAPI
+      ☐ Others... (list to be refined)
+
+  Shop:
+    @develop
+    @definition eCommerce Solution
+    * Supported Payment Gateways
+      ☐ PayPal Integration
+        ☐ PHP via PayPa PHP SDK
+        ☐ Client (JS) via PayPal ExpressCheckout
+      ☐ Others...
+    * submodules:
+      ☐ Cashier
+      ☐ Invoice
+      ☐ Product
+      ☐ Cart
+      ☐ Customer
+      ☐ Order
+
+-------*
+
+Dashboard:
+    ☐ Live reload of charts
+
+Calendar:
+    Calendar Events
+        ☐ Calendar Entry
+        ☐ Summary of events
+
+Library:
+    ☐ Lightbox on image gallery
+
+Mediabox:
+    ☐ List view
+
+Profile:
+    ☐ Activity log
+    ☐ Task Progress
+    ☐ Task Completed
+    ☐ On-going Project
+
+
+Others:
+    ☐ UI Tour (to introduce new users to rippl3s by walking them through it step by step)
+    ☐ Chat Support?
+    ☐ Multilingual website / Language Selector (??? charot)
+    ☐ Dynamic Themes
+    ☐ Lock Screen
+
+
+Pluma:
+    Standard Template
+    Vuetify Alpha v1
+    Organization of assets

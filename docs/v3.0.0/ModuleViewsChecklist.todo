@@ -1,0 +1,26 @@
+Typical Page
+
+Page Module Views:
+	Index:
+    ☐ List of resources: can be Data-table (list view) or Data-iterator (grid view)
+      _with:_
+      ☐ Sorting
+      ☐ Filtering
+      ☐ Rows per page
+      ☐ Pagination
+    ☐ Search bar: local search
+    ☐ Toolbar actions:
+      ☐ Create Page
+      ☐ View Trashed Page
+        ☐ OPTIONAL, with indicator of how many resources are trashed
+      ☐ Bulk Commands
+        ☐ Destroy: delete many resources
+        ☐ OPTIONAL, Clone: clone many resources
+        ☐ OPTIONAL, Edit: edit many resources (limited, not applicable to unique columns)
+
+  Create:
+    ☐ Validations
+      ☐ with snackbar alert
+      ☐ with inline field error prompt
+    ☐ Save
+      ☐ OPTIONAL, Save as Draft: a dropdown button alternative

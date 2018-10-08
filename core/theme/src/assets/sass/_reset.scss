@@ -1,0 +1,45 @@
+html {
+  font-size: $font-size-base;
+}
+
+body.fancy {
+  #app {
+    background: linear-gradient(45deg, #4B2E75 0%, #C63B5A 100%);
+    transition: all 0.3s cubic-bezier(0.45, 0, 0.32, 1);
+  }
+
+  .workspace {
+    transition: all 0.3s cubic-bezier(0.45, 0, 0.32, 1);
+    background-color: $body-bg;
+  }
+
+  &.active {
+    // background: linear-gradient(45deg, #4B2E75 0%, #C63B5A 100%);
+    .workspace {
+      overflow-x: hidden;
+      margin: 4rem 2rem;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 5px;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+    }
+  }
+}
+
+noscript {
+  background-color: $primary;
+  color: $white;
+  margin: 0;
+  padding: 2rem;
+  display: block;
+  width: 100vw;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+[role="button"] {
+  cursor: pointer;
+}
+
+[disabled], .disabled {
+  pointer-events: none;
+}

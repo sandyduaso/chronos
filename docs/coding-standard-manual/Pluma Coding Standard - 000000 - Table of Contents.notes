@@ -1,0 +1,137 @@
+**Pluma Coding Standard**
+
+--- ✄ -------------------------------------------------------------------------
+**Notes**
+
+The Pluma Coding Standard apply to written code within Pluma and its
+contributed modules. This document is loosely based on the PSR-2 Coding Style
+Guide [http://www.php-fig.org/psr/psr-2]
+
+ALL code comments should follow the US English spelling (e.g., "color"
+not "colour"). No convention imposed on naming classes, variables, and all
+non documentative writing within code.
+
+The Coding Standards are version-independent and may be subject to
+change in every major version. All new code should follow the current standards,
+regardless of Pluma version.
+--- ✄ -------------------------------------------------------------------------
+
+Table of Contents:
+  Part I, Writing PHP Code:
+    * Naming Conventions
+      1. Files and Folders
+      2. Functions
+      3. Variables
+      4. Constants
+      5. Global Variables
+      6. Classes
+    * Arrays
+    * Braces
+    * Casting
+    * Control Structures
+    * Line Length and Wrapping
+    * Class Constructor Calls
+    * Comments
+    * Database Queries
+    * Example URLs
+    * Function Calls
+    * Function Declarations
+    * Including Code
+    * Indenting and Whitespace
+    * Operators
+    * Parameters and Flag Values for Function Arguments
+    * PHP Code Tags
+    * Quotation Marks
+    * Regular Expressions
+    * Semicolons
+    * Space Usage
+    * String Concatenations
+    * Terminology
+    * Don't use `extract`
+    * Tools
+
+TOPIC:
+  Part I:
+    Naming Conventions
+    Naming Conventions: Solutions, Modules, Submodules...
+    Part I A, Pluma:
+      Core (infrastructure files)
+      Modules
+      Themes
+
+    Part I B, Getting Started with Pluma (for dev):
+      1. Blacksmith (for dev automation)
+      2. Routing
+
+  Part II, Module Development:
+    Best Practice when developing modules
+    Composers
+      {Module}ViewComposer
+    Controllers
+      Admin\{Module}Controller
+      API\{Module}Controller
+      Public\{Module}Controller
+    Models
+      {Module}
+    Observers
+      {Module}Observer
+    Providers
+      {Module}ServiceProvider
+    Requests
+      {Module}Requests
+    Support
+      Mutators
+      Relations
+      Scopes
+      Traits
+    database
+      migrations
+      seeds
+    routes
+      admin.php
+      public.php
+      console.php
+      api.php
+    views
+      partials
+      {modules}
+        view("Blog::admin.blogs.index")
+        admin/index
+        admin/show
+        admin/
+        edit
+    permissions
+      {module}.php
+    config
+      composers
+      commands
+      jobs
+      menus
+
+    Developing for /admin route
+    Developing for /public route
+
+  Part III, Theme Development:
+    Assets Management
+    The Templating System
+    File Hierarchy
+
+  Part IV, Core/Infrastructure Development:
+    Core files
+    Assets Management for backend
+    View Files Management
+
+  Part V:
+    Pluma: Modules to upgrade
+    Modules folder structure
+    Pluma: Current Issues
+
+
+
+--- ✄ -----------------------
+Rules on View Hierarchy
+* Themes will override modules' views
+* A Submodule can override it's Parent Module's views
+* A Parent cannot override it's children's views
+--- ✄ -----------------------
+

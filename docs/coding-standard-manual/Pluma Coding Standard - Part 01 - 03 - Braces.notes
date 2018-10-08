@@ -1,0 +1,35 @@
+**Braces**
+
+* Keyword operators like 'if', 'elseif' should have spaces.
+* Opening and closing braces should not have spaces inside.
+* Opening braces should be in the first line.
+  ` Example:
+      if ($blog->published) {
+* Multiple conditions inside the braces should have spaces.
+  The exclamation point (!) operator should have a space after.
+  ` Example:
+      if (! is_null($blog) && $blog->published)
+* Braces should always be used even when not required, except when in a view file.
+  ` Example:
+      `Correct:
+        if ($blog->published) {
+          run();
+        }
+      `Incorrect:
+        if ($blog->published) run();
+* When in a view file, always use the Blade Syntax ("{{  }}") and directives,
+  WHENEVER possible.
+  If you must write plain PHP Code Tags, use the alternative syntax for control
+  structures (e.g. if/endif, while/endwhile). The PHP Code tags should all be in
+  one line.
+    ` Example:
+        // index.blade.php
+        <p>{{ $blog->rating }}</p>
+        @if ($blog->published)
+          ... some html
+        @endif
+        // or
+        <p><?php echo $blog->rating; ?></p>
+        <?php if ($blog->published) : ?>
+          ... some html
+        <?php endif; ?>

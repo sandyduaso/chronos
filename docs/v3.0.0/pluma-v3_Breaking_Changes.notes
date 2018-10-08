@@ -1,0 +1,20 @@
+Routing:
+  - Added namespace on routes - avoid using the Qualified name namespace on your routes. E.g. use 'QuestController' instead of 'Quest\Controllers\QuestController'.
+                    - if you must override the namespace use a FULLY Qualified Name. E.g. use '\Quest\Controllers\QuestController'.
+
+  Fuzzy:
+  - Removed the route core
+
+
+
+
+
+
+
+====================
+Non-Breaking Changes
+====================
+
+
+Pluma\Providers\PlumaServiceProvider:
+  ☐ remove registerBindings()

@@ -1,0 +1,13 @@
+# v2.0.1
+
+Blacksmith:
+  Key:
+    ✔ Added Blacksmith Command `key:generate` @done (Dec-14 2017 [10:21AM])
+  Furnace:
+    ✔ Added PurgeSessionCommand @done (17-12-22 11:22)
+    ✔ Added PurgeViewCommand @done (17-12-22 11:22)
+    ✔ Modified PurgeCacheCommand to only affect the framework cache @done (17-12-22 11:22)
+    ✔ Optimized PurgeStorageCommand @done (17-12-22 11:22)
+
+Config:
+  ✔ added `config/download.php`, will replace `config/downloadables.php` @done (17-12-22 11:22)

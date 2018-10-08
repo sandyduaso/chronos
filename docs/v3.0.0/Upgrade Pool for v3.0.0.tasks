@@ -1,0 +1,106 @@
+LEGEND:
+  *NOTES:
+   - @3 = Scheduled for Version 3.0.0
+     - The updates for `@3` are changes that may break previous versions. Full upgrade is recommended.
+
+   - @2.* = changes should be compatible in any v2.* version of Pluma
+
+--- ✄ -----------------------
+
+Installation:
+  ☐ Move migrating of database before saving user credentials
+  ☐ Remove the middleware checking if app is installed
+     _instead opt for a file-based approach when checking if app_
+     _is installed._
+     _ideas: have a file called install.php_
+  ☐ Install from console
+
+Core/Controllers:
+  ☐ Move API/Controllers/* to Controllers/
+
+Core/Models:
+  ☐ Remove User model, make the User\Models\User the default User model
+  ☐ Mutators, fix namespaces
+
+Core/Routing:
+  Fuzzy:
+    ☐ move core/ routes to admin
+    ☐ rename /~assets to /assets
+    ☐ remove /~p
+    ☐ rename /anytheme to /theme
+
+Blacksmith:
+  ☐ add forge:module params
+    _--plain_ : produces an empty module.
+
+  ☐ add forge:controller params
+    _--controller_ : (default) extends the generic controller.
+    _--admin_ : extends the admin controller.
+    _--public_ : extends the public controller.
+    _--api_ : extends the api controller.
+
+  ☐ add forge:api command
+    - will produce:
+      - Controllers/{ModuleName}APIController.php
+      - routes/api.php
+
+  ☐ @3 > Move ./blacksmith folder to ./consoles/Blacksmith
+    - add to composer.json psr-4 entry: "Blacksmith\\": consoles/Blacksmith/
+    - update namespaces that may break application
+
+  ☐ Add `forge:category --module ${Module}`
+    _produces a Category submodule for the given module_
+
+  ☐ add db:migrate params
+     _module_ : Only use the migrations in this module
+
+Frontend [Presentation Logic]:
+  ☐ @critical | @3 > assets deployment
+    - Find a solution to remove inline assets
+
+  ☐ @critical | @3 > assets inclusions
+    - find a better way to include assets to:
+      ☐ avoid assets duplicate inclusion
+
+  ☐ @3 > Have a frontend assets management system
+    @pref bower
+      - Make a gulpfile that iterates over given folders to look for bower.json, then installs them.
+
+  ☐ @3 > Frontend-Backend Loose Coupling - refine decouple frontend from the backend
+
+  ☐ @3 > remove all assets from Frontier Module and:
+    ☐ do one of the following: ________
+      * move assets to ./core/assets; or
+      * Add a core module: Assets
+    ☐ refactor assets() helper functions and related
+      ☐ move the v() function inside the vuetify assets function helpers
+    ☐ support atleast one library with folder structure:
+      _./core/assets/vuetify/<files>_
+      _./core/assets/bootstrap/<files>_
+      _or if going for the moduled approach_
+      _./core/submodules/Assets/lib/vuetify/<files>_
+      _./core/submodules/Assets/lib/bootstrap/<files>_
+
+
+Backend [Programming Logic]:
+  ✔ Implement Composer-merge-plugin @done (Dec-05 2017 10:21AM)
+    @link https://github.com/wikimedia/composer-merge-plugin
+  ☐ @3 > Make the backend frontend-agnostic
+  ☐ @3 > develop a Handler Class to manage Programming-Presentation Logic (a.k.a. Backend-Frontend data exchange)
+
+
+Modules:
+  ☐ /config/menus.php : avoid using the user() object in the menus
+
+
+Models:
+  ☐ Move rules to Model level
+    -- move validation rules from Request (e.g. BlogRequest) to Model's own rules method.
+  Category:
+    ☐ rename `categorable_type` to `type`
+
+
+Themes:
+  ☐ Core: add ability to configure menus, custom permissions, jobs, etc like a module.
+
+--- ✄ -----------------------

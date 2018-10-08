@@ -1,0 +1,18 @@
+TIME_IN             = <user input>
+TIME_OUT            = <user input>
+
+DEFAULT_TIME_IN     = 09:00
+DEFAULT_TIME_OUT    = 18:15
+
+GRACE_TIME_IN       = 00:00
+GRACE_TIME_OUT      = 00:00
+
+TARDYTIME           = TIME_IN - DEFAULT_TIME_IN
+UNDERTIME          <= DEFAULT_TIME_OUT
+   Function            = DEFAULT_TIME_OUT - TIME_OUT
+
+OVERTIME           >= DEFAULT_TIME_OUT
+   Function            = TIME_OUT - DEFAULT_TIME_OUT
+
+OFFSET_TARDINESS    = OVERTIME - TARDYTIME
+

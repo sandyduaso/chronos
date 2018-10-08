@@ -1,0 +1,16 @@
+.workspace {
+  display: block;
+
+  > .footer:last-child {
+    padding: 0;
+  }
+
+  > .main {
+    padding-top: 0;
+    min-height: calc(100% - 202px);
+  }
+}
+
+.bg-workspace {
+  background-color: $body-bg;
+}

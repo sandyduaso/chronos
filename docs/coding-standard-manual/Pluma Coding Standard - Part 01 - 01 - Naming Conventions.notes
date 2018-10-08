@@ -1,0 +1,77 @@
+**Naming Conventions**
+
+
+Introduction:
+  _TODO: make an intro_
+
+1. Files:
+  * Files should follow the PSR-2 naming convention [http://www.php-fig.org/bylaws/psr-naming-conventions].
+  * All file extensions should be lowercase.
+  * All class, traits, interface files should be studly case (e.g. BlogController.php).
+  * All other files should be lowercase.
+  * All documentation files may have the ".txt" or ".notes" or ".todo" as a file extension.
+    The file name for the document should be in all uppercase (e.g. README.txt, UPGRADES.todo).
+    The file should be a plain text (mimetype text/plain).
+
+
+2. Functions:
+  Functions should be named using lowercase, and words should be separated
+  with an underscore. Functions in addition, should have the grouping/module name
+  as a prefix, to avoid name collisions between modules.
+    ` Examples:
+        assets('css/style.css');
+        str_slug($stringVariable);
+        blog_assets('css/blog.css');
+
+
+3. Variables:
+  * Variables should be named using camel case. It is recommended to use a
+    single word to the variable WHENEVER possible, WITHOUT sacrificing context
+    or leading to ambiguity.
+    ` Examples:
+        Right: $single = 'string'; $isSingle = true;
+        Wrong: $StudlyCase; $snake_case;
+  * Only boolean variables are allowed to have the prefixes "is", and "has"
+    (e.g. $isChild, $hasChildren).
+
+4. Constants:
+  All user defined constants should always be written in all-uppercase, with
+  underscores to separate words.
+  All predefined PHP Constants like `TRUE`, 'FALSE', and `NULL` are left to the
+  author's preference.
+  WHENEVER applicable, all constants should be defined using the `const` PHP language keyword
+  (instead of `define()`), because it is better for performance.
+    ` Example:
+        const PLUMA_GENESIS_DATE = '2017';
+
+
+5. Global Variables:
+  As much as possible avoid using global variables. If you need to define one,
+  the name should start with atleast a single underscore followed by the module or theme
+  name AND should be in all uppercase.
+    ` Example:
+        $_BLOG_CUSTOM_TIMEOUT = 32000;
+
+
+6. Classes:
+  * All classes should follow the PSR-2 Coding Standard.
+  * Class names should not have the reserved word "Pluma".
+  * Classes, traits, and interfaces should use studly case naming
+    (e.g. BlogController, BlogTrait, BlogInterface).
+  * The namespace should have one space above.
+    ` Example:
+        <?php
+
+        namespace Blog\Models;
+
+        class Blog
+        {
+        ...
+    `
+  * Methods and class properties should use camel case.
+  * Test classes should always have the suffix "Test" (e.g. BlogTest).
+  * Class names should not have "Class" in the name.
+  * Protected or private properties and methods should not use an underscore prefix.
+
+
+

@@ -1,0 +1,24 @@
+<?php
+
+namespace DummyNamespace;
+
+use Tests\Support\Test\DatabaseMigrations;
+use Tests\TestCase;
+
+/**
+ * @package Tests
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
+class DummyClass extends TestCase
+{
+    use DatabaseMigrations;
+
+    /**
+     * @test
+     */
+    public function testExample()
+    {
+        $this->assertTrue(true);
+    }
+}

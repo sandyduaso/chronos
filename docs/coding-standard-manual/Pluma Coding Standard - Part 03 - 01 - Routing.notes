@@ -1,0 +1,93 @@
+**Routing**
+
+
+
+TABLE OF CONTENTS:
+  1. Web Routes: Public Routes
+  2. Web Routes: Admin Routes
+  3. Fuzzy Routes
+  4. Console Routes
+  5. API Routes
+  6. Sample Module Route Names
+
+6. SAMPLE MODULE ROUTE NAMES:
+  _These example routes are from the Blog module_
+
+**Admin                   Public                  API**
+_Default_
+blogs.index               blogs.all               api.blogs.all                       :
+GET                       GET                     GET
+@index                    @all                    @getAllBlogs
+Blog::blogs.index         Blog::blogs.all         Blog::blogs.index
+
+blogs.show                blogs.single            api.blogs.show                      :
+GET                       GET                     GET
+@show                     @single                 @getShowBlog
+
+blogs.create              -                                                           :
+GET                       -
+@create                   -
+
+blogs.store               -                       api.blogs.store                     :
+POST                      -                       POST
+@store                    -                       @postStoreBlog
+
+blogs.edit                -                                                           :
+GET                       -
+@edit                     -
+
+blogs.update              -                       api.blogs.update                    :
+POST|PUT|PATCH            -                       PUT|PATCH
+@update                   -                       @putUpdateBlog
+
+blogs.destroy             -                       api.blogs.destroy                   :
+POST|DELETE               -                       DELETE
+@destroy                  -                       @deleteDestroyBlog
+
+_Extra_
+blogs.trashed             -                                                           :
+GET                       -
+@trashed                  -
+
+blogs.restore             -                       api.blogs.restore                   :
+POST|PATCH                      -                 PATCH
+@restore                  -                       @postRestoreBlog
+
+blogs.delete              -                       api.blogs.delete                    :
+POST|DELETE               -                       DELETE
+@delete                   -                       @deleteDeleteBlog
+
+blogs.preview             -                       api.blogs.preview                   :
+GET                       -                       GET
+@preview                  -                       @getPreviewBlog
+
+
+--- ✄ -----------------------
+*Notes*
+_ff. are capable of handling mutiple resources via IDs_
+  blogs.destroy - _softDeletes one or more blogs_
+  blogs.restore - _restores one or more blogs_
+  blogs.delete  - _permDeletes one or more blogs_
+
+_previously, handled by different methods:_
+  blogs.destroy.many [deprecated in v3]
+  blogs.restore.many [deprecated in v3]
+  blogs.delete.many  [deprecated in v3]
+--- ✄ -----------------------
+
+Blog\Controllers\Admin\BlogController
+Blog\Controllers\API\BlogController
+Blog\Controllers\Public\BlogController
+
+--or--
+
+Blog\Controllers\BlogAdminController
+Blog\Controllers\BlogAPIController
+Blog\Controllers\BlogPublicController
+
+--or--
+
+Blog\Controllers\BlogController
+  Blog\Support\Controllers\Traits\ExtraResource
+  Blog\Support\Controllers\Traits\PublicResource
+  Blog\Support\Controllers\Traits\APIResource

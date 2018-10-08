@@ -1,0 +1,5 @@
+TODO:
+Blacksmith
+ ✔ auto make dir migrations @done (18-07-15 08:38)
+ ☐ fix db:drop command
+ ☐ make auth.permission a guard on default auth, e.g. auth:permission, auth:admin

@@ -1,0 +1,22 @@
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app, .app {
+  display: flex;
+  align-items: stretch;
+  perspective: 1500px;
+  height: 100vh;
+  overflow: hidden;
+
+  @include media-breakpoint-down(md) {
+    overflow-x: hidden;
+  }
+
+  .workspace {
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
+

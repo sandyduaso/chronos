@@ -1,0 +1,15 @@
+core/AppServicePoriv
+  ✔ registerApplMacor @done (18-10-05 17:10)
+core/theme
+ ✔ upload directive js + view @done (18-10-04 10:06)
+ ☐ Add feather icons
+ ☐ Add materialdesignicons
+
+ ☐ replaced pre/post to before/after on foot.blade
+
+library
+ ✔ added upload to routes/admin @done (18-10-04 10:06)
+ ✔ added icons @done (18-10-04 10:06)
+
+user
+ ✔ UserConr@create view(User::admin.create) @done (18-10-04 13:47)

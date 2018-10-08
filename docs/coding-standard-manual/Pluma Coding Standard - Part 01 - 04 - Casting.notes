@@ -1,0 +1,31 @@
+4. Casting:
+  Put a space between the type and the variable in a cast.
+    ` Example:
+        (int) $myNumber
+        (bool) $isNumber
+
+5. Control Structures:
+  * Control structures include if, for, while, switch, etc.
+  * Do not use "else if", always use "elseif".
+    ` Example:
+        if (is_numeric($myNumber) || $anotherVariable) {
+          $isNumber = true;
+        } elseif (is_string($myNumber)) {
+          $myNumber = convert_to_int($myNumber);
+          $isNumber = true;
+        } else {
+          $isNumber = false;
+        }
+
+  * Control statements should have one space between the control keyword and
+    opening parenthesis, to distinguish them from function calls.
+  * Always use curly braces even in situations where they are technically optional.
+    Having them increases readability and decreases the likelihood of logic errors
+    being introduced when new lines are added. The opening curly should be on the
+    same line as the opening statement, preceded by one space.
+    The closing curly should be on a line by itself and indented to the same level
+    as the opening statement.
+  # Alternate control statement syntax for templates:
+    In templates, the alternate control statement syntax using : instead of brackets is allowed. Note that there should not be a space between the closing parenthesis after the control keyword, and the colon, and HTML/PHP inside the control structure should be indented.
+
+

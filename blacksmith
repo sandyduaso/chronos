@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ *------------------------------------------------------------------------------
+ * Pluma Console
+ *------------------------------------------------------------------------------
+ *
+ * Require the console/blacksmith/blacksmith Command.
+ *
+ * Try running `php blacksmith list` to view all available commands.
+ */
+
+require_once __DIR__ . '/console/blacksmith/blacksmith';

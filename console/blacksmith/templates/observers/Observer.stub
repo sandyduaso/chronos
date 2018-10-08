@@ -1,0 +1,61 @@
+<?php
+
+namespace $namespace\Observers;
+
+use $namespace\Models\$model;
+
+class $class
+{
+    /**
+     * Listen to the $name created event.
+     *
+     * @param  \$namespace\Models\$model  $resource
+     * @return void
+     */
+    public function created($model $resource)
+    {
+        // save fields
+        session()->flash('title', $resource->name);
+        session()->flash('message', "$model successfully created");
+        session()->flash('type', 'success');
+    }
+
+    /**
+     * Listen to the $name updated event.
+     *
+     * @param  \$namespace\Models\$model  $resource
+     * @return void
+     */
+    public function updated($model $resource)
+    {
+        session()->flash('title', $resource->name);
+        session()->flash('message', "$model successfully updated");
+        session()->flash('type', 'success');
+    }
+
+    /**
+     * Listen to the $name deleted event.
+     *
+     * @param  \$namespace\Models\$model  $resource
+     * @return void
+     */
+    public function deleted($model $resource)
+    {
+        session()->flash('title', $resource->name);
+        session()->flash('message', "$model successfully removed");
+        session()->flash('type', 'success');
+    }
+
+    /**
+     * Listen to the $name restored event.
+     *
+     * @param  \$namespace\Models\$model  $resource
+     * @return void
+     */
+    public function restored($model $resource)
+    {
+        session()->flash('title', $resource->name);
+        session()->flash('message', "$model successfully restored");
+        session()->flash('type', 'success');
+    }
+}

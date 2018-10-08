@@ -1,0 +1,14 @@
+[data-sticky-class],
+[data-sticky] {
+  transition: all 0.05s ease-in-out;
+}
+
+.stuck {
+  .sticky {
+    position: sticky;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    z-index: 9996;
+  }
+}
