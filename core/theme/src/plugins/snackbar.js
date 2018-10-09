@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'snackbarjs/dist/snackbar.min.css'
 import 'snackbarjs/themes-css/material.css'
 import 'snackbarjs/dist/snackbar.min.js'

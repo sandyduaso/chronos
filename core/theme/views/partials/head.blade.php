@@ -14,7 +14,7 @@
       {{ $application->page->subtitle }}
     @show
   </title>
-  <base href="{{ url('/') }}">
+  {{-- <base href="{{ url('/') }}"> --}}
   <meta name="description" content="{{ __(@$application->head->description) }}">
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -22,7 +22,7 @@
   @stack('tokens')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="_token" content="{{ csrf_token() }}">
-    <meta name="base-url" content="{{ home() }}">
+    <meta name="base-url" content="{{ url('/') }}">
   @show
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url('favicons/apple-touch-icon.png') }}">
@@ -34,7 +34,7 @@
   @stack('seo')
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
-    <link rel="canonical" href="{{ home() }}">
+    <link rel="canonical" href="{{ url('/') }}">
     -->
   @show
   @stack('post-meta')
@@ -52,6 +52,7 @@
       This line is only a preload.
       The actual script should be found in this theme's views/partials/foot.blade.php
     --}}
+    <link rel="preload" href="{{ theme('dist/vendor.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
     <link rel="preload" href="{{ theme('dist/app.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
   @show
   @stack('css')

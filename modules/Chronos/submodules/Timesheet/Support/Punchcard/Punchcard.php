@@ -227,4 +227,20 @@ class Punchcard
 
         return $seconds;
     }
+
+    /**
+     * Calculate the sum tota from associative array via key.
+     *
+     * @param array $dates
+     * @param string $key
+     * @return string
+     */
+    public function totalFromKey(array $dates, string $key)
+    {
+        foreach ($dates as $date) {
+            $times[] = $this->toSeconds($date[$key] ?? '00:00:00');
+        }
+
+        return $this->toTime(array_sum($times ?? []));
+    }
 }

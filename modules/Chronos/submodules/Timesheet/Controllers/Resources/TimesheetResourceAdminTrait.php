@@ -56,8 +56,9 @@ trait TimesheetResourceAdminTrait
     public function show(Request $request, $id)
     {
         $resource = $this->repository->find($id);
+        $repository = $this->repository;
 
-        return view('Timesheet::admin.show')->with(compact('resource'));
+        return view('Timesheet::admin.show')->with(compact('resource', 'repository'));
     }
 
     /* Show the form for editing the specified resource.

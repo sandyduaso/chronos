@@ -31,6 +31,13 @@ class TimesheetRepository extends Repository
     protected $timedumps;
 
     /**
+     * The Punchcard instance.
+     *
+     * @var \Timesheet\Support\Punchcard\Punchcard
+     */
+    protected $punchcard;
+
+    /**
      * Constructor of the class.
      *
      * @param \Pluma\Models\Model $model
@@ -40,6 +47,8 @@ class TimesheetRepository extends Repository
         parent::__construct($model);
 
         $this->timedumps = new Timedump();
+
+        $this->punchcard = $this->punchcard();
     }
 
     /**
@@ -109,12 +118,7 @@ class TimesheetRepository extends Repository
             return $set;
         });
 
-        $punchcard = new Punchcard([
-            'default_time_in' => settings('timesheet_default_time_in', '09:00 AM'),
-            'default_time_out' => settings('timesheet_default_time_out', '06:15 PM'),
-            'default_lunch_start' => settings('timesheet_default_lunch_start', '01:00 PM'),
-            'default_lunch_end' => settings('timesheet_default_lunch_end', '02:00 PM'),
-        ]);
+        $punchcard = $this->punchcard();
 
         $dataset = $dataset->map(function ($item) use ($punchcard) {
             $item['date'] = date('Y/m/d', strtotime($item['time_in']));
@@ -147,6 +151,7 @@ class TimesheetRepository extends Repository
                 'over_time' => date('H:i:s', strtotime($set['over_time'])),
                 'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
                 'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
+                'department' => $set['department'] ?? null,
                 'user_id' => $set['user'] ? $set['user']->id : null,
                 'timesheet_id' => $timesheet->id,
                 'metadata' => json_encode(collect($set)->except(['date','time_in','time_out','total_am','total_pm','total_time','tardy_time','under_time','over_time','offset_hours','user'])),
@@ -180,5 +185,20 @@ class TimesheetRepository extends Repository
         }
 
         return $user;
+    }
+
+    /**
+     * Retrieve a new Punchar instance.
+     *
+     * @return \Timesheet\Support\Punchcard\Punchcard
+     */
+    public function punchcard()
+    {
+        return new Punchcard([
+            'default_time_in' => settings('timesheet_default_time_in', '09:00 AM'),
+            'default_time_out' => settings('timesheet_default_time_out', '06:15 PM'),
+            'default_lunch_start' => settings('timesheet_default_lunch_start', '01:00 PM'),
+            'default_lunch_end' => settings('timesheet_default_lunch_end', '02:00 PM'),
+        ]);
     }
 }

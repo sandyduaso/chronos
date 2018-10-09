@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'bootstrap-select/js/bootstrap-select.js'
 import 'bootstrap-select/sass/bootstrap-select.scss'
 

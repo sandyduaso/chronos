@@ -25,14 +25,36 @@ trait HasManyTimedumps
      * @param array $whereStatement
      * @return mixed
      */
-    public function dates($whereStatement = null)
+    public function dates($whereStatement = null, $startDate = null, $endDate = null)
     {
         return Calendar::build(
             (new Timedump)->getTable(),
             $whereStatement ?? ['timesheet_id' => $this->id],
-            $this->start_date,
-            $this->end_date
+            $startDate ?? $this->start_date,
+            $endDate ?? $this->end_date
         );
+    }
+
+    /**
+     * Retrieve the complete dates from given range.
+     *
+     * @param  string $sortBy
+     * @return mixed
+     */
+    public function department($sortBy = 'date')
+    {
+        foreach ($this->timedumps->groupBy('department') as $i => $timedump) {
+            foreach ($timedump->groupBy('key') as $key => $date) {
+                $calendar = $this->dates([
+                    'timesheet_id' => $this->id,
+                    'key' => (string) $key,
+                ])->get();
+
+                $items[$i][$key] = $calendar;
+            }
+        }
+
+        return collect($items ?? []);
     }
 
     /**
@@ -44,16 +66,20 @@ trait HasManyTimedumps
      */
     public function calendar($groupBy = 'date', $sortBy = 'date')
     {
-        $calendar = Calendar::whereBetween('date', [$this->start_date, $this->end_date])->get();
+        foreach ($this->timedumps->groupBy($groupBy) as $i => $timedump) {
+            $calendar = $this->dates([
+                'timesheet_id' => $this->id,
+                $groupBy => $i,
+            ])->get();
 
-        $items = [];
-        foreach ($this->timedumps->groupBy('key') as $i => $timedump) {
-            $timedump = $timedump->groupBy('date')->toArray();
-            $timedump = array_merge($calendar->groupBy('date')->toArray(), $timedump);
-            $items[(string) $i] = collect($timedump)->first();
-            // $items[] = array_merge((array) $calendar->toArray(), (array) $timedump->toArray());
+            $dates = $calendar->sortBy($sortBy)->groupBy('date');
+            foreach ($dates as $date => $employees) {
+                $items[$i][$date] = $employees->groupBy('key')->map(function ($item) {
+                    return $item->first();
+                });
+            }
         }
 
-        dd($items);
+        return $items ?? [];
     }
 }

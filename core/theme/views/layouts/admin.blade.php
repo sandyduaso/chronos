@@ -5,7 +5,9 @@
 @endpush
 
 @section('main')
-  <div id="workspace" class="workspace justify-content-start" data-workspace>
+  @section('workspace:head')
+  <div id="workspace" class="workspace justify-content-start">
+  @show
 
     @include('Theme::partials.utilitybar')
     @include('Theme::partials.breadcrumbs')

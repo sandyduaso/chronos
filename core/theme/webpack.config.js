@@ -3,16 +3,19 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin')
-const WebpackOnBuildPlugin = require('on-build-webpack')
 const webpack = require('webpack')
+const WebpackOnBuildPlugin = require('on-build-webpack')
 
 module.exports = {
   cache: true,
   mode: 'production',
+  devtool: 'source-map',
   entry: {
     app: './src/app.js',
     data: './src/data.js',
+    vendor: './src/vendor.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -23,6 +26,13 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     },
     extensions: ['.js', '.json'],
+  },
+  optimization: {
+    minimizer: [new UglifyJsPlugin({
+      cache: true,
+      sourceMap: true,
+      parallel: true,
+    })]
   },
   module: {
     rules: [
@@ -73,6 +83,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new UglifyJsPlugin({
+      sourceMap: true,
+      extractComments: 'all',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

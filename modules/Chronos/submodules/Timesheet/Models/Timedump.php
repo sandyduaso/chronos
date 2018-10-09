@@ -9,6 +9,7 @@ class Timedump extends Model
 {
     protected $fillable = [
         'date',
+        'department',
         'key',
         'time_in',
         'time_out',

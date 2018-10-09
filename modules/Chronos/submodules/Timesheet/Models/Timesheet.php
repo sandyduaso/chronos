@@ -2,6 +2,7 @@
 
 namespace Timesheet\Models;
 
+use Calendar\Support\Accessors\CalendarAccessor;
 use Frontier\Support\Breadcrumbs\Accessors\Breadcrumable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,7 @@ class Timesheet extends Model
         Breadcrumable,
         BelongsToUser,
         HasManyTimedumps,
+        CalendarAccessor,
         TimesheetAccessor;
 
     /**

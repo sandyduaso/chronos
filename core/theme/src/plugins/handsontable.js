@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'handsontable/dist/handsontable.full.min.css'
 import * as Handsontable from 'handsontable'
 

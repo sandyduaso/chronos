@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'd3/dist/d3.min.js'
 import 'c3/c3.min.css'
 import c3 from 'c3'

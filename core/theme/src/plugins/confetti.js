@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import 'confetti-js'
 
 $(document).ready(function () {
