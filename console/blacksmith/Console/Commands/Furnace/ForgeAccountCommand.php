@@ -125,7 +125,7 @@ class ForgeAccountCommand extends Command
         $lastname = $this->ask("Last name");
         $email = $this->ask("Email");
         $username = $this->ask("User name", $email);
-        $password = $this->secret("Password (hidden)");
+        $password = $this->ask("Password (visible)");
         $this->password = $password;
 
         $password = Hash::make($password);
@@ -163,6 +163,10 @@ class ForgeAccountCommand extends Command
      */
     protected function generateAccount(array $params = [], Role $role = null) : Model
     {
+        if (! isset($params['api_token'])) {
+            $params['api_token'] = Hash::make($params['username']);
+        }
+
         $model = config('auth.providers.users.model', \User\Models\User::class);
         if ($this->option('pretend')) {
             $user = factory($model)->make($params);

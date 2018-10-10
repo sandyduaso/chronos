@@ -1,4 +1,7 @@
 @import 'variables';
 @import 'reset';
 @import '~bootstrap/scss/bootstrap';
+@import 'plugins/selectpicker';
+@import 'plugins/dropzone';
+// Main Components
 @import 'components/components';

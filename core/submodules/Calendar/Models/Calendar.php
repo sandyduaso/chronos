@@ -36,6 +36,7 @@ class Calendar extends Model
                 $join->where($params);
             })
             ->select(['*', "$joinTable.date AS date"])
-            ->whereBetween("$joinTable.date", [$startDate, $endDate]);
+            ->whereBetween("$joinTable.date", [$startDate, $endDate])
+            ->orderBy("$joinTable.date");
     }
 }

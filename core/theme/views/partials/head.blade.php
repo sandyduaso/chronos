@@ -7,10 +7,10 @@
   <meta http-equiv="Content-Language" content="{{ app()->getLocale() }}">
   <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
   <title>
-    @section('head-title')
+    @section('head:title')
       {{ $application->page->title }}
     @show
-    @section('head-subtitle')
+    @section('head:subtitle')
       {{ $application->page->subtitle }}
     @show
   </title>

@@ -197,6 +197,23 @@ class Punchcard
     }
 
     /**
+     * Calculate the total number of lates.
+     *
+     * @return string
+     */
+    public function totalLateCount(object $dates, $key)
+    {
+        $times = [];
+        foreach ($dates as $time) {
+            $timeIn = $this->toSeconds($time->$key ?? '00:00:00');
+            $defaultTimeIn = $this->toSeconds($this->defaultTimeIn);
+            $times[] = (int) $timeIn > $defaultTimeIn;
+        }
+
+        return array_sum($times);
+    }
+
+    /**
      * Converts the string to time.
      *
      * @param  string $seconds

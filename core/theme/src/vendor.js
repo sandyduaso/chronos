@@ -1,6 +1,4 @@
-import '@/plugins/bootstrap'
 import '@/plugins/datatables'
-import '@/plugins/selectpicker'
 import '@/plugins/snackbar'
 import '@/plugins/dropzone'
 import '@/plugins/c3js'

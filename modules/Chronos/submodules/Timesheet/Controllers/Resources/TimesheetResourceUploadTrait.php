@@ -13,7 +13,7 @@ trait TimesheetResourceUploadTrait
     /**
      * Process the resource then return to view.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Timesheet\Requests\TimesheetRequest $request
      * @return \Illuminate\Http\Response
      */
     public function process(TimesheetRequest $request)
@@ -31,10 +31,10 @@ trait TimesheetResourceUploadTrait
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Library\Requests\LibraryRequest  $request
+     * @param  \Timesheet\Requests\TimesheetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function upload(Request $request)
+    public function upload(TimesheetRequest $request)
     {
         $resources = $request->file('file')
             ? $this->repository->process($request->file('file'))->toArray()

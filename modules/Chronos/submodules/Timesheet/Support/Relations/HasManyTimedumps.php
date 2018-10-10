@@ -4,6 +4,7 @@ namespace Timesheet\Support\Relations;
 
 use Timesheet\Models\Calendar;
 use Timesheet\Models\Timedump;
+use User\Models\User;
 
 trait HasManyTimedumps
 {
@@ -50,7 +51,13 @@ trait HasManyTimedumps
                     'key' => (string) $key,
                 ])->get();
 
-                $items[$i][$key] = $calendar;
+                $items[$i][$key]['calendar'] = $calendar;
+                $items[$i][$key]['key'] = $key;
+                $items[$i][$key]['metadata'] = json_decode($date[0]->metadata);
+                $items[$i][$key]['user'] = User::whereHas('details', function ($query) use ($key) {
+                    $query->where('key', 'card_id');
+                    $query->where('value', $key);
+                })->first();
             }
         }
 
@@ -66,20 +73,6 @@ trait HasManyTimedumps
      */
     public function calendar($groupBy = 'date', $sortBy = 'date')
     {
-        foreach ($this->timedumps->groupBy($groupBy) as $i => $timedump) {
-            $calendar = $this->dates([
-                'timesheet_id' => $this->id,
-                $groupBy => $i,
-            ])->get();
-
-            $dates = $calendar->sortBy($sortBy)->groupBy('date');
-            foreach ($dates as $date => $employees) {
-                $items[$i][$date] = $employees->groupBy('key')->map(function ($item) {
-                    return $item->first();
-                });
-            }
-        }
-
-        return $items ?? [];
+        return [];
     }
 }

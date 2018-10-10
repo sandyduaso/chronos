@@ -1,7 +1,6 @@
 @extends('Theme::layouts.blank')
 
 @section('head-title', '404 Page Not Found')
-@push('head-subtitle', ' | ' . $application->site->title)
 
 @section('content')
   <div class="container text-center">

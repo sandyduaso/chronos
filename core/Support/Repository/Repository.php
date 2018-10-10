@@ -161,7 +161,7 @@ class Repository implements RepositoryInterface
      */
     public function search($params)
     {
-        $this->model = $this->model->search($params);
+        $this->model = $this->model()->search($params);
 
         return $this;
     }
@@ -186,20 +186,20 @@ class Repository implements RepositoryInterface
     public function paginate()
     {
         if (is_null(request()->get('per_page')) && is_null(request()->get('page'))) {
-            $this->model = $this->model->paginate();
+            $this->model = $this->model()->paginate();
             $this->model = $this->model->appends('per_page', $this->model->perPage());
             return $this->model;
         }
 
         if (request()->get('per_page') !== null && request()->get('per_page') <= 0) {
-            return $this->model->paginate($this->model->count());
+            return $this->model()->paginate($this->model()->count());
         }
 
         $perPage = ! request()->get('per_page')
-            ? $this->model->count()
+            ? $this->model()->count()
             : request()->get('per_page');
 
-        $this->model = $this->model->paginate($perPage);
+        $this->model = $this->model()->paginate($perPage);
         $this->model->appends('per_page', $perPage);
 
         return $this->model;

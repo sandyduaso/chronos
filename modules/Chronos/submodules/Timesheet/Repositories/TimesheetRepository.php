@@ -129,11 +129,7 @@ class TimesheetRepository extends Repository
             $item['under_time'] = $punchcard->undertime($item['time_out']);
             $item['over_time'] = $punchcard->overtime($item['time_out']);
             $item['offset_hours'] = $punchcard->offset($item['time_in'], $item['time_out']);
-            $item['user'] = $this->user(
-                $item['user_id'] ?? $item['card_id'] ?? null,
-                isset($item['user_id']) ? 'id' : 'card_id',
-                isset($item['user_id']) ? false : true
-            );
+            $item['user'] = $this->user($item['user_id'] ?? $item['card_id'] ?? null);
 
             return $item;
         });
@@ -165,24 +161,14 @@ class TimesheetRepository extends Repository
      * Retrieve user from given parameters.
      *
      * @param string $value
-     * @param string $key
-     * @param string $fromDetails
      * @return mixed
      */
-    public function user($value, $key = 'id', $fromDetails = false)
+    public function user($value)
     {
-        $user = null;
-
-        if (! is_null($value)) {
-            if ($fromDetails) {
-                $user = User::join('details', 'details.user_id', '=', 'users.id')
-                    ->where('details.key', $key)
-                    ->where('details.value', $value)
-                    ->first();
-            } else {
-                $user = User::where($key, $value)->first();
-            }
-        }
+        $user = User::with('details', function ($query) use ($value) {
+            $query->where('key', 'card_id');
+            $query->where('kevale', $value);
+        })->first();
 
         return $user;
     }

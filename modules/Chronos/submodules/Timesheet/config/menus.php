@@ -49,7 +49,7 @@ return [
                 'code' => 'timesheets.trashed',
                 'always_viewable' => false,
                 'labels' => [
-                    'title' => __('Trashed Timesheets'),
+                    'title' => __('Archived'),
                     'description' => __('View list of all timesheets moved to trash'),
                 ],
             ],

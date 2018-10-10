@@ -11,7 +11,7 @@
           @if ($menu['has_children'])
 
             <div class="sidebar-item sidebar-dropdown">
-              <a role="button" href="#" aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}" data-toggle="collapse" data-target="#sidebar-dropdown-{{ $i }}" class="dropdown-toggle list-group-item list-group-item-action d-flex align-items-center rounded {{ $menu['active'] ? 'active' : '' }}">
+              <a role="button" title="{{ $menu['labels']['description'] ?? null }}" href="#" aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}" data-toggle="collapse" data-target="#sidebar-dropdown-{{ $i }}" class="dropdown-toggle list-group-item list-group-item-action d-flex align-items-center rounded {{ $menu['active'] ? 'active' : '' }}">
                 <span class="icon mr-3">
                   @isset ($menu['icon'])
                     <i class="{{ $menu['icon'] }}"></i>

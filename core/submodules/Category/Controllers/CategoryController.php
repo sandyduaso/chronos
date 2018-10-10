@@ -3,6 +3,7 @@
 namespace Category\Controllers;
 
 use Category\Models\Category;
+use Category\Repositories\CategoryRepository;
 use Category\Requests\CategoryRequest;
 use Category\Support\Traits\CategoryResourceApiTrait;
 use Frontier\Controllers\GeneralController;
@@ -10,53 +11,31 @@ use Illuminate\Http\Request;
 
 class CategoryController extends GeneralController
 {
-    use CategoryResourceApiTrait;
+    use Resources\CategoryResourceAdminTrait;
 
     /**
      * The view hintpath.
      *
      * @var string
      */
-    protected $hintpath;
+    protected $hintpath = 'Category';
 
     /**
      * The category type of the resource.
      *
      * @var string
      */
-    protected $type;
+    protected $type = 'category';
 
     /**
-     * Display a listing of the resource.
+     * Inject the resource model to the repository instance.
      *
-     * @param  Request $request
-     * @return Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function __construct()
     {
-        $resources = Category::type($this->type)->paginate();
+        $this->repository = new CategoryRepository();
 
-        return view("{$this->hintpath}::categories.index")->with(compact('resources', 'type'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Category\Requests\CategoryRequest  $request
-     * @return Illuminate\Http\Response
-     */
-    public function store(CategoryRequest $request)
-    {
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->alias = $request->input('alias');
-        $category->code = $request->input('code');
-        $category->description = $request->input('description');
-        $category->icon = $request->input('icon');
-        $category->type = $request->input('type');
-        $category->save();
-
-        return back();
+        parent::__construct();
     }
 
     /**

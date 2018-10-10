@@ -58,14 +58,6 @@
                   </div>
                 </div>
 
-                {{-- <div class="form-group mb-6">
-                  <label for="file" class="form-label">{{ __('CSV') }}</label>
-                  <input id="file" type="file" name="file" accept=".csv">
-                  @if ($errors->has('file'))
-                    <div class="small text-danger">{{ __($errors->first('file')) }}</div>
-                  @endif
-                </div> --}}
-
                 @include('Theme::fields.upload', [
                   'attr' => 'data-target=#csv-preview',
                   'label' => __('CSV File'),

@@ -49,17 +49,6 @@ $(document).ready(function () {
           $target.trigger('data-attribute:changed')
         }
       })
-      $dropzone.on('addedfile', function (file) {
-        alert('asd')
-        let data = JSON.stringify(file)
-        let $input = $('<input type=hidden name="file_json">')
-        let exists = $form.find('input[name=file_json]').length
-
-        $input.val(data)
-        if (! exists) {
-          $form.append($input)
-        }
-      })
 
       // Set button
       $form.find('[data-dropzone-button]').on('click', function (e) {
