@@ -1,8 +1,9 @@
-@stack('before-footer')
+@stack('before:footer')
 
 @section('footer')
-  <footer class="footer">
-    <div class="container">
+  <footer class="footer border-0 bg-transparent">
+    todo: fix
+    <div class="container-fluid">
       <div class="row align-items-center flex-row-reverse">
         <div class="col-auto ml-lg-auto">
           <div class="row align-items-center">
@@ -19,4 +20,4 @@
   </footer>
 @show
 
-@stack('after-footer')
+@stack('after:footer')

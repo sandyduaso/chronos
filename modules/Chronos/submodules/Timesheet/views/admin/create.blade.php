@@ -1,20 +1,20 @@
 @extends('Theme::layouts.admin')
 
-@push('after-css')
+@push('after:css')
   <link href="{{ theme('dist/data.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" rel="stylesheet" media="screen">
 @endpush
 
-@push('before-js')
+@push('before:js')
   <script src="{{ theme('dist/data.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}"></script>
 @endpush
 
-@section('head-title', __('New Timesheet'))
+@section('head:title', __('New Timesheet'))
 
-@section('page-title')
+@section('page:title')
   <h1 class="page-title">{{ __('New Timesheet') }}</h1>
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">

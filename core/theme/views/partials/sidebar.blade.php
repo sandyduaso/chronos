@@ -1,7 +1,8 @@
 <nav id="sidebar" class="sidebar sidebar-fixed bg-workspace active p-4 pb-2" data-sidebar>
   <header class="sidebar-header">
-    <img width="80px" height="80px" class="sidebar-brand img-fit" src="{{ $application->site->logo }}">
-    <h2 class="sidebar-title">{{ $application->site->title }}</h2>
+    <div class="sidebar-brand">
+      @include('Theme::partials.brand')
+    </div>
   </header>
   <div class="sidebar-content">
     <div class="sidebar-nav list-group list-group-transparent mb-0" data-sidebar-nav>

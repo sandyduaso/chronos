@@ -1,6 +1,6 @@
 @extends('Theme::layouts.admin')
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       {{-- @include("Theme::widgets.glance", ['widgets' => widgets('dashboard.glance', 'location')]) --}}

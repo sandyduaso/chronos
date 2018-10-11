@@ -1,17 +1,18 @@
 @extends('Theme::layouts.auth')
 
+@push('before:main')
+  <div style="opacity:0.09;position:fixed;width:100vw;height:100vh;background-image: url({{ theme('dist/assets/img/patterns/seigaiha.png') }})"></div>
+@endpush
+
 @section('content')
   <div class="container">
     <div class="row">
       <div class="col col-login mx-auto">
-        <div class="text-center mb-2">
-          <img class="brand-img brand-img-shadow img-inverted" src="{{ $application->site->logo }}" alt="{{ $application->site->title }}" width="100" height="auto">
-          <h1 class="text-white brand-title brand-title-shadow">{{ $application->site->title }}</h1>
-        </div>
-        <form class="card" action="{{ route('login.login') }}" method="POST">
+        <form class="card mt-6" action="{{ route('login.login') }}" method="POST">
           {{ csrf_field() }}
           <div class="card-body p-6">
-            <div class="card-title">{{ __("Sign in with your {$application->site->title} account") }}</div>
+            @include('Theme::partials.brand')
+            <div class="card-title mt-1">{{ __("Sign in with your {$application->site->title} account") }}</div>
             <div class="form-group">
               <label class="form-label">{{ __('Email or username') }}</label>
               <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" aria-describedby="emailHelp" placeholder="{{ __('Type email or username') }}" value="{{ old('username') }}">

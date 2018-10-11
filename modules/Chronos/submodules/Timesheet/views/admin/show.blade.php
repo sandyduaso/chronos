@@ -4,7 +4,7 @@
   <div id="workspace" class="workspace justify-content-start" data-workspace data-spy="scroll" data-target="#report-list" data-offset="50">
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3 col-lg-2">
@@ -22,15 +22,14 @@
   </div>
 @endsection
 
-@push('after-js')
-  <script
+@push('after:js')
+  {{-- <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script>
     document.querySelectorAll('[data-smooth-scroll-test]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        // alert('sad')
           e.preventDefault();
           document.querySelector(this.getAttribute('href')).scrollIntoView({
               behavior: 'smooth'
@@ -38,5 +37,5 @@
       });
     });
 
-  </script>
+  </script> --}}
 @endpush

@@ -1,10 +1,10 @@
 @extends('Theme::layouts.admin')
 
-@section('head-title', $resource->fullname)
+@section('head:title', $resource->fullname)
 
-@section('page-title', $resource->fullname)
+@section('page:title', $resource->fullname)
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
 

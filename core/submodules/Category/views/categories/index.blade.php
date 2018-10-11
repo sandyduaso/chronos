@@ -1,6 +1,6 @@
 @extends('Theme::layouts.admin')
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3">
@@ -32,7 +32,7 @@
 
               <div class="form-group">
                 <label class="form-label">{{ __('Icon') }}</label>
-                @include('Theme::fields.select-icons', [
+                @include('Theme::fields.selecticons', [
                   'name' => 'icon',
                   'value' => old('icon'),
                   'attr' => 'data-selectpicker data-live-search="true"',

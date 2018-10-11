@@ -1,6 +1,6 @@
 @extends("Theme::layouts.admin")
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
@@ -178,7 +178,7 @@
   </div>
 @endsection
 
-@push('after-footer')
+@push('after:footer')
   {{-- Export --}}
   @include('Theme::partials.modal', [
     'id' => 'restore-confirmbox',

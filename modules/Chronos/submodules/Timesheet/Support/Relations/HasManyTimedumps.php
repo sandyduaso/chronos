@@ -44,22 +44,41 @@ trait HasManyTimedumps
      */
     public function department($sortBy = 'date')
     {
-        foreach ($this->timedumps->groupBy('department') as $i => $timedump) {
-            foreach ($timedump->groupBy('key') as $key => $date) {
-                $calendar = $this->dates([
-                    'timesheet_id' => $this->id,
-                    'key' => (string) $key,
-                ])->get();
+        $items = [];
+        $this->timedumps()->where('timesheet_id', $this->id)->chunk(100, function ($timedumps) use (&$items) {
+            foreach ($timedumps->groupBy('department') as $i => $timedump) {
+                foreach ($timedump->groupBy('key') as $key => $date) {
+                    $calendar = $this->dates([
+                        'timesheet_id' => $this->id,
+                        'key' => (string) $key,
+                    ])->get();
 
-                $items[$i][$key]['calendar'] = $calendar;
-                $items[$i][$key]['key'] = $key;
-                $items[$i][$key]['metadata'] = json_decode($date[0]->metadata);
-                $items[$i][$key]['user'] = User::whereHas('details', function ($query) use ($key) {
-                    $query->where('key', 'card_id');
-                    $query->where('value', $key);
-                })->first();
+                    $items[$i][$key]['calendar'] = $calendar;
+                    $items[$i][$key]['key'] = $key;
+                    $items[$i][$key]['metadata'] = json_decode($date[0]->metadata);
+                    $items[$i][$key]['user'] = User::whereHas('details', function ($query) use ($key) {
+                        $query->where('key', 'card_id');
+                        $query->where('value', $key);
+                    })->first();
+                }
             }
-        }
+        });
+        // foreach ($this->timedumps->groupBy('department') as $i => $timedump) {
+        //     foreach ($timedump->groupBy('key') as $key => $date) {
+        //         $calendar = $this->dates([
+        //             'timesheet_id' => $this->id,
+        //             'key' => (string) $key,
+        //         ])->get();
+
+        //         $items[$i][$key]['calendar'] = $calendar;
+        //         $items[$i][$key]['key'] = $key;
+        //         $items[$i][$key]['metadata'] = json_decode($date[0]->metadata);
+        //         $items[$i][$key]['user'] = User::whereHas('details', function ($query) use ($key) {
+        //             $query->where('key', 'card_id');
+        //             $query->where('value', $key);
+        //         })->first();
+        //     }
+        // }
 
         return collect($items ?? []);
     }

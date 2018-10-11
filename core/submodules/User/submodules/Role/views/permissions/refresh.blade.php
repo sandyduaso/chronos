@@ -1,13 +1,13 @@
 @extends('Theme::layouts.admin')
 
-@section('head-title', __('Refresh Permissions'))
+@section('head:title', __('Refresh Permissions'))
 
-@section('page-title')
+@section('page:title')
   <a href="{{ route('permissions.index') }}" role="button" class="btn shadow-none"><i class="fe fe-arrow-left"></i></a>
   <h1 class="page-title mr-auto">{{ __('Refresh Permissions') }}</h1>
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
@@ -46,9 +46,9 @@
               @include('Theme::partials.modal', [
                 'dataset' => false,
                 'id' => 'reset-permissions-confirmbox',
-                'icon' => 'fe fe-trash display-1 icon-border icon-faded d-inline-block',
-                'lead' => __('Warning! Read before proceeding.'),
-                'text' => 'You might need to setup the user roles manually again. If you do not want to upset the order of the Cosmos, then for the love of Talos, do not proceed. Are you sure yout want to reset permissions?',
+                'icon' => 'mdi mdi-skull display-1 icon-border icon-faded d-inline-block',
+                'lead' => __('WARNING! Read before proceeding.'),
+                'text' => __("<p>Resetting the permissions table will break your existing users' established roles. Though the application will try to rebuild the permissions table, there is no guarantee all items will be restored. In fact, any manually added permission will not be recovered. You might need to setup the user roles manually again. If you do not want to upset the order of the Cosmos, then for the love of Talos, do not proceed.</p><p>Are you sure yout want to reset permissions?</p>"),
                 'method' => 'POST',
                 'action' => route('permissions.reset'),
                 'button' => __("Reset Permissions"),

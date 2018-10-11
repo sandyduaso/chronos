@@ -2,7 +2,7 @@
 
 @section('head:title', __('Departments | Office'))
 
-@section('page-title')
+@section('page:title')
   <h1 class="page-title">{{ __('Departments') }}</h1>
 @endsection
 

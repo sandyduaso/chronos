@@ -1,6 +1,6 @@
 @extends('Theme::layouts.admin')
 
-@section('page-title')
+@section('page:title')
   @parent
   @if (isset($buttons['primary']))
     <a role="button" href="{{ $buttons['primary']['url'] }}" class="btn btn-primary btn-lg">
@@ -12,7 +12,7 @@
   @endif
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
@@ -121,12 +121,12 @@
                       @endforeach
 
                       @if (isset($actions) && $actions || ! isset($actions))
-                        <td class="text-center justify-content-center">
-                          <a title="{{ __("Edit this {$text['singular']}") }}" href="{{ route("{$text['plural']}.edit", $resource->id) }}" role="button" class="btn btn-secondary btn-sm"><i class="fe fe-edit-2"></i></a>
+                        <td class="text-center justify-content-center d-flex">
+                          <a title="{{ __("Edit this {$text['singular']}") }}" href="{{ route("{$text['plural']}.edit", $resource->id) }}" role="button" class="mx-1 btn btn-secondary btn-sm"><i class="fe fe-edit-2"></i></a>
 
-                          <a title="{{ __("View this {$text['singular']}") }}" href="{{ route("{$text['plural']}.show", $resource->id) }}" role="button" class="btn btn-secondary btn-sm"><i class="fe fe-search"></i></a>
+                          <a title="{{ __("View this {$text['singular']}") }}" href="{{ route("{$text['plural']}.show", $resource->id) }}" role="button" class="mx-1 btn btn-secondary btn-sm"><i class="fe fe-search"></i></a>
 
-                          <form class="btn p-0 ml-1 form-row form-inline" action="{{ route("{$text['plural']}.destroy", $resource->id) }}" method="POST">
+                          <form class="d-block mx-1" action="{{ route("{$text['plural']}.destroy", $resource->id) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <input type="hidden" name="id" value="{{ $resource->id }}">
@@ -160,7 +160,7 @@
   </div>
 @endsection
 
-@push('after-footer')
+@push('after:footer')
   {{-- Export --}}
   @if (isset($actions) && $actions || ! isset($actions))
     @include('Theme::partials.modal', [

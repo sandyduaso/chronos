@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-  @stack('pre-meta')
+  @stack('before:meta')
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Content-Language" content="{{ app()->getLocale() }}">
@@ -37,21 +37,13 @@
     <link rel="canonical" href="{{ url('/') }}">
     -->
   @show
-  @stack('post-meta')
+  @stack('after:meta')
   @stack('fonts')
     {{-- Display the links specified in config/stylesheets.php --}}
     {!! font_link_tags('stylesheets') !!}
   @show
-  @stack('before-css')
-    @if (settings('is_rtl', false))
-      <link rel="preload" href="{{ theme('dist/app.rtl.min.css') }}" as="style">
-    @else
-      <link rel="preload" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="style">
-    @endif
-    {{--
-      This line is only a preload.
-      The actual script should be found in this theme's views/partials/foot.blade.php
-    --}}
+  @stack('before:css')
+    <link rel="preload" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="style">
     <link rel="preload" href="{{ theme('dist/vendor.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
     <link rel="preload" href="{{ theme('dist/app.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
   @show
@@ -62,9 +54,9 @@
       <link rel="stylesheet" type="text/css" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}">
     @endif
   @show
-  @stack('after-css')
+  @stack('after:css')
 </head>
 <body>
-  @push('head.noscript')
+  @push('noscript')
     @include('Theme::partials.noscript')
   @show
