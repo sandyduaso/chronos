@@ -25,9 +25,8 @@ Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function (
             ->setName('Arial Narrow');
 
         // Inserting data
-
         $i = 0;
-        foreach ($resource->department()->only('Barakah') as $department => $employees) {
+        foreach ($resource->department() as $department => $employees) {
             $spreadsheet->createSheet();
             $spreadsheet->setActiveSheetIndex($i);
             $activeSheet = $spreadsheet->getActiveSheet($i);
@@ -69,7 +68,7 @@ Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function (
                 'default-over-time' => settings('timesheet_default_time_out', '06:15 PM'),
                 'default-tardy' => '',
             ];
-            foreach ($employees as $employee) {
+            foreach ($employees as $card_id => $employee) {
                 # Cells for Hours texts/values
                 $activeSheet
                     // I1:L1
@@ -92,7 +91,7 @@ Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function (
                 // Employee name
                 $employeeName = $employee['user']
                     ? $employee['user']->displayname
-                    : (($employee['metadata']->firstname ?? '').' '.($employee['metadata']->lastname ?? ''));
+                    : ($employee['metadata']->lastname ?? $card_id);
 
                 // Merge cells for name
                 $activeSheet
@@ -203,20 +202,30 @@ Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function (
                                 __('Max')
                             )
                             ->setCellValueByColumnAndRow(
-                                $coordinates['footer'][0],
-                                $c+1,
-                                $repository->punchcard()->totalLateCount($employee['calendar'], 'time_in')
-                            )
-                            ->setCellValueByColumnAndRow(
                                 $coordinates['footer'][0]+1,
                                 $c+1,
                                 $repository->punchcard()->totalLateCount($employee['calendar'], 'time_in')
                             )
                             // Total Footer
                             ->setCellValueByColumnAndRow(
-                                $coordinates['footer'][0]+1,
-                                $c+1,
+                                $coordinates['footer'][0]+6,
+                                $c,
                                 $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'tardy_time')
+                            )
+                            ->setCellValueByColumnAndRow(
+                                $coordinates['footer'][0]+7,
+                                $c,
+                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'under_time')
+                            )
+                            ->setCellValueByColumnAndRow(
+                                $coordinates['footer'][0]+8,
+                                $c,
+                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'over_time')
+                            )
+                            ->setCellValueByColumnAndRow(
+                                $coordinates['footer'][0]+9,
+                                $c,
+                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'offset_hours')
                             )
                             ;
                     }
@@ -226,9 +235,11 @@ Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function (
                 $coordinates['calendar'][1] = $coordinates['calendar'][1];
                 $coordinates['data'][0] = $coordinates['data'][0]+10;
                 $coordinates['data'][1] = $coordinates['data'][1];
+                $coordinates['footer'][0] = $coordinates['footer'][0]+10;
+                $coordinates['footer'][1] = $coordinates['footer'][1];
 
-                $coordinates['hours-text-headers'][0] = $coordinates['hours-text-headers'][0]+7;
-                $coordinates['hours-value-headers'][0] = $coordinates['hours-value-headers'][0]+7;
+                $coordinates['hours-text-headers'][0] = $coordinates['hours-text-headers'][0]+6;
+                $coordinates['hours-value-headers'][0] = $coordinates['hours-value-headers'][0]+6;
                 $coordinates['time-text-headers'][0] = $coordinates['time-text-headers'][0]+5;
                 $coordinates['name-cells'][0] = $coordinates['name-cells'][0]+10;
             }
