@@ -9,6 +9,8 @@ use Timesheet\Repositories\TimesheetRepository;
 class TimesheetController extends AdminController
 {
     use Resources\TimesheetResourceAdminTrait,
+        Resources\TimesheetResourceExportTrait,
+        Resources\TimesheetResourceSoftDeleteTrait,
         Resources\TimesheetResourceUploadTrait;
 
     /**

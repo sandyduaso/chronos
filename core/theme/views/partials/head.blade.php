@@ -25,12 +25,12 @@
     <meta name="base-url" content="{{ url('/') }}">
   @show
   <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ url('favicons/apple-touch-icon.png') }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ url('favicons/favicon-32x32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ url('favicons/favicon-16x16.png') }}">
-  <link rel="manifest" href="{{ url('manifest.json') }}">
-  <link rel="mask-icon" color="{{ settings('site_theme_color', '#3984e8') }}" href="{{ url('favicons/safari-pinned-tab.svg') }}">
-  <meta name="theme-color" content="{{ settings('site_theme_color', '#ffff') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ theme('dist/favicons/apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ theme('dist/favicons/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ theme('dist/favicons/favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ theme('dist/favicons/manifest.json') }}">
+  <link rel="mask-icon" color="{{ settings('site_theme_color', '#3984e8') }}" href="{{ theme('dist/favicons/safari-pinned-tab.svg') }}">
+  {{-- <meta name="theme-color" content="{{ settings('site_theme_color', '#ffff') }}"> --}}
   @stack('seo')
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
@@ -44,15 +44,13 @@
   @show
   @stack('before:css')
     <link rel="preload" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="style">
+    <link rel="preload" href="{{ theme('dist/vendor.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="style">
     <link rel="preload" href="{{ theme('dist/vendor.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
     <link rel="preload" href="{{ theme('dist/app.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" as="script">
   @show
   @stack('css')
-    @if (settings('is_rtl', false))
-      <link rel="stylesheet" href="{{ theme('dist/app.rtl.min.css') }}">
-    @else
-      <link rel="stylesheet" type="text/css" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}">
-    @endif
+    <link rel="stylesheet" type="text/css" href="{{ theme('dist/vendor.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}">
+    <link rel="stylesheet" type="text/css" href="{{ theme('dist/app.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}">
   @show
   @stack('after:css')
 </head>

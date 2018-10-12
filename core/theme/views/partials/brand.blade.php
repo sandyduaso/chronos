@@ -1,5 +1,5 @@
 @section('brand:logo')
-  <div class="brand-logo text-{{ $color ?? 'primary' }}">
+  <div class="brand-logo {{ $color ?? '' }}">
     {!! logo(public_path('logo.svg')) !!}
   </div>
 @show

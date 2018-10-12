@@ -34,5 +34,28 @@ class Timesheet extends Model
         'user_id',
     ];
 
-    protected $searchables = ['created_at', 'updated_at'];
+    protected $searchables = [
+        'name',
+        'start_date',
+        'end_date',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
+     * Retrieve the chart data.
+     *
+     * @return string
+     */
+    public function chart()
+    {
+        $departments[0] = [__('Number of Lates')];
+        $departments[0] = array_merge($departments[0], [30,200,100,400,150,250,50,100,1,3,4,250]);
+        foreach ($this->department() as $department) {
+            dd($department);
+        }
+        // $departments[1] = ['Total Lates', 1,100,100,150,200,250,250,3,30,4,400,50];
+
+        return json_encode($departments ?? []);
+    }
 }

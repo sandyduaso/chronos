@@ -1,8 +1,8 @@
 // Sidebar
 $sidebar-width-full: 250px;
 $sidebar-width-min: 50px;
-$sidebar-bg-color: transparent;
-$sidebar-bg-colot-alt: #2b343a;
+$sidebar-bg-color: var(--body-bg);
+$sidebar-bg-colot-alt: var(--accent);
 
 .sidebar {
   min-width: $sidebar-width-full;

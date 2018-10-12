@@ -214,6 +214,23 @@ class Punchcard
     }
 
     /**
+     * Retrieve the max value from array.
+     *
+     * @param array $dates
+     * @param string $key
+     * @return string
+     */
+    public function maxFromArray($dates, $key)
+    {
+        $loops = [];
+        foreach ($dates as $date) {
+            $loops[] = $this->toSeconds($date->$key);
+        }
+
+        return $this->toTime(max($loops));
+    }
+
+    /**
      * Converts the string to time.
      *
      * @param  string $seconds

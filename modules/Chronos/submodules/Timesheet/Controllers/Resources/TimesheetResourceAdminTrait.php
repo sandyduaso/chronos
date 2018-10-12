@@ -73,4 +73,18 @@ trait TimesheetResourceAdminTrait
 
         return view('Timesheet::admin.edit')->with(compact('resource'));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  mixed $id
+     * @return Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id = null)
+    {
+        $this->repository->destroy($id ?? $request->input('id'));
+
+        return back();
+    }
 }

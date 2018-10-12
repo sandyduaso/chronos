@@ -22,7 +22,7 @@
           <span class="text-divider bordered-circle mt-3"><strong class="text-muted lead p-3 px-4 rounded-circle"><i class="fe fe-upload-cloud"></i></strong></span>
           @if (! session('data'))
             <div class="card-body">
-              @include('Theme::errors.all')
+              {{-- @include('Theme::errors.all') --}}
               <form action="{{ route('timesheets.process') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <legend class="small mb-4">
@@ -81,7 +81,7 @@
           {{-- <div class="text-muted small text-divider">{{ __('or') }}</div> --}}
 
           @if (session('data') || isset($resources) && $resources)
-            <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-export"></i></strong></span>
+            <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-search"></i></strong></span>
             <div class="card-body">
               <div class="alert alert-info p-4">
                 <div><strong>{{ __('Before Proceeding') }}</strong></div>

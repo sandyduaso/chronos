@@ -73,4 +73,9 @@ trait TimesheetAccessor
     {
         return $this->total_time ?? date('H:i:s', strtotime('00:00:00'));
     }
+
+    public function getDepartmentsAttribute()
+    {
+        return array_keys($this->department()->toArray()) ?? [];
+    }
 }

@@ -11,9 +11,11 @@
             <p>{!! $text !!}</p>
           @endisset
 
-          @isset ($include)
+          @if (isset($include) && ! is_array($include))
             @include($include)
-          @endisset
+          @elseif (isset($include) && is_array($include))
+            @include($include[0], $include[1])
+          @endif
         </div>
         <div id="bulk-{{ $id ?? 'modal-id' }}" class="bulk-data"></div>
         <div class="modal-footer border-0">

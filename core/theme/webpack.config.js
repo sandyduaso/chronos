@@ -7,6 +7,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebappWebpackPlugin = require('webapp-webpack-plugin')
 const webpack = require('webpack')
 const WebpackOnBuildPlugin = require('on-build-webpack')
+const theme = require('./src/theme/theme.json')
 
 module.exports = {
   cache: true,
@@ -113,8 +114,13 @@ module.exports = {
     // }),
     // Favicon generator
     new WebappWebpackPlugin({
+      cache: true,
+      favicons: {
+        background: theme.$light,
+        theme_color: theme.$primary,
+      },
       logo: path.resolve(__dirname, 'src/assets/images/logo.png'),
-      prefix: 'assets/favicons/',
+      prefix: '/favicons/',
     }),
   ],
 }

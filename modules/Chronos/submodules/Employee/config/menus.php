@@ -12,6 +12,7 @@ return [
     'employee' => [
         'name' => 'employee',
         'order' => 53,
+        'is_hidden' => true,
         'slug' => route('employees.index'),
         'always_viewable' => false,
         'icon' => 'mdi mdi-clipboard-account',

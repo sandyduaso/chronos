@@ -11,7 +11,7 @@
         <form class="card mt-6" action="{{ route('login.login') }}" method="POST">
           {{ csrf_field() }}
           <div class="card-body p-6">
-            @include('Theme::partials.brand')
+            @include('Theme::partials.brand', ['color' => 'text-primary'])
             <div class="card-title mt-1">{{ __("Sign in with your {$application->site->title} account") }}</div>
             <div class="form-group">
               <label class="form-label">{{ __('Email or username') }}</label>

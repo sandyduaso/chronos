@@ -5,7 +5,7 @@ namespace Timesheet\Repositories;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
-use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use Pluma\Support\Repository\Repository;
 use Role\Models\Role;
 use Timesheet\Models\Timedump;
@@ -16,6 +16,8 @@ use User\Models\User;
 
 class TimesheetRepository extends Repository
 {
+    use Traits\ExportToSpreadsheet;
+
     /**
      * The model instance.
      *
@@ -87,7 +89,7 @@ class TimesheetRepository extends Repository
      */
     public function process(UploadedFile $file)
     {
-        $csv = new Csv();
+        $csv = new CsvReader();
         $sheet = $csv->load($file->getPathname());
         $worksheet = $sheet->getActiveSheet();
 
@@ -157,6 +159,23 @@ class TimesheetRepository extends Repository
         return $timesheet;
     }
 
+
+    /**
+     * Export from given format
+     *
+     * @param int $id
+     * @param array $data
+     * @return void
+     */
+    public function export($id, $data)
+    {
+        $resource = $this->find($id);
+
+        if (in_array($data['format'], ['xlsx'])) {
+            $this->toSpreadsheet($resource, $data);
+        }
+    }
+
     /**
      * Retrieve user from given parameters.
      *
@@ -165,9 +184,9 @@ class TimesheetRepository extends Repository
      */
     public function user($value)
     {
-        $user = User::with('details', function ($query) use ($value) {
+        $user = User::whereHas('details', function ($query) use ($value) {
             $query->where('key', 'card_id');
-            $query->where('kevale', $value);
+            $query->where('value', $value);
         })->first();
 
         return $user;
@@ -186,5 +205,24 @@ class TimesheetRepository extends Repository
             'default_lunch_start' => settings('timesheet_default_lunch_start', '01:00 PM'),
             'default_lunch_end' => settings('timesheet_default_lunch_end', '02:00 PM'),
         ]);
+    }
+
+    public function charts($departments)
+    {
+        $charts['totallates'] = ['Total No. of Lates'];
+        $x = [];
+        foreach ($departments as $name => $employees) {
+            foreach ($employees as $j => $employee) {
+                $charts['totallates'][$name][] = $this->punchcard()->totalLateCount($employee['calendar'], 'time_in');
+            }
+            $charts['totallates'][$name] = $y = array_sum($charts['totallates'][$name]);
+            $x[$name] = $y;
+        }
+        $y = $x;
+        sort($y);
+        dd($x, $y);
+        $charts['ranking'] = array_merge(['Ranking'], array_values($x));
+
+        return [array_values($charts['totallates']), $charts['ranking']];
     }
 }

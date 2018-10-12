@@ -20,14 +20,14 @@
               <td class="pt-6" colspan="100%">{{
                 $employee['user']
                 ? $employee['user']->displayname
-                : (($employee['metadata']->firstname ?? '').' '.($employee['metadata']->lastname ?? ''))
+                : (($employee['metadata']->firstname ?? $id))
               }}</td>
             </tr>
             <tr><td colspan="100%"></td></tr>
             <tr class="text-center">
-              <td colspan="2"></td>
-              <td>{{ __('Time In') }}</td>
-              <td>{{ __('Time Out') }}</td>
+              <td class="w-100" colspan="2"></td>
+              <td class="w-100">{{ __('Time In') }}</td>
+              <td class="w-100">{{ __('Time Out') }}</td>
               <td>{{ __('Morning Hours') }}</td>
               <td>{{ __('Afternoon Hours') }}</td>
               <td>{{ __('Total Hours') }}</td>
@@ -39,7 +39,7 @@
             @foreach ($employee['calendar'] as $j => $date)
               <tr class="text-center {{ $date->weekend || $date->holiday ? 'bg-light text-muted' : '' }}">
                 <td class="bg-muted">{{ $date->dayletter }}</td>
-                <td class="bg-muted">{!! $date->dated ?? '<span class="text-muted">00:00:00</span>' !!}</td>
+                <td class="bg-muted" style="min-width:100px;">{!! $date->dated ?? '<span class="text-muted">00:00:00</span>' !!}</td>
                 <td><span data-x-contenteditable data-x-data-mask="99:99:99">{!! $date->time_in ?? '<span class="text-muted">00:00:00</span>' !!}</span></td>
                 <td><span data-x-contenteditable data-x-data-mask="99:99:99">{!! $date->time_out ?? '<span class="text-muted">00:00:00</span>' !!}</span></td>
                 <td><span data-x-contenteditable data-x-data-mask="99:99:99">{!! $date->total_am ?? '<span class="text-muted">00:00:00</span>' !!}</span></td>
