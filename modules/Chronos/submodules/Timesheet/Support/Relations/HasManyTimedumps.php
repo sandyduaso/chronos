@@ -44,6 +44,10 @@ trait HasManyTimedumps
      */
     public function department($sortBy = 'date')
     {
+        if (cache()->has('timesheet::department.'.$this->id)) {
+            return cache()->get('timesheet::department.'.$this->id);
+        }
+
         $items = [];
         $this->timedumps()->where('timesheet_id', $this->id)->chunk(100, function ($timedumps) use (&$items) {
             foreach ($timedumps->groupBy('department') as $i => $timedump) {
@@ -64,6 +68,10 @@ trait HasManyTimedumps
             }
         });
 
+        cache()->put('timesheet::department.'.$this->id, function () use ($items) {
+            return collect($items ?? []);
+        });
+
         return collect($items ?? []);
     }
 
@@ -76,6 +84,10 @@ trait HasManyTimedumps
      */
     public function lates($groupBy = 'date', $sortBy = 'date')
     {
+        if (cache()->has('timesheet::lates.'.$this->id)) {
+            return cache()->get('timesheet::lates.'.$this->id);
+        }
+
         $items = [];
         $this->timedumps()->where('timesheet_id', $this->id)->chunk(100, function ($timedumps) use (&$items) {
             foreach ($timedumps->groupBy('key') as $key => $date) {
@@ -92,6 +104,10 @@ trait HasManyTimedumps
                     $query->where('value', $key);
                 })->first();
             }
+        });
+
+        cache()->put('timesheet::lates.'.$this->id, function () use ($items) {
+            return collect($items ?? []);
         });
 
         return collect($items ?? []);

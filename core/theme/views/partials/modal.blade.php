@@ -5,7 +5,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body text-center">
-          <div class="m-5"><i class="{{ $icon }} text-{{ $context }}"></i></div>
+          <div class="m-5"><i class="text-{{ $context }} {{ $icon }}"></i></div>
           <p class="lead">{!! $lead !!}</p>
           @isset ($text)
             <p>{!! $text !!}</p>

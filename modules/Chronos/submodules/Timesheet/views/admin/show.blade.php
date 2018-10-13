@@ -13,13 +13,13 @@
   @include('Theme::partials.modal', [
     'dataset' => false,
     'id' => 'export-single-confirmbox-'.$resource->id,
-    'icon' => 'fe fe-download-cloud display-1 icon-border icon-faded d-inline-block',
+    'icon' => 'fe fe-download-cloud display-1 icon-border text-primary icon-faded d-inline-block',
     'lead' => __('Select format to download.'),
     'text' => 'Export data to a specific file type.',
     'method' => 'POST',
     'action' => route('timesheets.export', $resource->id),
-    'button' => __("Export"),
-    'context' => 'success',
+    'button' => __('Export'),
+    'context' => 'primary',
     'include' => ['Timesheet::fields.export', ['name' => $resource->name]],
   ])
 @endsection

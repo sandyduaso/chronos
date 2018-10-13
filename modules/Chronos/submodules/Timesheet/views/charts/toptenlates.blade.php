@@ -3,7 +3,7 @@
     <h3 class="card-title">{{ __('Top 10 Staff (That are Late)') }}</h3>
   </div>
   <div class="card-body">
-    <div id="timesheet-chart-lates" data-toggle="chart" data-options='{"data":{"type":"bar","types":{"Total No. of Lates":"bar"},"columns":{{ json_encode($data[0]) }} },"axis":{"x":{"type":"category","categories":{{ json_encode($data[1]) }} }}}'></div>
+    <div id="timesheet-chart-lates" data-toggle="chart" data-options='{"color":{"pattern":["#06c398","#0c5689"]},"data":{"type":"bar","types":{"Total No. of Lates":"bar"},"columns":{{ json_encode($data[0]) }} },"axis":{"x":{"type":"category","categories":{{ json_encode($data[1]) }} }}}'></div>
   </div>
   <div class="table-responsive">
     <table class="table table-sm table-striped">
