@@ -74,8 +74,26 @@ trait HasManyTimedumps
      * @param  string $sortBy
      * @return mixed
      */
-    public function calendar($groupBy = 'date', $sortBy = 'date')
+    public function lates($groupBy = 'date', $sortBy = 'date')
     {
-        return [];
+        $items = [];
+        $this->timedumps()->where('timesheet_id', $this->id)->chunk(100, function ($timedumps) use (&$items) {
+            foreach ($timedumps->groupBy('key') as $key => $date) {
+                $calendar = $this->dates([
+                    'timesheet_id' => $this->id,
+                    'key' => (string) $key,
+                ])->get();
+
+                $items[$key]['calendar'] = $calendar;
+                $items[$key]['key'] = $key;
+                $items[$key]['metadata'] = json_decode($date[0]->metadata);
+                $items[$key]['user'] = User::whereHas('details', function ($query) use ($key) {
+                    $query->where('key', 'card_id');
+                    $query->where('value', $key);
+                })->first();
+            }
+        });
+
+        return collect($items ?? []);
     }
 }

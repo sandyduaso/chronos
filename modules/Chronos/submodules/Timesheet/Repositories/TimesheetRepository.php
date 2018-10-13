@@ -218,11 +218,55 @@ class TimesheetRepository extends Repository
             $charts['totallates'][$name] = $y = array_sum($charts['totallates'][$name]);
             $x[$name] = $y;
         }
-        $y = $x;
-        sort($y);
-        dd($x, $y);
-        $charts['ranking'] = array_merge(['Ranking'], array_values($x));
+        $orderedValues = $x;
+        sort($orderedValues);
+
+        $newX = [];
+        foreach ($x as $key => $value) {
+            foreach ($orderedValues as $orderedKey => $orderedValue) {
+                if ($value === $orderedValue) {
+                    $key = $orderedKey;
+                    break;
+                }
+            }
+            $newX[] = $key + 1;
+        }
+
+        $charts['ranking'] = array_merge(['Ranking'], array_values($newX));
 
         return [array_values($charts['totallates']), $charts['ranking']];
+    }
+
+    /**
+     * Retrieve the top late employees.
+     *
+     * @return array
+     */
+    public function lates($lates, $take = 10)
+    {
+        $charts[0] = ['Total Late Points'];
+        $employees = [];
+        foreach ($lates as $employee) {
+            $employee['hours-late'] = $this->punchcard()->toSeconds($this->punchcard()->totalFromKey($employee['calendar']->toArray(), 'tardy_time'));
+            $employees[] = $employee;
+        }
+
+        $employees = collect($employees)->sortByDesc('hours-late')->map(function ($item) {
+            // $this->punchcard()->toTime
+            $item['hours-late'] = (string) ($item['hours-late']);
+            return [
+                'hours-late' => $item['hours-late'],
+                'metadata' => $item['metadata'],
+                'user' => $item['user'],
+            ];
+        })->take($take);
+
+        foreach ($employees as $emp) {
+            $charts[0][] = $emp['hours-late'];
+            $charts[1][] = (string) (! is_null($emp['user']) ? $emp['user']->displayname : ($emp['metadata']->firstname ?? $emp['metadata']->card_id ?? 'Unnamed Employee'));
+        }
+        $charts[0] = [$charts[0]];
+
+        return $charts;
     }
 }

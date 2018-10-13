@@ -28,25 +28,28 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
-        <div class="card">
-          <div class="card-body">
-            {{ dd($repository->charts($resource->department())) }}
-            <div id="timesheet-chart" data-toggle="chart" data-options='{"data":{"axes":{"Ranking":"y2"},"type":"area","types":{"Total No. of Lates":"bar"},"columns":{{ json_encode($repository->charts($resource->department())) }} },"axis":{"y2":{"show":true},"x":{"type":"category","categories":{{ json_encode($resource->departments) }} }}}'></div>
-          </div>
-        </div>
+        @include('Timesheet::charts.latesranking', [
+          'data' => json_encode($repository->charts($resource->department())),
+          'departments' => json_encode($resource->departments),
+        ])
+      </div>
+      <div class="col-lg-12">
+        @include('Timesheet::charts.toptenlates', [
+          'data' => $repository->lates($resource->lates()),
+        ])
       </div>
     </div>
     <div class="row">
       <div class="col-md-3 col-lg-2">
         <div data-sticky="#report-list"></div>
         <div id="report-list" data-sticky-class="sticky pt-8" class="list-group">
-          {{-- @foreach ($resource->department() as $department => $unused)
+          @foreach ($resource->department() as $department => $unused)
             <a data-smooth-scroll-test href="#scroll-{{ str_slug($department) }}" class="list-group-item list-group-item-action">{{ $department }}</a>
-          @endforeach --}}
+          @endforeach
         </div>
       </div>
       <div class="col-md-9 col-lg-10">
-        {{-- @include('Timesheet::reports.html', ['data' => $resource->data->toArray()]) --}}
+        @include('Timesheet::reports.html', ['data' => $resource->data->toArray()])
       </div>
     </div>
   </div>
