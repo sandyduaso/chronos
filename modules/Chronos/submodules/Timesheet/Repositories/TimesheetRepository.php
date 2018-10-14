@@ -171,8 +171,16 @@ class TimesheetRepository extends Repository
     {
         $resource = $this->find($id);
 
-        if (in_array($data['format'], ['xlsx'])) {
-            $this->toSpreadsheet($resource, $data);
+        switch ($data['format']) {
+            case 'xlsx':
+                $this->toSpreadsheet($resource, $data);
+                return;
+                break;
+
+            default:
+            case 'pdf':
+                $this->toPDF($resource, $data);
+                break;
         }
     }
 

@@ -7,6 +7,8 @@ use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 
 trait ExportToSpreadsheet
 {
@@ -17,7 +19,7 @@ trait ExportToSpreadsheet
      * @param array $data
      * @return void
      */
-    public function toSpreadsheet($resource, $data)
+    public function buildSpreadsheet($resource, $data)
     {
         $repository = $this;
         $spreadsheet = new Spreadsheet();
@@ -32,8 +34,20 @@ trait ExportToSpreadsheet
         $spreadsheet
             ->getDefaultStyle()
             ->getFont()
-            ->setSize('8px')
+            ->setSize(8)
             ->setName('Arial Narrow');
+
+        $spreadsheet
+            ->getActiveSheet()
+            ->getPageSetup()
+            ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+
+        $spreadsheet
+            ->getActiveSheet()
+            ->getPageSetup()
+            ->setFitToPage(true)
+            ->setPaperSize(PageSetup::PAPERSIZE_A4);
+
 
         // Inserting data
         $i = 0;
@@ -44,8 +58,14 @@ trait ExportToSpreadsheet
 
             $activeSheet->setTitle(ucfirst($department));
             $activeSheet->setShowGridlines(false);
-            $activeSheet->getDefaultColumnDimension()
+
+            $activeSheet
+                ->getDefaultColumnDimension()
                 ->setWidth(14);
+
+            $activeSheet
+                ->getPageMargins()
+                ->setTop(0.5);
 
             // More options
             $activeSheet->freezePane('D4');
@@ -110,13 +130,13 @@ trait ExportToSpreadsheet
                     ->mergeCellsByColumnAndRow(
                         $coordinates['name-cells'][0],
                         $coordinates['name-cells'][1],
-                        $coordinates['name-cells'][0]+4, // merge 5 cells. Trust me 4 is 5 in this godforsaken library.
+                        $coordinates['name-cells'][0]+4,
                         $coordinates['name-cells'][1]
                     )
                     ->setCellValueByColumnAndRow(
                         $coordinates['name-cells'][0],
                         $coordinates['name-cells'][1],
-                        $employeeName
+                        (string) $employeeName
                     );
 
                 // Calendar Loop
@@ -267,6 +287,45 @@ trait ExportToSpreadsheet
             }
             $i++;
         }
+
+        return $spreadsheet;
+    }
+
+    /**
+     * Export to pdf.
+     *
+     * @param \Timesheet\Models\Timesheet $resource
+     * @param array $data
+     * @return void
+     */
+    public function toPDF($resource, $data)
+    {
+        $spreadsheet = $this->buildSpreadsheet($resource, $data);
+        // dd($spreadsheet);
+
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'.$data['filename'].'.pdf"');
+        // header("Cache-Control: max-age=0");
+        // header("Content-Type: application/octet-stream");
+        // header("Content-Description: File Transfer");
+        // header("Content-Transfer-Encoding: Binary");
+
+        $writer = new Dompdf($spreadsheet);
+        $writer->setPreCalculateFormulas(false);
+        $writer->writeAllSheets();
+        $writer->save('php://output');
+    }
+
+    /**
+     * Export to spreadsheet format.
+     *
+     * @param \Timesheet\Models\Timesheet $resource
+     * @param array $data
+     * @return void
+     */
+    public function toSpreadsheet($resource, $data)
+    {
+        $spreadsheet = $this->buildSpreadsheet($resource, $data);
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="'.$data['filename'].'.xlsx"');

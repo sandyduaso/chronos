@@ -13,7 +13,7 @@
           {{-- <option data-icon="text-green fa fa-file-excel" value="ods">{{ __('OpenDocument Spreadsheet (.ods)') }}</option> --}}
         </optgroup>
         <optgroup label="{{ __('Presentable') }}">
-          <option disabled data-icon="text-red fa fa-file-pdf" value="pdf">{{ __('[NOT SUPPORTED YET] Portable Document Format (.pdf)') }}</option>
+          <option data-icon="text-red fa fa-file-pdf" value="pdf">{{ __('Portable Document Format (.pdf)') }}</option>
         </optgroup>
       </select>
     </div>

@@ -199,9 +199,11 @@ class Punchcard
     /**
      * Calculate the total number of lates.
      *
+     * @param object $dates
+     * @param string $key
      * @return string
      */
-    public function totalLateCount(object $dates, $key)
+    public function totalLateCount($dates, $key)
     {
         $times = [];
         foreach ($dates as $time) {
