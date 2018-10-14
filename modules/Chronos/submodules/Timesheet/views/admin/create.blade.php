@@ -1,20 +1,20 @@
 @extends('Theme::layouts.admin')
 
-@push('after-css')
+@push('after:css')
   <link href="{{ theme('dist/data.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" rel="stylesheet" media="screen">
 @endpush
 
-@push('before-js')
+@push('before:js')
   <script src="{{ theme('dist/data.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}"></script>
 @endpush
 
-@section('head-title', __('New Timesheet'))
+@section('head:title', __('New Timesheet'))
 
-@section('page-title')
+@section('page:title')
   <h1 class="page-title">{{ __('New Timesheet') }}</h1>
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
@@ -22,7 +22,7 @@
           <span class="text-divider bordered-circle mt-3"><strong class="text-muted lead p-3 px-4 rounded-circle"><i class="fe fe-upload-cloud"></i></strong></span>
           @if (! session('data'))
             <div class="card-body">
-              @include('Theme::errors.all')
+              {{-- @include('Theme::errors.all') --}}
               <form action="{{ route('timesheets.process') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <legend class="small mb-4">
@@ -31,25 +31,45 @@
 
                 <div class="form-group">
                   <label for="#name" class="form-label">{{ __('Name') }}</label>
-                  <input id="name" type="text" name="name" class="form-control" value="{{ session('name') ?? old('name') ?? date('F Y') }}">
-                </div>
-
-                <div class="form-group mb-6">
-                  <label for="file" class="form-label">{{ __('CSV') }}</label>
-                  <input id="file" type="file" name="file" accept=".csv">
-                  @if ($errors->has('data'))
-                    <div class="small text-danger">{{ __($errors->first('data')) }}</div>
+                  <input id="name" type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ session('name') ?? old('name') ?? date('F Y') }}">
+                  @if ($errors->has('name'))
+                    <div class="small mt-2 text-danger">{{ __($errors->first('name')) }}</div>
                   @endif
                 </div>
-                {{-- @include('Theme::fields.upload', [
+
+                <div class="form-row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="#start_date" class="form-label">{{ __('Start Date') }}</label>
+                      <input id="start_date" type="text" name="start_date" class="form-control {{ $errors->has('start_date') ? 'is-invalid' : '' }}" data-mask="99/99/9999" data-mask-clearifnotmatch="true" placeholder="MM/DD/YYYY" autocomplete="off" maxlength="10" value="{{ session('start_date') ?? old('start_date') ?? date('m/01/Y') }}">
+                      @if ($errors->has('start_date'))
+                        <div class="small mt-2 text-danger">{{ __($errors->first('start_date')) }}</div>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="#end_date" class="form-label">{{ __('End Date') }}</label>
+                      <input id="end_date" type="text" name="end_date" class="form-control {{ $errors->has('end_date') ? 'is-invalid' : '' }}" data-mask="99/99/9999" data-mask-clearifnotmatch="true" placeholder="MM/DD/YYYY" autocomplete="off" maxlength="10" value="{{ session('end_date') ?? old('end_date') ?? date('m/t/Y') }}">
+                      @if ($errors->has('end_date'))
+                        <div class="small mt-2 text-danger">{{ __($errors->first('end_date')) }}</div>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+
+                @include('Theme::fields.upload', [
                   'attr' => 'data-target=#csv-preview',
+                  'label' => __('CSV File'),
                   'dropzone' => false,
                   'multiple' => false,
+                  'name' => 'file',
                   'options' => [
+                    'maxFiles' => 1,
                     'acceptedFiles' => '.csv',
                     'uploadMultiple' => false,
                   ]
-                ]) --}}
+                ])
 
                 <div class="d-flex text-center mt-3">
                   <button type="submit" class="btn btn-primary btn-lg">{{ __('Preview') }}</button>
@@ -61,7 +81,7 @@
           {{-- <div class="text-muted small text-divider">{{ __('or') }}</div> --}}
 
           @if (session('data') || isset($resources) && $resources)
-            <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-export"></i></strong></span>
+            <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-search"></i></strong></span>
             <div class="card-body">
               <div class="alert alert-info p-4">
                 <div><strong>{{ __('Before Proceeding') }}</strong></div>
@@ -82,6 +102,8 @@
               <form action="{{ route('timesheets.store') }}" method="POST">
                 {{ csrf_field() }}
                 <input type="hidden" name="name" value="{{ session('name') }}">
+                <input type="hidden" name="start_date" value="{{ session('start_date') }}">
+                <input type="hidden" name="end_date" value="{{ session('end_date') }}">
                 <input type="hidden" name="data" data-handsontable-input value="{{ old('data') ?? json_encode(session('data')) }}">
                 <button type="submit" class="btn btn-primary">{{ __('Generate Timesheet') }}</button>
               </form>

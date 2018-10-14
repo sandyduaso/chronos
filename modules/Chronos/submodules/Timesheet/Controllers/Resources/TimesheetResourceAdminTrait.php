@@ -30,8 +30,6 @@ trait TimesheetResourceAdminTrait
      */
     public function create(Request $request)
     {
-        // $resources = null; // $request;
-
         return view('Timesheet::admin.create');
     }
 
@@ -58,8 +56,9 @@ trait TimesheetResourceAdminTrait
     public function show(Request $request, $id)
     {
         $resource = $this->repository->find($id);
+        $repository = $this->repository;
 
-        return view('Timesheet::admin.show')->with(compact('resource'));
+        return view('Timesheet::admin.show')->with(compact('resource', 'repository'));
     }
 
     /* Show the form for editing the specified resource.
@@ -73,5 +72,19 @@ trait TimesheetResourceAdminTrait
         $resource = $this->repository->find($id);
 
         return view('Timesheet::admin.edit')->with(compact('resource'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  mixed $id
+     * @return Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $id = null)
+    {
+        $this->repository->destroy($id ?? $request->input('id'));
+
+        return back();
     }
 }

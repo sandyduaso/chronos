@@ -19,10 +19,12 @@
 	padding-left: .5rem;
 	padding-right: .5rem;
 	text-align: center;
+  background-color: transparent;
+  border: none;
 }
 
 .btn-secondary {
-	@include button-variant(#fff, $input-border-color, #f6f6f6);
+	@include button-variant($secondary, $input-border-color, #f6f6f6);
 }
 
 .btn-pill {

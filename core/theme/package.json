@@ -42,6 +42,7 @@
     "handsontable": "^6.0.1",
     "inputmask": "^4.0.2",
     "jquery": "^3.3.1",
+    "jquery.scrollintoview": "^1.9.4",
     "popper.js": "^1.14.4",
     "precss": "^3.1.2",
     "snackbarjs": "^1.1.0",

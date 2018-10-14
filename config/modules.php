@@ -26,7 +26,7 @@ return [
      */
     'disabled' => [
         'Library',
-        'Calendar',
+        // 'Calendar',
         'Note',
         'Form',
         // 'Appearance',

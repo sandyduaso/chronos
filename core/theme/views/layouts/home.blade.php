@@ -1,7 +1,7 @@
 @include("Theme::partials.header")
 
-@yield("pre-content")
+@yield("before:content")
 @yield("content")
-@yield("post-content")
+@yield("after:content")
 
 @include("Theme::partials.footer")

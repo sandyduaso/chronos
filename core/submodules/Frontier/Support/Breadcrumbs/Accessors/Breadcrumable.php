@@ -15,4 +15,15 @@ trait Breadcrumable
 
         return $crumb;
     }
+
+    /**
+     * Guess the title from breadcrumb middleware
+     *
+     * @param string $segment
+     * @return string
+     */
+    public function guessFromBreadcrumb($segment = null)
+    {
+        return request()->route('breadcrumb') ?? config('breadcrumb:leaf') ?? $segment;
+    }
 }

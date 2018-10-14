@@ -1,0 +1,11 @@
+{
+  "$primary": "#06c398",
+  "$accent": "#abdfa6",
+  "$secondary": "#ffffff",
+  "$success": "#86d067",
+  "$info": "#87ceeb",
+  "$warning": "#ffda3e",
+  "$danger": "#f3483c",
+  "$light": "#f8f9fa",
+  "$dark": "#343a40"
+}

@@ -26,6 +26,18 @@
   &-responsive {
     overflow: auto;
   }
+
+  &-responsive.d-flex {
+    .table:not(:first-child) {
+      border-left: 1px dotted $border-color;
+    }
+  }
+
+  &-no-border {
+    th, td {
+      border-top: none;
+    }
+  }
 }
 
 .table-md {

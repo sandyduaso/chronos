@@ -98,6 +98,17 @@ class Handler extends BaseHandler
         // and not through ajax.
         //
         // TODO: if (regex('api/v1', $request->path()) return view::404
+        # Return back with message
+        // Return back
+        if ($e instanceof \Illuminate\Session\TokenMismatchException) {
+            return back()->with([
+                'error' => [
+                    'code' => 'TOKEN_MISMATCH',
+                    'message' => $exception->getMessage(),
+                    'description' => 'Action did not succeed due to expired token. Retrying the action gain will usually fix this.',
+                ]
+            ]);
+        }
 
         # 404 Exception
         if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {

@@ -18,6 +18,14 @@ class UserRepository extends Repository
     protected $model = User::class;
 
     /**
+     * The User model type.
+     * Used for module specific users.
+     *
+     * @var string
+     */
+    protected $usertype = 'user';
+
+    /**
      * Set of rules the model should be validated against when
      * storing or updating a resource.
      *
@@ -54,6 +62,16 @@ class UserRepository extends Repository
     }
 
     /**
+     * Retrieve the full model instance.
+     *
+     * @return \Pluma\Models\Model
+     */
+    public function model()
+    {
+        return $this->model->type($this->usertype);
+    }
+
+    /**
      * Retrieve the roles list.
      *
      * @return array
@@ -80,11 +98,11 @@ class UserRepository extends Repository
         $user->password = bcrypt($data['password']) ?? null;
         $user->avatar = $data['avatar'] ?? null;
         $user->tokenize($data['username']) ?? null;
+        $user->type = $this->usertype;
         $user->save();
         $user->roles()->attach(! empty($data['roles']) ? $data['roles'] : []);
 
         if (isset($data['details'])) {
-            // dd($data['details']);
             collect($data['details'])->each(function ($detail) use ($user) {
                 $user->details()->create([
                     'icon' => $detail['icon'],

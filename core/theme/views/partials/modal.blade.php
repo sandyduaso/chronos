@@ -5,15 +5,17 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body text-center">
-          <div class="m-5"><i class="{{ $icon }} text-{{ $context }}"></i></div>
+          <div class="m-5"><i class="text-{{ $context }} {{ $icon }}"></i></div>
           <p class="lead">{!! $lead !!}</p>
           @isset ($text)
             <p>{!! $text !!}</p>
           @endisset
 
-          @isset ($include)
+          @if (isset($include) && ! is_array($include))
             @include($include)
-          @endisset
+          @elseif (isset($include) && is_array($include))
+            @include($include[0], $include[1])
+          @endif
         </div>
         <div id="bulk-{{ $id ?? 'modal-id' }}" class="bulk-data"></div>
         <div class="modal-footer border-0">

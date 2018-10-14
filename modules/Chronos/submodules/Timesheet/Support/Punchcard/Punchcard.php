@@ -197,6 +197,42 @@ class Punchcard
     }
 
     /**
+     * Calculate the total number of lates.
+     *
+     * @param object $dates
+     * @param string $key
+     * @return string
+     */
+    public function totalLateCount($dates, $key)
+    {
+        $times = [];
+        foreach ($dates as $time) {
+            $timeIn = $this->toSeconds($time->$key ?? '00:00:00');
+            $defaultTimeIn = $this->toSeconds($this->defaultTimeIn);
+            $times[] = (int) $timeIn > $defaultTimeIn;
+        }
+
+        return array_sum($times);
+    }
+
+    /**
+     * Retrieve the max value from array.
+     *
+     * @param array $dates
+     * @param string $key
+     * @return string
+     */
+    public function maxFromArray($dates, $key)
+    {
+        $loops = [];
+        foreach ($dates as $date) {
+            $loops[] = $this->toSeconds($date->$key);
+        }
+
+        return $this->toTime(max($loops));
+    }
+
+    /**
      * Converts the string to time.
      *
      * @param  string $seconds
@@ -226,5 +262,21 @@ class Punchcard
         $seconds = $hours + $minutes + $seconds;
 
         return $seconds;
+    }
+
+    /**
+     * Calculate the sum tota from associative array via key.
+     *
+     * @param array $dates
+     * @param string $key
+     * @return string
+     */
+    public function totalFromKey(array $dates, string $key)
+    {
+        foreach ($dates as $date) {
+            $times[] = $this->toSeconds($date[$key] ?? '00:00:00');
+        }
+
+        return $this->toTime(array_sum($times ?? []));
     }
 }

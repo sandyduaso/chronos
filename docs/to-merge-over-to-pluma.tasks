@@ -6,6 +6,7 @@ core/theme
  ☐ Add materialdesignicons
 
  ☐ replaced pre/post to before/after on foot.blade
+ ☐ use var(--primary) instead of $primary
 
 library
  ✔ added upload to routes/admin @done (18-10-04 10:06)

@@ -26,6 +26,13 @@ return [
                 'slug' => route('timesheets.index'),
                 'code' => 'timesheets.index',
                 'always_viewable' => false,
+                'routes' => [
+                    'name' => 'timesheets.index',
+                    'children' => [
+                        'timesheets.edit',
+                        'timesheets.show',
+                    ]
+                ],
                 'labels' => [
                     'title' => __('All Timesheets'),
                     'description' => __('View the list of all timesheets'),
@@ -49,7 +56,7 @@ return [
                 'code' => 'timesheets.trashed',
                 'always_viewable' => false,
                 'labels' => [
-                    'title' => __('Trashed Timesheets'),
+                    'title' => __('Archived'),
                     'description' => __('View list of all timesheets moved to trash'),
                 ],
             ],

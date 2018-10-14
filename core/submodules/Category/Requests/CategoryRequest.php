@@ -13,6 +13,10 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
+        if ($this->user()->isRoot()) {
+            return true;
+        }
+
         switch ($this->method()) {
             case 'POST':
                 if ($this->user()->can('store-category')) {
@@ -31,10 +35,6 @@ class CategoryRequest extends FormRequest
                     return true;
                 }
                 break;
-
-            default:
-                return false;
-                break;
         }
 
         return false;
@@ -50,8 +50,7 @@ class CategoryRequest extends FormRequest
         $isUpdating = $this->method() == "PUT" ? ",id,$this->id" : "";
 
         return [
-            'name' => 'required|max:255',
-            'code' => 'required|regex:/^[\pL\s\-\*\#\(0-9)]+$/u|unique:categories' . $isUpdating,
+            'name' => 'required|regex:/^[\pL\s\-\*\#\(0-9)]+$/u|unique:categories' . $isUpdating,
         ];
     }
 

@@ -1,8 +1,8 @@
 // Sidebar
 $sidebar-width-full: 250px;
 $sidebar-width-min: 50px;
-$sidebar-bg-color: transparent;
-$sidebar-bg-colot-alt: #2b343a;
+$sidebar-bg-color: var(--body-bg);
+$sidebar-bg-colot-alt: var(--accent);
 
 .sidebar {
   min-width: $sidebar-width-full;
@@ -92,7 +92,7 @@ $sidebar-bg-colot-alt: #2b343a;
         overflow: hidden;
         transition: all 0.3s ease-in;
         border: none;
-        padding-left: 1.2rem;
+        padding-left: 1.5rem;
 
         &.show {
           height: auto;
@@ -103,6 +103,7 @@ $sidebar-bg-colot-alt: #2b343a;
         .sidebar-dropdown-item {
           padding-top: .5rem;
           padding-bottom: .5rem;
+          position: relative;
           &.active {
             background-color: transparent;
             color: $primary;
@@ -114,7 +115,30 @@ $sidebar-bg-colot-alt: #2b343a;
           }
 
           .icon, &-icon {
-            margin-left: -1.5rem;
+            // margin-left: -1.5rem;
+          }
+
+          &:before, &:after {
+            content: '';
+            position: absolute;
+          }
+
+          &:after {
+            border-left: 1px dashed $border-color;
+            top: -50%;
+            left: 0;
+            height: 100%;
+            width: 1px;
+          }
+
+          &:before {
+            border-bottom: 1px dashed $border-color;
+            width: 12px;
+            height: 1px;
+            top: 50%;
+            left: 0;
+            display: block;
+            position: absolute;
           }
         }
       }
@@ -132,6 +156,8 @@ $sidebar-bg-colot-alt: #2b343a;
 
   &-brand {
     height: 60px;
+    margin: 0 auto;
+    max-width: 130px;
     width: auto;
   }
 

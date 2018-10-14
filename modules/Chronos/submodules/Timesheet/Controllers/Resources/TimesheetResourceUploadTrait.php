@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
+use Pluma\Requests\UploadRequest;
 use Timesheet\Requests\TimesheetRequest;
 
 trait TimesheetResourceUploadTrait
@@ -13,27 +14,28 @@ trait TimesheetResourceUploadTrait
     /**
      * Process the resource then return to view.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Timesheet\Requests\TimesheetRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function process(TimesheetRequest $request)
+    public function process(UploadRequest $request)
     {
         $resources = $this->repository->process($request->file('file'))->toArray();
-        $name = $request->input('name');
 
         return back()->with([
             'data' => $resources,
-            'name' => $name,
+            'name' => $request->input('name'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Library\Requests\LibraryRequest  $request
+     * @param  \Timesheet\Requests\TimesheetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function upload(Request $request)
+    public function upload(TimesheetRequest $request)
     {
         $resources = $request->file('file')
             ? $this->repository->process($request->file('file'))->toArray()

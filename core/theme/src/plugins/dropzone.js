@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import * as Dropzone from 'dropzone'
 
 Dropzone.autoDiscover = false
@@ -52,7 +51,7 @@ $(document).ready(function () {
       })
 
       // Set button
-      $form.find('[data-dropzone-button], [type=submit]').on('click', function (e) {
+      $form.find('[data-dropzone-button]').on('click', function (e) {
         e.preventDefault()
         $dropzone.options.parallelUploads = $dropzone.getAcceptedFiles().length
         $dropzone.processQueue()

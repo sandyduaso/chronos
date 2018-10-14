@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->text('password');
             $table->text('avatar')->nullable();
             $table->string('api_token', 60)->unique()->nullable();
+            $table->string('type')->default('user');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

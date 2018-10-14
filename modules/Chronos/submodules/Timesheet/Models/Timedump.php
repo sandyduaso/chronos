@@ -2,12 +2,15 @@
 
 namespace Timesheet\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Pluma\Models\Model;
 
 class Timedump extends Model
 {
     protected $fillable = [
         'date',
+        'department',
+        'key',
         'time_in',
         'time_out',
         'total_am',

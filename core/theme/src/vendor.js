@@ -1,0 +1,7 @@
+import '@/plugins/datatables'
+import '@/plugins/snackbar'
+import '@/plugins/dropzone'
+import '@/plugins/c3js'
+import '@/plugins/inputmask'
+import '@/plugins/confetti'
+import '@/plugins/jquery-scrollintoview'

@@ -1,7 +1,8 @@
 <nav id="sidebar" class="sidebar sidebar-fixed bg-workspace active p-4 pb-2" data-sidebar>
   <header class="sidebar-header">
-    <img width="80px" height="80px" class="sidebar-brand img-fit" src="{{ $application->site->logo }}">
-    <h2 class="sidebar-title">{{ $application->site->title }}</h2>
+    <div class="sidebar-brand">
+      @include('Theme::partials.brand')
+    </div>
   </header>
   <div class="sidebar-content">
     <div class="sidebar-nav list-group list-group-transparent mb-0" data-sidebar-nav>
@@ -11,7 +12,7 @@
           @if ($menu['has_children'])
 
             <div class="sidebar-item sidebar-dropdown">
-              <a role="button" href="#" aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}" data-toggle="collapse" data-target="#sidebar-dropdown-{{ $i }}" class="dropdown-toggle list-group-item list-group-item-action d-flex align-items-center rounded {{ $menu['active'] ? 'active' : '' }}">
+              <a role="button" title="{{ $menu['labels']['description'] ?? null }}" href="#" aria-expanded="{{ $menu['active'] ? 'true' : 'false' }}" data-toggle="collapse" data-target="#sidebar-dropdown-{{ $i }}" class="dropdown-toggle list-group-item list-group-item-action d-flex align-items-center rounded {{ $menu['active'] ? 'active' : '' }}">
                 <span class="icon mr-3">
                   @isset ($menu['icon'])
                     <i class="{{ $menu['icon'] }}"></i>

@@ -5,6 +5,7 @@ namespace Role\Controllers\Resources;
 use Blacksmith\Support\Facades\Blacksmith;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 trait PermissionResourceAdminTrait
@@ -125,8 +126,7 @@ trait PermissionResourceAdminTrait
     public function reset(Request $request)
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('permission_role');
-        $this->repository->model()->truncate();
+        DB::table($this->repository->model()->getTable())->truncate();
         Schema::enableForeignKeyConstraints();
 
         // Reseed

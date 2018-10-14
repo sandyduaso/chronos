@@ -1,8 +1,8 @@
 @extends('Theme::layouts.admin')
 
-@section('head-title', $resource->fullname)
+@section('head:title', $resource->fullname)
 
-@section('main-title')
+@section('main:title')
   <div data-sticky="#page-header"></div>
   <header id="page-header" data-sticky-class="sticky bg-workspace shadow-sm p-3" class="container-fluid">
     <div class="row">
@@ -30,7 +30,7 @@
   </header>
 @endsection
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid mt-6">
 
     <div class="row text-center text-lg-left">
@@ -115,7 +115,7 @@
   </div>
 @endsection
 
-@push('post-footer')
+@push('after:footer')
   @include('Theme::partials.modal', [
     'id' => 'delete-confirmbox',
     'icon' => 'fe fe-user-x display-1 icon-border icon-faded d-inline-block',

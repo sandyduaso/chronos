@@ -53,10 +53,7 @@ return [
 
     // List of background colors to be used, randomly selected based on name supplied
     'backgrounds' => [
-        '#85A0A1',
-        '#BEAAD0',
-        '#185686',
-        '#D3C5B6',
+        '#06c398',
     ],
 
     'border' => [

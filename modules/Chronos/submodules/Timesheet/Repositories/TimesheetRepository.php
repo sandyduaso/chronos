@@ -5,7 +5,7 @@ namespace Timesheet\Repositories;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
-use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use Pluma\Support\Repository\Repository;
 use Role\Models\Role;
 use Timesheet\Models\Timedump;
@@ -16,6 +16,8 @@ use User\Models\User;
 
 class TimesheetRepository extends Repository
 {
+    use Traits\ExportToSpreadsheet;
+
     /**
      * The model instance.
      *
@@ -31,6 +33,13 @@ class TimesheetRepository extends Repository
     protected $timedumps;
 
     /**
+     * The Punchcard instance.
+     *
+     * @var \Timesheet\Support\Punchcard\Punchcard
+     */
+    protected $punchcard;
+
+    /**
      * Constructor of the class.
      *
      * @param \Pluma\Models\Model $model
@@ -40,6 +49,8 @@ class TimesheetRepository extends Repository
         parent::__construct($model);
 
         $this->timedumps = new Timedump();
+
+        $this->punchcard = $this->punchcard();
     }
 
     /**
@@ -53,6 +64,9 @@ class TimesheetRepository extends Repository
         return [
             'name' => 'required',
             'data' => 'sometimes|required',
+            'file' => 'sometimes|file|required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ];
     }
 
@@ -75,7 +89,7 @@ class TimesheetRepository extends Repository
      */
     public function process(UploadedFile $file)
     {
-        $csv = new Csv();
+        $csv = new CsvReader();
         $sheet = $csv->load($file->getPathname());
         $worksheet = $sheet->getActiveSheet();
 
@@ -92,6 +106,8 @@ class TimesheetRepository extends Repository
         // Timesheet
         $timesheet = $this->model->create([
             'name' => $data['name'],
+            'start_date' => date('Y-m-d', strtotime($data['start_date'])),
+            'end_date' => date('Y-m-d', strtotime($data['end_date'])),
             'user_id' => user()->id,
         ]);
 
@@ -104,12 +120,7 @@ class TimesheetRepository extends Repository
             return $set;
         });
 
-        $punchcard = new Punchcard([
-            'default_time_in' => settings('timesheet_default_time_in', '09:00 AM'),
-            'default_time_out' => settings('timesheet_default_time_out', '06:15 PM'),
-            'default_lunch_start' => settings('timesheet_default_lunch_start', '01:00 PM'),
-            'default_lunch_end' => settings('timesheet_default_lunch_end', '02:00 PM'),
-        ]);
+        $punchcard = $this->punchcard();
 
         $dataset = $dataset->map(function ($item) use ($punchcard) {
             $item['date'] = date('Y/m/d', strtotime($item['time_in']));
@@ -120,11 +131,7 @@ class TimesheetRepository extends Repository
             $item['under_time'] = $punchcard->undertime($item['time_out']);
             $item['over_time'] = $punchcard->overtime($item['time_out']);
             $item['offset_hours'] = $punchcard->offset($item['time_in'], $item['time_out']);
-            $item['user'] = $this->user(
-                $item['user_id'] ?? $item['card_id'] ?? null,
-                isset($item['user_id']) ? 'id' : 'card_id',
-                isset($item['user_id']) ? false : true
-            );
+            $item['user'] = $this->user($item['user_id'] ?? $item['card_id'] ?? null);
 
             return $item;
         });
@@ -141,6 +148,8 @@ class TimesheetRepository extends Repository
                 'under_time' => date('H:i:s', strtotime($set['under_time'])),
                 'over_time' => date('H:i:s', strtotime($set['over_time'])),
                 'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
+                'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
+                'department' => $set['department'] ?? null,
                 'user_id' => $set['user'] ? $set['user']->id : null,
                 'timesheet_id' => $timesheet->id,
                 'metadata' => json_encode(collect($set)->except(['date','time_in','time_out','total_am','total_pm','total_time','tardy_time','under_time','over_time','offset_hours','user'])),
@@ -150,29 +159,122 @@ class TimesheetRepository extends Repository
         return $timesheet;
     }
 
+
+    /**
+     * Export from given format
+     *
+     * @param int $id
+     * @param array $data
+     * @return void
+     */
+    public function export($id, $data)
+    {
+        $resource = $this->find($id);
+
+        switch ($data['format']) {
+            case 'xlsx':
+                $this->toSpreadsheet($resource, $data);
+                return;
+                break;
+
+            default:
+            case 'pdf':
+                $this->toPDF($resource, $data);
+                break;
+        }
+    }
+
     /**
      * Retrieve user from given parameters.
      *
      * @param string $value
-     * @param string $key
-     * @param string $fromDetails
      * @return mixed
      */
-    public function user($value, $key = 'id', $fromDetails = false)
+    public function user($value)
     {
-        $user = null;
-
-        if (! is_null($value)) {
-            if ($fromDetails) {
-                $user = User::join('details', 'details.user_id', '=', 'users.id')
-                    ->where('details.key', $key)
-                    ->where('details.value', $value)
-                    ->first();
-            } else {
-                $user = User::where($key, $value)->first();
-            }
-        }
+        $user = User::whereHas('details', function ($query) use ($value) {
+            $query->where('key', 'card_id');
+            $query->where('value', $value);
+        })->first();
 
         return $user;
+    }
+
+    /**
+     * Retrieve a new Punchar instance.
+     *
+     * @return \Timesheet\Support\Punchcard\Punchcard
+     */
+    public function punchcard()
+    {
+        return new Punchcard([
+            'default_time_in' => settings('timesheet_default_time_in', '09:00 AM'),
+            'default_time_out' => settings('timesheet_default_time_out', '06:15 PM'),
+            'default_lunch_start' => settings('timesheet_default_lunch_start', '01:00 PM'),
+            'default_lunch_end' => settings('timesheet_default_lunch_end', '02:00 PM'),
+        ]);
+    }
+
+    public function charts($departments)
+    {
+        $charts['totallates'] = ['Total No. of Lates'];
+        $x = [];
+        foreach ($departments as $name => $employees) {
+            foreach ($employees as $j => $employee) {
+                $charts['totallates'][$name][] = $this->punchcard()->totalLateCount($employee['calendar'], 'time_in');
+            }
+            $charts['totallates'][$name] = $y = array_sum($charts['totallates'][$name]);
+            $x[$name] = $y;
+        }
+        $orderedValues = $x;
+        sort($orderedValues);
+
+        $newX = [];
+        foreach ($x as $key => $value) {
+            foreach ($orderedValues as $orderedKey => $orderedValue) {
+                if ($value === $orderedValue) {
+                    $key = $orderedKey;
+                    break;
+                }
+            }
+            $newX[] = $key + 1;
+        }
+
+        $charts['ranking'] = array_merge(['Ranking'], array_values($newX));
+
+        return [array_values($charts['totallates']), $charts['ranking']];
+    }
+
+    /**
+     * Retrieve the top late employees.
+     *
+     * @return array
+     */
+    public function lates($lates, $take = 10)
+    {
+        $charts[0] = ['Total Late Points'];
+        $employees = [];
+        foreach ($lates as $employee) {
+            $employee['hours-late'] = $this->punchcard()->toSeconds($this->punchcard()->totalFromKey($employee['calendar']->toArray(), 'tardy_time'));
+            $employees[] = $employee;
+        }
+
+        $employees = collect($employees)->sortByDesc('hours-late')->map(function ($item) {
+            // $this->punchcard()->toTime
+            $item['hours-late'] = (string) ($item['hours-late']);
+            return [
+                'hours-late' => $item['hours-late'],
+                'metadata' => $item['metadata'],
+                'user' => $item['user'],
+            ];
+        })->take($take);
+
+        foreach ($employees as $emp) {
+            $charts[0][] = $emp['hours-late'];
+            $charts[1][] = (string) (! is_null($emp['user']) ? $emp['user']->displayname : ($emp['metadata']->firstname ?? $emp['metadata']->card_id ?? 'Unnamed Employee'));
+        }
+        $charts[0] = [$charts[0]];
+
+        return $charts;
     }
 }

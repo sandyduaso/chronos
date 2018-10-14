@@ -48,7 +48,7 @@ return [
                     'name' => 'users.create',
                 ],
                 'labels' => [
-                    'title' => __('Create User'),
+                    'title' => __('Add User'),
                     'description' => __('Create new user account'),
                 ],
             ],
@@ -57,7 +57,6 @@ return [
                 'order' => 3,
                 'slug' => route('users.trashed'),
                 'code' => 'users.trashed',
-                'icon' => 'fe fe-user-x',
                 'always_viewable' => false,
                 'routes' => [
                     'name' => 'users.trashed',

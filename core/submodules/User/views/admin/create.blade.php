@@ -1,14 +1,15 @@
 @extends('Theme::layouts.admin')
 
-@section('main-title', '')
+@section('head:title', __('Add User'))
+@section('main:title', '')
 
-@section('page-content')
+@section('page:content')
   <div class="container-fluid">
     <form action="{{ route('users.store') }}" method="POST">
       {{ csrf_field() }}
       <div data-sticky="#page-header"></div>
       <nav id="page-header" data-sticky-class="sticky bg-workspace shadow-sm" class="navbar row">
-        <h1 class="page-title">{{ __('Create User') }}</h1>
+        <h1 class="page-title">{{ __('Add User') }}</h1>
         <button type="submit" class="btn btn-primary btn-lg"><i class="fe fe-save"></i> {{ __('Save') }}</button>
       </nav>
       {{-- <div class="row sticky">
@@ -151,7 +152,7 @@
                   </div>
                 </div>
 
-                <table class="table" data-dynamic-container>
+                <table class="table table-no-border" data-dynamic-container>
                   <tbody>
                     <tr>
                       <td class="pl-5">
@@ -216,7 +217,7 @@
                       @foreach (collect(old('details'))->except(['address', 'phone', 'birthday']) as $i => $detail)
                         <tr data-dynamic-item data-dynamic-item-number="{{ $i }}">
                           <td class="pl-5">
-                            @include('Theme::fields.select-icons', [
+                            @include('Theme::fields.selecticons', [
                               'name' => 'details['.$i.'][icon]',
                               'value' => $detail['icon'],
                               'attr' => 'data-selectpicker data-live-search="true"',
@@ -244,7 +245,7 @@
                     {{-- Dynamic Template --}}
                     <tr data-dynamic-item-template>
                       <td class="pl-5">
-                        @include('Theme::fields.select-icons', [
+                        @include('Theme::fields.selecticons', [
                           'name' => 'details[#][icon]',
                           'attr' => 'disabled',
                         ])

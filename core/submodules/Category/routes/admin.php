@@ -9,5 +9,7 @@
  *
  */
 
-Route::post('{type}/categories', 'CategoryController@store')->name('categories.store');
-Route::put('{type}/categories', 'CategoryController@update')->name('categories.update');
+Route::middleware(['breadcrumbs:\Category\Models\Category'])->group(function () {
+    Route::softDeletes('categories', 'CategoryController');
+    Route::resource('categories', 'CategoryController');
+});

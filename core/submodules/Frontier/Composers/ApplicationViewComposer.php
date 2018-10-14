@@ -2,10 +2,11 @@
 
 namespace Frontier\Composers;
 
-use Page\Models\Page;
+use Frontier\Support\Breadcrumbs\Accessors\Breadcrumable;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
+use Page\Models\Page;
 use Pluma\Support\Composers\BaseViewComposer;
 use Setting\Models\Setting;
 
@@ -18,6 +19,8 @@ use Setting\Models\Setting;
  */
 class ApplicationViewComposer extends BaseViewComposer
 {
+    use Breadcrumable;
+
     /**
      * The view's variable.
      *
@@ -156,6 +159,10 @@ class ApplicationViewComposer extends BaseViewComposer
      */
     public function guessTitle()
     {
+        if (! is_null($this->guessFromBreadcrumb())) {
+            return $this->guessFromBreadcrumb();
+        }
+
         if ($model = $this->model() && isset($model->title)) {
             return $model->title;
         }

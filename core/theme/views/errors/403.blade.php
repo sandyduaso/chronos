@@ -1,21 +1,17 @@
-@extends("Theme::layouts.public")
+@extends('Theme::layouts.blank')
 
-@section("head-title", '403 Error')
-@section("head-subtitle", 'Forbidden')
+@section('head:title', '403')
 
-@section("content")
-    <v-container fluid grid-list-lg>
-        <v-layout row wrap>
-            <v-flex sm6 offset-sm3 class="text-xs-center">
-                <h1 class="page-title display-5 mt-5 mb-0 blue-grey--text text--lighten-4"><strong>{{ __('403') }}</strong></h1>
-                <h2 class="page-title display-2 mt-0 lh-1 blue-grey--text text--lighten-3">{{ __('Forbidden') }}</h2>
-                <p class="subheading page-title blue-grey--text text--lighten-3">{{ __('The action previously taken or this part of the application is restricted.') }}
-                </p>
-
-                {{-- <v-card-text>
-                    <v-btn primary round large class="px-4 elevation-1" href="\admin/dashboard">Dashboard</v-btn>
-                </v-card-text> --}}
-            </v-flex>
-        </v-layout>
-    </v-container>
+@section('page:content')
+  <div class="page">
+    <div class="page-content">
+      <div class="container text-center">
+        <div class="display-1 text-muted mb-5">{{ __('403') }}</div>
+        <h2 class="h2 mb-3">{{ __('Oops.. page is restricted.') }}</h2>
+        <p class="h4 text-muted font-weight-normal mb-7">{{ __('We are sorry but you do not have permission to access this page') }}&hellip;</p>
+        <a role="button" href="{{ home() }}" class="btn btn-primary">{{ __('Home') }}</a>
+      </div>
+    </div>
+  </div>
 @endsection
+
