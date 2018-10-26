@@ -8,7 +8,6 @@
  * The API routes for users.
  *
  */
-
 Route::group(['prefix' => 'v1'], function () {
     Route::get('users/all', 'UserController@getAll')->name('users.all');
     Route::get('users/find', 'UserController@postFind')->name('users.find');
@@ -17,4 +16,8 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('users/save', 'UserController@postStore')->name('users.save');
     Route::post('users/store', 'UserController@postStore')->name('users.store');
     Route::delete('users/{user}/destroy', 'UserController@deleteDestroy')->name('users.destroy');
+});
+
+Route::prefix('v1')->middleware(['cors', 'preflight'])->group(function () {
+    Route::get('login', 'LoginController@postLogin');
 });

@@ -75,6 +75,20 @@ trait TimesheetResourceAdminTrait
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Timesheet\Requests\TimesheetRequest  $request
+     * @param  int  $id
+     * @return Illuminate\Http\Response
+     */
+    public function update(TimesheetRequest $request, $id)
+    {
+        $resource = $this->repository->update($request->all(), $id);
+
+        return redirect()->route('timesheets.show', $resource->id);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  Illuminate\Http\Request  $request

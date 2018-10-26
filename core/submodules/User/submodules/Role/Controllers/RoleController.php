@@ -25,25 +25,6 @@ class RoleController extends AdminController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Role\Requests\RoleRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(RoleRequest $request)
-    {
-        $role = new Role();
-        $role->name = $request->input('name');
-        $role->code = $request->input('code');
-        $role->description = $request->input('description');
-        $role->alias = $request->input('alias');
-        $role->save();
-        $role->grants()->attach($request->input('grants'));
-
-        return back();
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request $request

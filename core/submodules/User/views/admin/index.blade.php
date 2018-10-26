@@ -1,6 +1,6 @@
 @extends("Theme::layouts.admin")
 
-@section('page:title')
+@section('page:header')
   @parent
   <a role="button" href="{{ route('users.create') }}" class="btn btn-primary btn-lg ml-auto"><i class="fe fe-user-plus"></i>&nbsp;{{ __('New User') }}</a>
 @endsection

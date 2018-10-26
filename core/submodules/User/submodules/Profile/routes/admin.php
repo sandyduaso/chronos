@@ -9,7 +9,7 @@
  *
  */
 
-Route::group(['middleware' => 'user.profile'], function () {
+Route::middleware(['user.profile', 'breadcrumbs:\User\Model\User'])->group(function () {
 	// Credentials Management
 	Route::get('profile/{handle}/credentials', 'CredentialController@edit')->name('credentials.edit');
 	Route::put('profile/{profile}/credentials', 'CredentialController@update')->name('credentials.update');

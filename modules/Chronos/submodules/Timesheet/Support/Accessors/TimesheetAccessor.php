@@ -74,6 +74,16 @@ trait TimesheetAccessor
         return $this->total_time ?? date('H:i:s', strtotime('00:00:00'));
     }
 
+    /**
+     * Retrieve the date range.
+     *
+     * @return string
+     */
+    public function getDaterangeAttribute()
+    {
+        return date('F', strtotime($this->start_date)).' '.date('d', strtotime($this->start_date)).'-'.date('d', strtotime($this->end_date)).', '.date('Y', strtotime($this->end_date));
+    }
+
     public function getDepartmentsAttribute()
     {
         return array_keys($this->department()->toArray()) ?? [];

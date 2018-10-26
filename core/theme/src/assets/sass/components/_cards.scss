@@ -231,6 +231,7 @@
 
 .card-chart-bg {
 	height: auto;
+  max-height: 64px;
 	margin-top: -1rem;
 	position: relative;
 	z-index: 1;
@@ -238,8 +239,10 @@
 
   .chart {
     padding-top: 0;
-    margin-left: -2px;
-    margin-right: -2px;
+    width: 100%;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-bottom: -1rem;
   }
 }
 

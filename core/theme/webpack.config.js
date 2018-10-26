@@ -23,6 +23,7 @@ module.exports = {
     filename: '[name].min.js',
   },
   resolve: {
+    unsafeCache: true,
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },

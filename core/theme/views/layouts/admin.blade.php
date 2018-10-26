@@ -17,8 +17,12 @@
           @section('main:title')
             <div data-sticky="#page-header"></div>
             <nav id="page-header" data-sticky-class="sticky bg-workspace shadow-sm" class="navbar">
-              @section('page:title')
-                <h1 class="page-title">{{ __($application->page->title) }}</h1>
+              @section('page:header')
+                <h1 class="page-title">
+                  @section('page:title')
+                    {{ __($application->page->title) }}
+                  @show
+                </h1>
               @show
             </nav>
           @show

@@ -3,11 +3,11 @@
 namespace Role\API\Controllers;
 
 use Illuminate\Http\Request;
-use Pluma\API\Controllers\APIController;
+use Pluma\Controllers\ApiController;
 use Role\Models\Grant;
 use Role\Models\Role;
 
-class RoleController extends APIController
+class RoleController extends ApiController
 {
     /**
      * Search the resource.

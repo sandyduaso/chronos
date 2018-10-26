@@ -6,23 +6,23 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
-use Pluma\Requests\UploadRequest;
 use Timesheet\Requests\TimesheetRequest;
+use Timesheet\Requests\TimesheetUploadRequest;
 
 trait TimesheetResourceUploadTrait
 {
     /**
      * Process the resource then return to view.
      *
-     * @param \Timesheet\Requests\TimesheetRequest $request
+     * @param \Timesheet\Requests\TimesheetUploadRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function process(UploadRequest $request)
+    public function process(TimesheetUploadRequest $request)
     {
-        $resources = $this->repository->process($request->file('file'))->toArray();
+        $data = $this->repository->process($request->file('file'))->toArray();
 
         return back()->with([
-            'data' => $resources,
+            'data' => $data,
             'name' => $request->input('name'),
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),

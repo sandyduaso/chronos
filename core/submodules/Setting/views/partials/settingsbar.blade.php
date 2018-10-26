@@ -1,6 +1,5 @@
 <v-card flat class="mb-3 transparent">
     <v-list class="transparent">
-
         @if (isset(navigations('parent')->children))
             @if (isset(navigations('parent')->display_as_header))
                 <v-subheader>
@@ -25,6 +24,5 @@
                 </v-list-tile>
             @endforeach
         @endif
-
     </v-list>
 </v-card>

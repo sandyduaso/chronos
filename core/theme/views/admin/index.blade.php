@@ -1,6 +1,6 @@
 @extends('Theme::layouts.admin')
 
-@section('page:title')
+@section('page:header')
   @parent
   @if (isset($buttons['primary']))
     <a role="button" href="{{ $buttons['primary']['url'] }}" class="btn btn-primary btn-lg">

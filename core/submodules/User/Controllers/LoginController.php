@@ -22,7 +22,8 @@ class LoginController extends Controller
      *
      */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers,
+        Resources\LoginResourceApiTrait;
 
     /**
      * Redirect path upon successful login.

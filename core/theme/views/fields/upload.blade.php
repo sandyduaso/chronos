@@ -8,12 +8,12 @@
     </div>
   </div>
 @else
-  <div {{ $attr ?? null }} class="form-group file-upload">
+  <div class="form-group file-upload">
     @isset ($label)
       <label class="form-label">{{ $label }}</label>
     @endisset
     <div class="custom-file">
-      <input {{ isset($multiple) && $multiple ? 'name=file[]' : 'name=file' }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
+      <input {{ $attr ?? null }} {{ isset($multiple) && $multiple ? 'name=file[]' : 'name=file' }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
       <label class="custom-file-label">{{ __('Choose files...') }}</label>
       @if ($errors->has('file'))
         <div class="small mt-2 text-danger">{{ __($errors->first('file')) }}</div>

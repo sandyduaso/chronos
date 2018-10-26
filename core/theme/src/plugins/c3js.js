@@ -8,7 +8,7 @@ $(document).ready(function () {
     let options = JSON.parse(JSON.stringify($this.data('options')))
     $this.attr('data-options', null)
     $this.attr('id', 'c3-chart-0' + $this.attr('id'))
-    c3.generate(Object.assign(options, {
+    c3.generate(Object.assign({}, {
       bindto: '#' + $this.attr('id'),
       grid: {
         x: {
@@ -18,6 +18,6 @@ $(document).ready(function () {
           show: true
         }
       }
-    }))
+    }, options))
   })
 })

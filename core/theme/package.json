@@ -31,7 +31,6 @@
     "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
-    "ag-grid": "^18.1.2",
     "bootstrap": "^4.1.3",
     "bootstrap-select": "^1.13.2",
     "c3": "^0.6.7",
@@ -42,6 +41,7 @@
     "handsontable": "^6.0.1",
     "inputmask": "^4.0.2",
     "jquery": "^3.3.1",
+    "jquery-slugger": "^1.0.4",
     "jquery.scrollintoview": "^1.9.4",
     "popper.js": "^1.14.4",
     "precss": "^3.1.2",

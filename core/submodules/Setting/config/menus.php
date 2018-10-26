@@ -10,6 +10,7 @@ return [
     'settings' => [
         'name' => 'settings',
         'is_parent' => true,
+        'is_hidden' => true,
         // 'is_group_link' => true,
         'order' => 1000,
         'slug' => route('settings'),

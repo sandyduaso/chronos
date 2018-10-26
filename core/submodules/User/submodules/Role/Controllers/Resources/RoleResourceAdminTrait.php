@@ -6,6 +6,7 @@ use Blacksmith\Support\Facades\Blacksmith;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Role\Requests\RoleRequest;
 
 trait RoleResourceAdminTrait
 {
@@ -21,59 +22,32 @@ trait RoleResourceAdminTrait
             ->search($request->all())
             ->paginate();
 
-        return view('Theme::admin.index')->with([
-            'resources' => $resources,
-            'actions' => false,
-            'buttons' => [
-                'primary' => [
-                    'icon' => 'fe fe-plus',
-                    'text' => __('New Role'),
-                    'url' => route('roles.create'),
-                ],
-            ],
-            'label' => [
-                'singular' => __('Role'),
-                'plural' => __('Roles'),
-            ],
-            'text' => [
-                'singular' => 'role',
-                'plural' => 'roles',
-            ],
-            'table' => [
-                'body' => [
-                    'name', 'code', 'description', 'created',
-                ],
-                'head' => [
-                    [
-                        'label' => __('Name'),
-                        'column' => 'name',
-                        'class' => 'pl-5',
-                        'colspan' => 1,
-                        'sortable' => true,
-                    ],
-                    [
-                        'label' => __('Code'),
-                        'column' => 'code',
-                        'class' => '',
-                        'colspan' => 1,
-                        'sortable' => true,
-                    ],
-                    [
-                        'label' => __('Description'),
-                        'column' => 'description',
-                        'class' => '',
-                        'colspan' => 1,
-                        'sortable' => false,
-                    ],
-                    [
-                        'label' => __('Date Added'),
-                        'column' => 'created_at',
-                        'class' => '',
-                        'colspan' => 1,
-                        'sortable' => true,
-                    ],
-                ]
-            ],
-        ]);
+        return view('Theme::roles.index')->with(compact('resources'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $repository = $this->repository;
+
+        return view('Theme::roles.create')->with(compact('repository'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Role\Requests\RoleRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(RoleRequest $request)
+    {
+        dd($request->all());
+        $this->repository->create($request->all());
+
+        return back();
     }
 }

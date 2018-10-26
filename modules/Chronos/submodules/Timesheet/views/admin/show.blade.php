@@ -4,24 +4,30 @@
   <div id="workspace" class="workspace justify-content-start" data-workspace data-spy="scroll" data-target="#report-list" data-offset="50">
 @endsection
 
-@section('page:title')
+@section('page:header')
   @parent
-  <button data-modal-toggle type="button" class="btn btn-secondary" data-toggle="modal" data-target="#export-single-confirmbox-{{ $resource->id }}" title="{{ __('Export this timesheet') }}">
-    <i class="fe fe-download-cloud"></i>
-    {{ __('Export...') }}
-  </button>
-  @include('Theme::partials.modal', [
-    'dataset' => false,
-    'id' => 'export-single-confirmbox-'.$resource->id,
-    'icon' => 'fe fe-download-cloud display-1 icon-border text-primary icon-faded d-inline-block',
-    'lead' => __('Select format to download.'),
-    'text' => 'Export data to a specific file type.',
-    'method' => 'POST',
-    'action' => route('timesheets.export', $resource->id),
-    'button' => __('Export'),
-    'context' => 'primary',
-    'include' => ['Timesheet::fields.export', ['name' => $resource->name]],
-  ])
+  <div class="text-right">
+    <a href="{{ route('timesheets.edit', $resource->id) }}" role="button" class="btn btn-secondary">
+      <i class="fe fe-edit">&nbsp;</i>
+      {{ __('Edit') }}
+    </a>
+    <button data-modal-toggle type="button" class="btn btn-secondary" data-toggle="modal" data-target="#export-single-confirmbox-{{ $resource->id }}" title="{{ __('Export this timesheet') }}">
+      <i class="fe fe-download-cloud"></i>
+      {{ __('Export...') }}
+    </button>
+    @include('Theme::partials.modal', [
+      'dataset' => false,
+      'id' => 'export-single-confirmbox-'.$resource->id,
+      'icon' => 'fe fe-download-cloud display-1 icon-border text-primary icon-faded d-inline-block',
+      'lead' => __('Select format to download.'),
+      'text' => 'Export data to a specific file type.',
+      'method' => 'POST',
+      'action' => route('timesheets.export', $resource->id),
+      'button' => __('Export'),
+      'context' => 'primary',
+      'include' => ['Timesheet::fields.export', ['name' => $resource->name]],
+    ])
+  </div>
 @endsection
 
 @section('page:content')

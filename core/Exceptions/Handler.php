@@ -100,7 +100,7 @@ class Handler extends BaseHandler
         // TODO: if (regex('api/v1', $request->path()) return view::404
         # Return back with message
         // Return back
-        if ($e instanceof \Illuminate\Session\TokenMismatchException) {
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
             return back()->with([
                 'error' => [
                     'code' => 'TOKEN_MISMATCH',

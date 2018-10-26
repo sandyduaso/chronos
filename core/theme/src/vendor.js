@@ -1,3 +1,6 @@
+import '@/plugins/jquery'
+
+import '@/plugins/slugger'
 import '@/plugins/datatables'
 import '@/plugins/snackbar'
 import '@/plugins/dropzone'

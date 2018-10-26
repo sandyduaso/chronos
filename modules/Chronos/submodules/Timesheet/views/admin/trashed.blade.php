@@ -27,7 +27,7 @@
                       </div>
                       <div class="btn-group ml-3" role="group">
                         <button data-modal-toggle type="button" class="btn btn-secondary" disabled data-toggle="modal" data-target="#delete-confirmbox" title="{{ __('Select timesheets to deactivate') }}">
-                          <i class="fe fe-user-x"></i>
+                          <i class="fe fe-trash"></i>
                         </button>
                       </div>
 
@@ -165,7 +165,7 @@
   {{-- Move to Trash --}}
   @include('Theme::partials.modal', [
     'id' => 'delete-confirmbox',
-    'icon' => 'fe fe-user-x display-1 icon-border icon-faded d-inline-block',
+    'icon' => 'fe fe-trash display-1 icon-border icon-faded d-inline-block',
     'lead' => __('You are about to deactivate the selected timesheets.'),
     'text' => 'If you have selected your account and continued, you will be signed out from the app. Are you sure yout want to continue?',
     'method' => 'DELETE',

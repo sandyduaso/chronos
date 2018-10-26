@@ -64,7 +64,7 @@ class TimesheetRepository extends Repository
         return [
             'name' => 'required',
             'data' => 'sometimes|required',
-            'file' => 'sometimes|file|required',
+            'file' => 'sometimes|mimes:csv,txt|file|required',
             'start_date' => 'required',
             'end_date' => 'required',
         ];
@@ -112,53 +112,37 @@ class TimesheetRepository extends Repository
         ]);
 
         // Timedumps
-        $dataset = json_decode($data['data']);
-        $keys = array_shift($dataset);
-
-        $dataset = collect($dataset)->map(function ($set) use ($keys) {
-            $set = array_combine($keys, $set);
-            return $set;
-        });
-
-        $punchcard = $this->punchcard();
-
-        $dataset = $dataset->map(function ($item) use ($punchcard) {
-            $item['date'] = date('Y/m/d', strtotime($item['time_in']));
-            $item['total_am'] = $punchcard->totalAM($item['time_in']);
-            $item['total_pm'] = $punchcard->totalPM($item['time_out']);
-            $item['total_time'] = $punchcard->duration($item['time_in'], $item['time_out']);
-            $item['tardy_time'] = $punchcard->tardy($item['time_in']);
-            $item['under_time'] = $punchcard->undertime($item['time_out']);
-            $item['over_time'] = $punchcard->overtime($item['time_out']);
-            $item['offset_hours'] = $punchcard->offset($item['time_in'], $item['time_out']);
-            $item['user'] = $this->user($item['user_id'] ?? $item['card_id'] ?? null);
-
-            return $item;
-        });
-
-        $dataset->sortBy('date')->each(function ($set) use ($timesheet) {
-            $this->timedumps->create([
-                'date' => date('Y-m-d', strtotime($set['date'])),
-                'time_in' => date('H:i:s', strtotime($set['time_in'])),
-                'time_out' => date('H:i:s', strtotime($set['time_out'])),
-                'total_am' => date('H:i:s', strtotime($set['total_am'])),
-                'total_pm' => date('H:i:s', strtotime($set['total_pm'])),
-                'total_time' => date('H:i:s', strtotime($set['total_time'])),
-                'tardy_time' => date('H:i:s', strtotime($set['tardy_time'])),
-                'under_time' => date('H:i:s', strtotime($set['under_time'])),
-                'over_time' => date('H:i:s', strtotime($set['over_time'])),
-                'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
-                'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
-                'department' => $set['department'] ?? null,
-                'user_id' => $set['user'] ? $set['user']->id : null,
-                'timesheet_id' => $timesheet->id,
-                'metadata' => json_encode(collect($set)->except(['date','time_in','time_out','total_am','total_pm','total_time','tardy_time','under_time','over_time','offset_hours','user'])),
-            ]);
-        });
+        $this->saveTimedumps(json_decode($data['data']), $timesheet);
 
         return $timesheet;
     }
 
+    /**
+     * Update model resource.
+     *
+     * @param array  $data
+     * @param int $id
+     */
+    public function update(array $data, $id)
+    {
+        $timesheet = $this->model->findOrFail($id);
+        $timesheet->fill([
+            'name' => $data['name'],
+            'start_date' => date('Y-m-d', strtotime($data['start_date'])),
+            'end_date' => date('Y-m-d', strtotime($data['end_date'])),
+            'user_id' => user()->id,
+        ]);
+
+        if (isset($data['file']) && $data['file'] instanceof UploadedFile) {
+            $timesheet->timedumps()->delete();
+            $data['data'] = json_encode($this->process($data['file'])->toArray());
+            $this->saveTimedumps(json_decode($data['data']), $timesheet);
+        }
+
+        $timesheet->save();
+
+        return $timesheet;
+    }
 
     /**
      * Export from given format
@@ -276,5 +260,62 @@ class TimesheetRepository extends Repository
         $charts[0] = [$charts[0]];
 
         return $charts;
+    }
+
+    /**
+     * Save the timedumps.
+     *
+     * @param array $data
+     * @param \Timesheet\Models\Timesheet $timesheet
+     * @return void
+     */
+    protected function saveTimedumps($data, $timesheet)
+    {
+        $dataset = $data;
+        $keys = array_shift($dataset);
+
+        $dataset = collect($dataset)->map(function ($set) use ($keys) {
+            $set = array_combine($keys, $set);
+            return $set;
+        });
+
+        $punchcard = $this->punchcard();
+
+        $dataset = $dataset->map(function ($item) use ($punchcard) {
+            $item['time_in'] = $item['time_in'] ?? '00:00:00';
+            $item['time_out'] = $item['time_out'] ?? '00:00:00';
+
+            $item['date'] = date('Y/m/d', strtotime($item['time_in']));
+            $item['total_am'] = $punchcard->totalAM($item['time_in']);
+            $item['total_pm'] = $punchcard->totalPM($item['time_out']);
+            $item['total_time'] = $punchcard->duration($item['time_in'], $item['time_out']);
+            $item['tardy_time'] = $punchcard->tardy($item['time_in']);
+            $item['under_time'] = $punchcard->undertime($item['time_out']);
+            $item['over_time'] = $punchcard->overtime($item['time_out']);
+            $item['offset_hours'] = $punchcard->offset($item['time_in'], $item['time_out']);
+            $item['user'] = $this->user($item['user_id'] ?? $item['card_id'] ?? null);
+
+            return $item;
+        });
+
+        $dataset->sortBy('date')->each(function ($set) use ($timesheet) {
+            $this->timedumps->create([
+                'date' => date('Y-m-d', strtotime($set['date'])),
+                'time_in' => date('H:i:s', strtotime($set['time_in'])),
+                'time_out' => date('H:i:s', strtotime($set['time_out'])),
+                'total_am' => date('H:i:s', strtotime($set['total_am'])),
+                'total_pm' => date('H:i:s', strtotime($set['total_pm'])),
+                'total_time' => date('H:i:s', strtotime($set['total_time'])),
+                'tardy_time' => date('H:i:s', strtotime($set['tardy_time'])),
+                'under_time' => date('H:i:s', strtotime($set['under_time'])),
+                'over_time' => date('H:i:s', strtotime($set['over_time'])),
+                'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
+                'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
+                'department' => $set['department'] ?? null,
+                'user_id' => $set['user'] ? $set['user']->id : null,
+                'timesheet_id' => $timesheet->id,
+                'metadata' => json_encode(collect($set)->except(['date','time_in','time_out','total_am','total_pm','total_time','tardy_time','under_time','over_time','offset_hours','user'])),
+            ]);
+        });
     }
 }

@@ -1,6 +1,6 @@
 @extends("Theme::layouts.admin")
 
-@section('page:title')
+@section('page:header')
   @parent
   <a role="button" href="{{ route('timesheets.create') }}" class="btn btn-primary btn-lg ml-auto">{{ __('New Timesheet') }}</a>
 @endsection
@@ -118,6 +118,9 @@
                       <td>{{ $resource->user->displayname }}</td>
                       <td title="{{ $resource->created_at }}">{{ $resource->created }}</td>
                       <td class="text-center justify-content-center">
+                        <a title="{{ __('Edit this timesheet') }}" href="{{ route('timesheets.edit', $resource->id) }}" role="button" class="btn btn-secondary btn-sm">
+                          <i class="fe fe-edit"></i>
+                        </a>
                         <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#export-single-confirmbox-{{ $resource->id }}" title="{{ __('Export this timesheet') }}">
                           <i class="fe fe-download-cloud"></i>
                         </button>
