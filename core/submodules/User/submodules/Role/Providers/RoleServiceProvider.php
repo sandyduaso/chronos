@@ -27,7 +27,7 @@ class RoleServiceProvider extends ServiceProvider
      */
     protected $middlewares = [
         [
-            'alias' => 'auth.permissions',
+            'alias' => 'permissions',
             'class' => \Role\Middleware\AuthenticateUserPermission::class,
         ],
     ];
@@ -68,11 +68,17 @@ class RoleServiceProvider extends ServiceProvider
     public function bootGate()
     {
         if (Schema::hasTable('permissions')) {
-            foreach (Permission::cached() as $permission) {
-                Gate::define($permission->code, function ($user) use ($permission) {
-                    return $user->isPermittedTo($permission->code);
-                });
-            }
+            Permission::chunk(100, function ($permissions) {
+                foreach ($permissions as $permission) {
+                    Gate::define($permission->code, function ($user) use ($permission) {
+                        return $user->isPermittedTo($permission->code);
+                    });
+
+                    Gate::define($permission->name, function ($user) use ($permission) {
+                        return $user->isPermittedTo($permission->name, 'name');
+                    });
+                }
+            });
         }
     }
 

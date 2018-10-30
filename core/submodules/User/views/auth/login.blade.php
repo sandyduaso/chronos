@@ -1,9 +1,5 @@
 @extends('Theme::layouts.auth')
 
-@push('before:main')
-  <div style="opacity:0.09;position:fixed;width:100vw;height:100vh;background-image: url({{ theme('dist/assets/img/patterns/seigaiha.png') }})"></div>
-@endpush
-
 @section('content')
   <div class="container">
     <div class="row">
@@ -16,18 +12,14 @@
             <div class="form-group">
               <label class="form-label">{{ __('Email or username') }}</label>
               <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" aria-describedby="emailHelp" placeholder="{{ __('Type email or username') }}" value="{{ old('username') }}">
-              @if ($errors->has('username'))
-                <div class="invalid-feedback">{{ __($errors->first('username')) }}</div>
-              @endif
+              @include('Theme::errors.span', ['field' => 'username'])
             </div>
             <div class="form-group">
               <label class="form-label">
                 {{ __('Password') }}
               </label>
               <input type="password" name="password" class="form-control  {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="{{ __('Password') }}" value="{{ old('password') }}">
-              @if ($errors->has('password'))
-                <div class="invalid-feedback">{{ __($errors->first('password')) }}</div>
-              @endif
+              @include('Theme::errors.span', ['field' => 'password'])
               <a href="{{ route('password.forgot') }}" class="float-right small">{{ __('Forgot password?') }}</a>
             </div>
             <div class="form-footer">

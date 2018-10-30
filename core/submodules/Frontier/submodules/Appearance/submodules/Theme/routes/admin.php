@@ -1,8 +1,11 @@
 <?php
 
-// Upload
-Route::post('appearance/themes/upload', 'ThemeController@upload')->name('themes.upload');
+Route::prefix('appearance')->middleware(['breadcrumbs:\Theme\Models\Theme'])->group(function () {
+    // Upload
+    Route::post('themes/upload', 'ThemeController@upload')->name('themes.upload');
 
-// List
-Route::get('appearance/themes/{preview}/preview', 'ThemeController@preview')->name('themes.preview');
-Route::get('appearance/themes', 'ThemeController@index')->name('themes.index');
+    // List
+    Route::get('themes/{preview}/preview', 'ThemeController@show')->name('themes.preview');
+    Route::get('themes', 'ThemeController@index')->name('themes.index');
+});
+

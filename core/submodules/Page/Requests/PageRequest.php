@@ -3,50 +3,17 @@
 namespace Page\Requests;
 
 use Illuminate\Http\Request;
-use Page\Models\Page;
+use Page\Repositories\PageRepository;
 use Pluma\Requests\FormRequest;
 
 class PageRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * The name of the authorization action.
      *
-     * @return bool
+     * @var string
      */
-    public function authorize()
-    {
-        switch ($this->method()) {
-            case 'POST':
-                if ($this->user()->can('store-page')) {
-                    return true;
-                }
-                break;
-
-            case 'PUT':
-                if ($this->user()->can('update-page')) {
-                    return true;
-                }
-                break;
-
-            case 'PATCH':
-                if ($this->user()->can('restore-page')) {
-                    return true;
-                }
-                break;
-
-            case 'DELETE':
-                if ($this->user()->can('destroy-page')) {
-                    return true;
-                }
-                break;
-
-            default:
-                return false;
-                break;
-        }
-
-        return false;
-    }
+    protected $name = 'page';
 
     /**
      * Get the validation rules that apply to the request.
@@ -55,9 +22,7 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        $isUpdating = $this->method() == "PUT" ? ",id,$this->id" : "";
-
-        return Page::rules($isUpdating);
+        return PageRepository::rules($this->method());
     }
 
     /**
@@ -67,6 +32,6 @@ class PageRequest extends FormRequest
      */
     public function messages()
     {
-        return Page::messages();
+        return PageRepository::messages();
     }
 }

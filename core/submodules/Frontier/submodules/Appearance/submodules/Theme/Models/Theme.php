@@ -3,11 +3,11 @@
 namespace Theme\Models;
 
 use Setting\Models\Setting;
-use Setting\Support\Traits\Themes;
+use Setting\Support\Traits\Themable;
 
 class Theme extends Setting
 {
-    use Themes;
+    use Themable;
 
     protected $table = 'settings';
 

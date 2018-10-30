@@ -45,8 +45,42 @@ trait RoleResourceAdminTrait
      */
     public function store(RoleRequest $request)
     {
-        dd($request->all());
         $this->repository->create($request->all());
+
+        return back();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $resource = $this->repository->find($id);
+        $repository = $this->repository;
+
+        return view('Theme::roles.edit')->with(compact('resource', 'repository'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Role\Requests\RoleRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(RoleRequest $request, $id)
+    {
+        $role = \Role\Models\Role::findOrFail($id);
+        $role->name = $request->input('name');
+        $role->code = $request->input('code');
+        $role->description = $request->input('description');
+        $role->alias = $request->input('alias');
+        $role->save();
+        $role->permissions()->sync($request->input('permissions'));
 
         return back();
     }

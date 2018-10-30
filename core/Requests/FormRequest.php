@@ -6,6 +6,11 @@ use Pluma\Support\Request\FormRequest as BaseRequest;
 
 class FormRequest extends BaseRequest
 {
+    /**
+     * The name of the authorization action.
+     *
+     * @var string
+     */
     protected $name;
 
     /**
@@ -15,29 +20,7 @@ class FormRequest extends BaseRequest
      */
     public function authorize()
     {
-        if ($this->user()->isRoot() || $this->user()->id === $this->user) {
-            return true;
-        }
-
-        switch ($this->method()) {
-            case 'POST':
-                return $this->user()->can("store-{$this->name}");
-                break;
-
-            case 'PUT':
-                return $this->user()->can("update-{$this->name}");
-                break;
-
-            case 'DELETE':
-                return $this->user()->can("destroy-{$this->name}");
-                break;
-
-            default:
-                return false;
-                break;
-        }
-
-        return false;
+        return $this->user()->isSuperAdmin() || $this->isAuthorized();
     }
 
     /**
@@ -54,5 +37,38 @@ class FormRequest extends BaseRequest
                 'description' => '',
             ]
         ]);
+    }
+
+    /**
+     * Check if the action is authorized.
+     *
+     * @return boolean
+     */
+    public function isAuthorized()
+    {
+        $name = $this->name;
+
+        switch ($this->method()) {
+            case 'POST':
+                return $this->user()->can("store-$name");
+
+            case 'PUT':
+                return $this->user()->can("update-$name");
+
+            case 'PATCH':
+                return $this->user()->can("restore-$name");
+
+            case 'DELETE':
+                return $this->user()->can("destroy-$name")
+                    || $this->user()->can("delete-$name");
+
+            default:
+            case 'GET':
+                $name = $this->pluralname ?? str_plural($name);
+                return $this->user()->can("view-$name")
+                    || $this->user()->can("trashed-$name");
+        }
+
+        return false;
     }
 }

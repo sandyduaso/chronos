@@ -78,6 +78,6 @@ if (! function_exists('get_raw_widgets')) {
             }
         }
 
-        return $asArray ? (array) $widgets : json_decode(json_encode($widgets));
+        return $asArray ? $widgets : json_decode(json_encode($widgets));
     }
 }

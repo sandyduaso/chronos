@@ -39,6 +39,16 @@ trait BelongsToManyRoles
     }
 
     /**
+     * Alias for isRoot.
+     *
+     * @return boolean
+     */
+    public function isSuperAdmin()
+    {
+        return $this->isRoot();
+    }
+
+    /**
      * Determine if the user's role is in the root roles list.
      *
      * @return boolean

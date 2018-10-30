@@ -5,9 +5,12 @@ namespace Menu\Support\Traits;
 use Crowfeather\Traverser\Traverser;
 use Illuminate\Support\Facades\Request;
 use Page\Models\Page;
+use Pluma\Support\Modules\Traits\ModulerTrait;
 
 trait MenuBuilderTrait
 {
+    use ModulerTrait;
+
     /**
      * Stores the menu locations.
      *
@@ -23,12 +26,12 @@ trait MenuBuilderTrait
     public static function location($code)
     {
         foreach (self::locations() as $location) {
-            if ($location->code === $code) {
-                return $location;
+            if ($location['code'] === $code) {
+                return json_decode(json_encode($location));
             }
         }
 
-        return abort(404);
+        return null;
     }
 
     /**
@@ -39,27 +42,27 @@ trait MenuBuilderTrait
     public static function locations()
     {
         $instance = new static;
+        $locations = [];
 
-        $modules = get_modules_path();
+        $modules = $instance->modulePaths();
         $activeThemePath = themes_path(settings('active_theme', 'default'));
         $modules = array_merge($modules, [$activeThemePath]);
 
         foreach ($modules as $key => $module) {
             if (file_exists("$module/config/locations.php")) {
-                $locations = (array) require_once "$module/config/locations.php";
-                foreach ($locations as $name => $location) {
-                    $instance->locations[$name] = array_merge($location, [
-                        'items' => $instance::menus($name),
-                        'items_flat' => $i = $instance->where('location', $name)->orderBy('sort', 'ASC')->get(),
-                        'count' => $i->count(),
+                $configs = (array) require "$module/config/locations.php";
+                foreach ($configs as $name => $location) {
+                    $locations[$name] = collect(array_merge($location, [
+                        // 'items' => $instance::menus($name),
+                        // 'count' => $i->count(),
                         'code' => $name,
                         'module' => basename($module)
-                    ]);
+                    ]))->recurse();
                 }
             }
         }
 
-        return json_decode(json_encode($instance->locations));
+        return collect($locations)->recurse();
     }
 
     /**
@@ -72,7 +75,8 @@ trait MenuBuilderTrait
     {
         $instance = new static;
 
-        $menus = $instance->where('location', $location)->orderBy('sort', 'ASC')->get();
+        $instance = $instance->where('location', $location)->orderBy('sort', 'ASC')->get();
+        $menus = $instance;
 
         $traverser = new Traverser($menus->toArray(), ['root' => ['key' => 'root']], ['name' => 'key', 'parent' => 'parent', 'children' => 'children']);
 
@@ -84,7 +88,7 @@ trait MenuBuilderTrait
         $menus = $traverser->update($menus, function ($key, &$menu, &$parent) use ($traverser) {
             $menu['active'] = false;
 
-            if (is_null($menu['page_id'])) {
+            if (is_null($menu['type'])) {
                 $menu['is_absolute_slug'] = true;
                 $menu['url'] = $menu['slug'];
             } else {

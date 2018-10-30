@@ -26,9 +26,14 @@ $(document).ready(function () {
       $clone.trigger('dynamic-item-added')
 
       // Inputs
-      if ($clone.find(':input:not([type=button])')) {
-        $clone.find(':input:not([type=button])').each(function (l, m) {
-          $(m).attr('name', $(m).attr('name').replace('#', $number))
+      if ($clone.find(':input')) {
+        $clone.find(':input').each(function (l, m) {
+          let $input = $(this).attr('name')
+          console.log($input, name, $number)
+          if ($input) {
+            let name = $input.replace('#', $number)
+            $(m).attr('name', name)
+          }
         })
       }
 

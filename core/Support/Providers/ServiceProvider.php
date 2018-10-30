@@ -73,8 +73,6 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->bootObservables();
 
-        $this->bootPolicies();
-
         $this->bootRouterMiddlewares();
 
         $this->bootViewComposers();
@@ -88,6 +86,8 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerProviders();
+
+        $this->registerPolicies();
 
         $this->registerEloquentFactories();
     }
@@ -141,7 +141,7 @@ class ServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function bootPolicies()
+    public function registerPolicies()
     {
         foreach ($this->policies as $model => $policy) {
             Gate::policy($model, $policy);

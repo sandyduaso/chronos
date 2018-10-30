@@ -13,6 +13,23 @@ use User\Policies\UserPolicy;
 class UserServiceProvider extends AuthServiceProvider
 {
     /**
+     * Registered middlewares on the
+     * Service Providers Level.
+     *
+     * @var mixed
+     */
+    protected $middlewares = [
+        [
+            'alias' => 'auth:jwt',
+            'class' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+        ],
+        [
+            'alias' => 'jwt:refresh',
+            'class' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+        ],
+    ];
+
+    /**
      * The policy mappings for the application.
      *
      * @var array
@@ -38,6 +55,7 @@ class UserServiceProvider extends AuthServiceProvider
      */
     protected $providers = [
         PasswordServiceProvider::class,
+        \Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     ];
 
     /**

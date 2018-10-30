@@ -60,6 +60,27 @@ return [
                     'description' => __('View list of all timesheets moved to trash'),
                 ],
             ],
+
+            'divider-timesheet-trashed-settings' => [
+                'name' => 'divider-timesheet-trashed-settings',
+                'is_header' => true,
+                'is_divider' => true,
+                'parent' => 'timesheet',
+                'order' => 4,
+            ],
+
+            'settings-timesheet' => [
+                'name' => 'settings-timesheet',
+                'order' => 5,
+                'slug' => route('timesheets.settings'),
+                'code' => 'timesheets.settings',
+                'icon' => 'fe fe-sliders',
+                'always_viewable' => false,
+                'labels' => [
+                    'title' => __('Settings'),
+                    'description' => __('View settings for timesheets'),
+                ],
+            ],
         ],
     ],
 ];

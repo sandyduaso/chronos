@@ -7,7 +7,7 @@ return [
         'order' => 5,
         'slug' => route('dashboard'),
         'always_viewable' => true,
-        'icon' => 'fe fe-triangle',
+        'icon' => 'mdi mdi-view-dashboard',
         'labels' => [
             'title' => __('Dashboard'),
             'description' => __('View summary and overview of the app.'),

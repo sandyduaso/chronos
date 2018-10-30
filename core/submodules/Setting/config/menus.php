@@ -10,7 +10,6 @@ return [
     'settings' => [
         'name' => 'settings',
         'is_parent' => true,
-        'is_hidden' => true,
         // 'is_group_link' => true,
         'order' => 1000,
         'slug' => route('settings'),
@@ -20,7 +19,7 @@ return [
             'name' => 'settings',
             'children' => [
                 'settings.general',
-                'settings.display',
+                'settings:display.index',
                 'settings.branding',
                 'settings.email',
                 'settings.social',
@@ -39,8 +38,8 @@ return [
              */
             'general-settings-group' => [
                 'name' => 'general-settings-group',
-                'slug' => route('settings.display'),
-                'code' => 'settings.display',
+                'slug' => route('settings:display.index'),
+                'code' => 'settings:display.index',
                 'is_group_link' => true,
                 'always_viewable' => false,
                 'order' => 1,
@@ -52,16 +51,16 @@ return [
                     'name' => 'settings.general',
                     'children' => [
                         'settings.general',
-                        'settings.display',
+                        'settings:display.index',
                         'settings.datetime',
                     ]
                 ],
                 'children' => [
                     'display-settings' => [
                         'name' => 'display-settings',
-                        'slug' => route('settings.display'),
-                        'code' => 'settings.display',
-                        'route' => 'settings.display',
+                        'slug' => route('settings:display.index'),
+                        'code' => 'settings:display.index',
+                        'route' => 'settings:display.index',
                         'icon' => 'fa-table',
                         'order' => 2,
                         'labels' => [

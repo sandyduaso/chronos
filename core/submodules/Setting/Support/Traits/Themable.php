@@ -2,8 +2,21 @@
 
 namespace Setting\Support\Traits;
 
-trait Themeable
+trait Themable
 {
+    /**
+     * Retrieve the themes from the filesystem.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function files()
+    {
+        return get_themes()
+            ->except('active')
+            ->sortBy('timestamp')
+            ->reverse();
+    }
+
     /**
      * Gets the registered themes.
      *
@@ -33,12 +46,6 @@ trait Themeable
      */
     public static function theme($theme)
     {
-        foreach (self::themes() as $item) {
-            if (strtolower($item->name) === strtolower($theme) && is_dir($item->path)) {
-                return $item;
-            }
-        }
-
-        return self::theme('default', false);
+        return get_themes()->only($theme)->first();
     }
 }

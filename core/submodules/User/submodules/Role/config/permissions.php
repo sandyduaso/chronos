@@ -92,46 +92,16 @@ return [
         'description' => 'Ability to show a single permission',
         'group' => 'permissions',
     ],
-    'create-permission' => [
-        'name' => 'create-permission',
-        'code' => 'permissions.create',
-        'description' => 'Ability to create new permission',
+    'reset-permission' => [
+        'name' => 'reset-permission',
+        'code' => 'permissions.reset',
+        'description' => 'Ability to reset the permission',
         'group' => 'permissions',
     ],
-    'store-permission' => [
-        'name' => 'store-permission',
-        'code' => 'permissions.store',
-        'description' => 'Ability to save the permission',
-        'group' => 'permissions',
-    ],
-    'update-permission' => [
-        'name' => 'update-permission',
-        'code' => 'permissions.update',
-        'description' => 'Ability to update the permission',
-        'group' => 'permissions',
-    ],
-    'destroy-permission' => [
-        'name' => 'destroy-permission',
-        'code' =>  'permissions.destroy',
-        'description' => 'Ability to move the permission to trash',
-        'group' => 'permissions',
-    ],
-    'delete-permission' => [
-        'name' => 'delete-permission',
-        'code' =>  'permissions.delete',
-        'description' => 'Ability to permanently delete the permission',
-        'group' => 'permissions',
-    ],
-    'trashed-permissions' => [
-        'name' => 'trashed-permissions',
-        'code' =>  'permissions.trashed',
-        'description' => 'Ability to view the list of all trashed permissions',
-        'group' => 'permissions',
-    ],
-    'restore-permission' => [
-        'name' => 'restore-permission',
-        'code' => 'permissions.restore',
-        'description' => 'Ability to restore the permission from trash',
+    'refresh-permission' => [
+        'name' => 'refresh-permission',
+        'code' => 'permissions.refresh',
+        'description' => 'Ability to refresh the permission',
         'group' => 'permissions',
     ],
 ];

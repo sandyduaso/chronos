@@ -1,40 +1,39 @@
-@extends("Theme::layouts.admin")
+@extends('Theme::layouts.admin')
 
-@section("head-title", __('Menus'))
+@section('head:title', __('Menus'))
+@section('page:title', __('Menus'))
 
-@section("content")
-    <v-toolbar dark class="secondary elevation-1 sticky">
-        <v-icon dark left>menu</v-icon>
-        <v-toolbar-title class="subheading">{{ __('Menus') }}</v-toolbar-title>
-    </v-toolbar>
-    <v-container grid-list-lg>
-        <v-layout row wrap>
-            <v-flex sm12>
-                <v-card class="elevation-1">
-                    <v-list three-line>
-                        @foreach ($locations as $location)
-                        <v-list-tile ripple target="_blank" href="{{ route('menus.edit', $location->code) }}">
-                            @if ($location->icon)
-                                <v-list-tile-avatar>
-                                    <v-icon>{{ $location->icon }}</v-icon>
-                                </v-list-tile-avatar>
-                            @endif
-                            <v-list-tile-content>
-                                <v-list-tile-title class="subheading">
-                                    {{ $location->name }}
-                                    <span class="caption grey--texy">({{ $location->code }})</span>
-                                </v-list-tile-title>
-                                <div class="grey--text caption">{{ $location->count }} {{ __('items') }}</div>
-                                <em class="caption grey--text">{{ $location->description }}</em>
-                            </v-list-tile-content>
-                            <v-list-tile-actions>
-                                <v-icon>keyboard_arrow_right</v-icon>
-                            </v-list-tile-actions>
-                        </v-list-tile>
-                        @endforeach
-                    </v-list>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+@section('page:content')
+  <div class="container-fluid">
+    <div class="row">
+
+      @foreach ($locations as $menu)
+        <div class="col-lg-4 order-lg-1 order-sm-3">
+          <div role="panel" class="card td-none mb-3">
+            <div class="card-header border-0 justify-contents-between">
+              <a href="{{ route('menus.edit', $menu['code']) }}">
+                <strong>{{ $menu['name'] }}</strong>
+              </a>
+            </div>
+            @isset ($menu['description'])
+              <div class="card-body ov-h">
+                @isset ($menu['icon'])
+                  <div class="card-value float-right text-blue">
+                    <i class="text-primary {{ $menu['icon'] }}"></i>
+                  </div>
+                @endisset
+                <p class="small text-truncate">{{ $menu['description'] }}</p>
+              </div>
+            @endisset
+            <div class="card-footer border-0">
+              <a role="button" href="{{ route('menus.edit', $menu['code']) }}" class="btn btn-secondary btn-sm">
+                <i class="mdi mdi-pencil">&nbsp;</i>
+                {{ __('Edit') }}
+              </a>
+            </div>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </div>
 @endsection

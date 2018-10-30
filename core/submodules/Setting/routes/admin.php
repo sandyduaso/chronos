@@ -1,18 +1,19 @@
 <?php
 
-Route::group(['prefix' => 'settings'], function () {
-    // Settings
+Route::middleware(['breadcrumbs:\Setting\Models\Setting'])->prefix('settings')->group(function () {
+    # Settings Redirect
     Route::get('/', function () {
         return redirect()->route('settings.display');
     })->name('settings');
 
+    # Save Settings
     Route::post('store', 'SettingController@store')->name('settings.store');
 
-    // General
+    # General
     Route::group(['prefix' => 'general'], function () {
         // Display
-        Route::get('display', 'DisplaySettingController@index')->name('settings.display');
-        Route::post('display', 'DisplaySettingController@store')->name('settings.display.store');
+        Route::get('display', 'DisplaySettingController@index')->name('settings:display.index');
+        Route::post('display', 'DisplaySettingController@store')->name('settings:display.store');
 
         // Date Time
         Route::get('datetime', 'DateTimeSettingController@index')->name('settings.datetime');

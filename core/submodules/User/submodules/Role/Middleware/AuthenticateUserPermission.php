@@ -61,7 +61,7 @@ class AuthenticateUserPermission
         }
 
         // if user is root, proceed.
-        if ($this->user && $this->user->isRoot()) {
+        if ($this->user && $this->user->isSuperAdmin()) {
             return $next($request);
         }
 

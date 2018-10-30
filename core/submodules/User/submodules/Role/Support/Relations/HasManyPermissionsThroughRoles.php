@@ -22,16 +22,11 @@ trait HasManyPermissionsThroughRoles
      * Determine if the resource has a given ability.
      *
      * @param string $code
+     * @param string $key
      * @return boolean
      */
-    public function isPermittedTo($code)
+    public function isPermittedTo($code, $key = 'code')
     {
-        foreach ($this->permissions as $permission) {
-            if ($permission->code === $code) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($code, $this->permissions->pluck($key)->toArray());
     }
 }

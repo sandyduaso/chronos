@@ -4,11 +4,10 @@ return [
     'page' => [
         'name' => 'page',
         'is_parent' => true,
-        'is_hidden' => true,
         'order' => 30,
         'slug' => '#',
         'always_viewable' => false,
-        'icon' => 'fa fa-file',
+        'icon' => 'mdi mdi-file',
         'labels' => [
             'title' => __('Pages'),
             'description' => __('Manage site pages'),
@@ -59,7 +58,6 @@ return [
                 'order' => 3,
                 'slug' => route('pages.trashed'),
                 'always_viewable' => false,
-                'icon' => 'delete',
                 'labels' => [
                     'title' => __('Trashed Pages'),
                     'description' => __('View list of all trashed pages'),

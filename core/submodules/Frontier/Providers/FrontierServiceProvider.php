@@ -2,6 +2,7 @@
 
 namespace Frontier\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Pluma\Support\Providers\ServiceProvider;
 
 class FrontierServiceProvider extends ServiceProvider
@@ -46,6 +47,8 @@ class FrontierServiceProvider extends ServiceProvider
         $this->bootRouter();
 
         $this->bootViewComposers();
+
+        $this->bootBladeDirectives();
     }
 
     /**
@@ -96,5 +99,24 @@ class FrontierServiceProvider extends ServiceProvider
         foreach ($this->services as $service) {
             $this->app->register($service);
         }
+    }
+
+    /**
+     * Registers additional Blade Directives in the context of this module.
+     *
+     * @return void
+     */
+    protected function bootBladeDirectives()
+    {
+        Blade::directive('field', function ($expression) {
+            list($file, $args) = explode(',', $expression, 2);
+            $file = str_replace("'", '', $file);
+
+            return "<?php echo view('Theme::fields.$file', $args)->render(); ?>";
+        });
+
+        Blade::directive('submit', function ($expression) {
+            return "<?php echo view('Theme::fields.submit', ['label' => $expression])->render(); ?>";
+        });
     }
 }

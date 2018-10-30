@@ -39,41 +39,6 @@ class RoleController extends AdminController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
-    {
-        $resource = Role::findOrFail($id);
-        $grants = Grant::pluck('name', 'id');
-
-        return view("Theme::roles.edit")->with(compact('resource', 'grants'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Role\Requests\RoleRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RoleRequest $request, $id)
-    {
-        $role = Role::findOrFail($id);
-        $role->name = $request->input('name');
-        $role->code = $request->input('code');
-        $role->description = $request->input('description');
-        $role->alias = $request->input('alias');
-        $role->save();
-        $role->grants()->sync($request->input('grants'));
-
-        return back();
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request

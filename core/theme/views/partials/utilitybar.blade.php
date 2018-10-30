@@ -1,20 +1,22 @@
 @stack('before-utilitybar')
 
 @section('utilitybar')
-  <nav class="navbar navbar-expand-lg bg-transparent">
-    <button type="button" class="btn btn-icon shadow-none mr-sm-2 py-1" aria-expanded="true" data-sidebar-toggle data-target="[data-sidebar]" aria-controls="sidebar" aria-label="{{ __('Toggle sidebar') }}">
-      <i class="fe fe-menu"></i>
-      <span class="sr-only">{{ __('Toggle Sidebar') }}</span>
-    </button>
+  <nav class="utilitybar navbar pl-0 navbar-expand-lg bg-transparent">
+
+    @section('utilitybar:menu')
+      <button type="button" class="btn btn-icon shadow-none text-muted mr-sm-2 py-1" aria-expanded="true" data-sidebar-toggle data-target="[data-sidebar]" aria-controls="sidebar" aria-label="{{ __('Toggle sidebar') }}">
+        <i class="mdi mdi-menu"></i>
+        <span class="sr-only">{{ __('Toggle Sidebar') }}</span>
+      </button>
+    @show
 
     {{-- @section('utilitysearch')
       @include('Theme::partials.search')
     @show --}}
-    {{-- <div class="w-100 spacer"></div> --}}
-    @section('utilitybar.user')
+    @section('utilitybar:user')
       <div class="d-flex order-lg-2 ml-auto">
         <div class="dropdown">
-          <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown" aria-expanded="true">
+          <a href="#" class="d-flex nav-link pr-0 leading-none" data-toggle="dropdown" aria-expanded="true">
             <img class="avatar avatar-fit" src="{{ user()->photo }}"></span>
             <span class="ml-2 d-none d-lg-block">
               <span class="text-default small">{{ user()->displayname }}</span>
@@ -31,7 +33,7 @@
               <i class="dropdown-icon mdi mdi-power"></i>
               <span>{{ __('Sign out') }}</span>
             </a>
-            {{-- <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ route('settings:display.index') }}">
               <i class="dropdown-icon fe fe-settings"></i> Settings
             </a>
             <a class="dropdown-item" href="#">
@@ -47,7 +49,7 @@
             </a>
             <a class="dropdown-item" href="#">
               <i class="dropdown-icon fe fe-log-out"></i> Sign out
-            </a> --}}
+            </a>
           </div>
         </div>
       </div>

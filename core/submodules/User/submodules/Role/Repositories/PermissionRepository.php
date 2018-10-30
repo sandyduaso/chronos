@@ -51,6 +51,26 @@ class PermissionRepository extends Repository
     }
 
     /**
+     * Retrieve the full model instance.
+     *
+     * @return \Pluma\Models\Model
+     */
+    public function model()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Get the permissions grouped.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function grouped()
+    {
+        return $this->model()->get()->groupBy('group');
+    }
+
+    /**
      * Create model resource.
      *
      * @param array $data

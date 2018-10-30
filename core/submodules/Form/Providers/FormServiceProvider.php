@@ -2,6 +2,7 @@
 
 namespace Form\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Pluma\Support\Providers\ServiceProvider;
 
 class FormServiceProvider extends ServiceProvider
@@ -42,15 +43,5 @@ class FormServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

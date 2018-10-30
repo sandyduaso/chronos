@@ -16,7 +16,7 @@
         @section('content')
           @section('main:title')
             <div data-sticky="#page-header"></div>
-            <nav id="page-header" data-sticky-class="sticky bg-workspace shadow-sm" class="navbar">
+            <nav id="page-header" data-sticky-class="sticky bg-workspace sticky-shadow" class="navbar px-3">
               @section('page:header')
                 <h1 class="page-title">
                   @section('page:title')

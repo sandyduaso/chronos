@@ -48,10 +48,10 @@ trait PageResourceAdminTrait
     public function create(Request $request)
     {
         $templates = Template::getTemplatesFromFiles('Page');
-        $categories = Category::type('pages')->select(['name', 'icon', 'id'])->get();
-        $catalogues = Catalogue::mediabox();
+        // $categories = Category::type('pages')->select(['name', 'icon', 'id'])->get();
+        // $catalogues = Catalogue::mediabox();
 
-        return view("Page::pages.create")->with(compact('templates', 'categories', 'catalogues'));
+        return view('Page::admin.create')->with(compact('templates'));
     }
 
     /**
@@ -85,12 +85,14 @@ trait PageResourceAdminTrait
      */
     public function edit(Request $request, $id)
     {
-        $resource = Page::lockForUpdate()->findOrFail($id);
-        $templates = Template::getTemplatesFromFiles();
-        $categories = Category::type('pages')->select(['name', 'icon', 'id'])->get();
-        $catalogues = Catalogue::mediabox();
+        $resource = Page::findOrFail($id);
 
-        return view("Page::pages.edit")->with(compact('resource', 'templates', 'categories', 'catalogues'));
+        $this->authorize('update', $resource);
+        // $templates = Template::getTemplatesFromFiles();
+        // $categories = Category::type('pages')->select(['name', 'icon', 'id'])->get();
+        // $catalogues = Catalogue::mediabox();
+
+        return view('Page::pages.edit')->with(compact('resource'));
     }
 
     /**
@@ -103,7 +105,7 @@ trait PageResourceAdminTrait
     public function update(PageRequest $request, Page $page)
     {
         $page->title = $request->input('title');
-        $page->code = $request->input('code');
+        $page->code = str_slug($request->input('code'));
         $page->feature = $request->input('feature');
         $page->body = $request->input('body');
         $page->delta = $request->input('delta');

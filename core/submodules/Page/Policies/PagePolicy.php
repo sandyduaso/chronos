@@ -3,24 +3,11 @@
 namespace Page\Policies;
 
 use Page\Models\Page;
+use Pluma\Support\Policy\Policy;
 use User\Models\User;
 
-class PagePolicy
+class PagePolicy extends Policy
 {
-    /**
-     * Run before any action in this class.
-     *
-     * @param  User\Models\User $user
-     * @param  string $ability
-     * @return mixed
-     */
-    public function before(User $user, $ability)
-    {
-        if ($user->isRoot()) {
-            return true;
-        }
-    }
-
     /**
      * Determine if the given resource can be viewed by the user.
      *
@@ -42,7 +29,7 @@ class PagePolicy
      */
     public function update(User $user, Page $page)
     {
-        return $user->id === $page->user_id;
+        return $this->unrestricted('pages') || $user->id === $page->user->id;
     }
 
     /**
@@ -54,6 +41,6 @@ class PagePolicy
      */
     public function delete(User $user, Page $page)
     {
-        return $user->id === $page->user_id;
+        return $this->unrestricted('pages') || $user->id === $page->user->id;
     }
 }

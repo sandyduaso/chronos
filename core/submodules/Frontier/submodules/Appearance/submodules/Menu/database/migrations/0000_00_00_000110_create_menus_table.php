@@ -30,14 +30,15 @@ class CreateMenusTable extends Migration
             $table->string('code');
             $table->string('location');
             $table->string('icon')->nullable();
-            $table->string('slug')->nullable()->default("");
+            $table->string('slug')->nullable()->default('');
             $table->string('key')->unique();
-            $table->integer('page_id')->unsigned()->nullable();
+            $table->string('type')->nullable();
             $table->integer('sort')->unsigned()->default(0);
             $table->string('parent')->nullable();
             $table->integer('lft')->unsigned()->nullable();
             $table->integer('rgt')->unsigned()->nullable();
             $table->timestamps();
+            $table->index(['location', 'type', 'slug', 'icon']);
         });
     }
 

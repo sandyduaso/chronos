@@ -43,6 +43,12 @@ return [
         'description' => 'Ability to save the page',
         'group' => 'pages',
     ],
+    'edit-page' => [
+        'name' => 'edit-page',
+        'code' => 'pages.edit',
+        'description' => 'Ability to view the edit form',
+        'group' => 'pages',
+    ],
     'update-page' => [
         'name' => 'update-page',
         'code' => 'pages.update',
@@ -71,6 +77,29 @@ return [
         'name' => 'restore-page',
         'code' => 'pages.restore',
         'description' => 'Ability to restore the page from trash',
+        'group' => 'pages',
+    ],
+
+    /**
+     *--------------------------------------------------------------------------
+     * Limited Access Policies
+     *--------------------------------------------------------------------------
+     * The policy stated below will limit the users to only interact with
+     * resources they created. Using this policy, the resource will usually have
+     * a `user_id` field defined. A Policy Class is also required to check
+     * authorization.
+     *
+     * E.g.
+     *  1. User1 will only be able to edit/delete their own created pages.
+     *  2. User1 will not be able to edit User2's created pages.
+     *  3. User1 will not be able to delete User2's created pages.
+     *  4. User1 will be able to view other users created pages. Although this can
+     *     be set to be otherwise. It will depend on the Policy file.
+     */
+    'unrestricted-page-access' => [
+        'name' => 'unrestricted-page-access',
+        'code' => 'pages.unrestricted',
+        'description' => 'Ability to edit and delete all pages even if the user is not the creator of the page.',
         'group' => 'pages',
     ],
 ];

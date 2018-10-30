@@ -18,83 +18,9 @@ trait PermissionResourceAdminTrait
      */
     public function index(Request $request)
     {
-        $resources = $this->repository
-            ->search($request->all())
-            ->paginate();
+        $resources = $this->repository->grouped();
 
-        return view('Theme::admin.index')->with([
-            'resources' => $resources,
-            'actions' => false,
-            'buttons' => [
-                'primary' => [
-                    'icon' => 'fe fe-refresh-ccw',
-                    'text' => __('Refresh Permissions'),
-                    'url' => route('permissions.edit'),
-                ],
-            ],
-            'label' => [
-              'singular' => __('Permission'),
-              'plural' => __('Permissions'),
-            ],
-            'text' => [
-              'singular' => 'permission',
-              'plural' => 'permissions',
-            ],
-            'table' => [
-              'body' => [
-                'name', 'code', 'description', 'group', 'created',
-              ],
-              'head' => [
-                [
-                  'label' => __('Name'),
-                  'column' => 'name',
-                  'class' => 'pl-5',
-                  'colspan' => 1,
-                  'sortable' => true,
-                ],
-                [
-                  'label' => __('Code'),
-                  'column' => 'code',
-                  'class' => '',
-                  'colspan' => 1,
-                  'sortable' => true,
-                ],
-                [
-                  'label' => __('Description'),
-                  'column' => 'description',
-                  'class' => '',
-                  'colspan' => 1,
-                  'sortable' => false,
-                ],
-                [
-                  'label' => __('Group'),
-                  'column' => 'group',
-                  'class' => '',
-                  'colspan' => 1,
-                  'sortable' => true,
-                ],
-                [
-                  'label' => __('Date Added'),
-                  'column' => 'created_at',
-                  'class' => '',
-                  'colspan' => 1,
-                  'sortable' => true,
-                ],
-              ]
-            ],
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  Illuminate\Http\Request $request
-     * @param  int  $id
-     * @return Illuminate\Http\Response
-     */
-    public function edit(Request $request)
-    {
-        return view('Theme::permissions.refresh');
+        return view('Role::permissions.index')->with(compact('resources'));
     }
 
     /**

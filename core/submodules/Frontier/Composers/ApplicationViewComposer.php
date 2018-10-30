@@ -303,6 +303,14 @@ class ApplicationViewComposer extends BaseViewComposer
     {
         $version = app()->version();
 
+        if (file_exists(get_active_theme()->path.'/dist/logos/logo.svg')) {
+            return theme('dist/logos/logo.svg');
+        }
+
+        if (file_exists(get_active_theme()->path.'/dist/logos/logo.png')) {
+            return theme('dist/logos/logo.png');
+        }
+
         if (file_exists(public_path('logo.png'))) {
             return url("logo.png?v=$version");
         }

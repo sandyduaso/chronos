@@ -1,7 +1,7 @@
 @extends('Theme::layouts.master')
 
 @section('main')
-  <main id="main" class="main mt-3" data-main>
+  <main id="main" class="main pt-4 bg-workspace" data-main>
     @yield('content')
   </main>
 @endsection

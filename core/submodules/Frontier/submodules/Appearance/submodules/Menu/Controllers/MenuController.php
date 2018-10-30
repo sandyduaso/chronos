@@ -6,36 +6,24 @@ use Frontier\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Menu\Models\Menu;
+use Menu\Repositories\MenuRepository;
 use Menu\Requests\MenuRequest;
 use Page\Models\Page;
 
 class MenuController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $locations = Menu::locations();
-
-        return view("Theme::menus.index")->with(compact('locations'));
-    }
+    use Resources\MenuResourceAdminTrait;
 
     /**
-     * Display the specified resource.
+     * Inject the resource model to the repository instance.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string  $code
-     * @return \Illuminate\Http\Response
+     * @param \Pluma\Models\Model $model
      */
-    public function show(Request $request, $code)
+    public function __construct()
     {
-        $resource = Menu::location($code);
+        $this->repository = new MenuRepository();
 
-        return view("Theme::menus.show")->with(compact('resource'));
+        parent::__construct();
     }
 
     /**
@@ -76,22 +64,5 @@ class MenuController extends AdminController
 
 
         return back();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string  $code
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $code)
-    {
-        $menus = Menu::menus($code);
-        $pages = Menu::pages();
-        $location = Menu::location($code);
-        $social = Menu::social();
-
-        return view("Theme::menus.edit")->with(compact('menus', 'pages', 'social', 'location'));
     }
 }

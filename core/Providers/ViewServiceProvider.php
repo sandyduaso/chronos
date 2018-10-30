@@ -10,9 +10,9 @@ use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Engines\FileEngine;
 use Illuminate\View\Engines\PhpEngine;
-use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 use Illuminate\View\ViewServiceProvider as ServiceProvider;
+use Pluma\Support\View\Factory;
 
 class ViewServiceProvider extends ServiceProvider
 {

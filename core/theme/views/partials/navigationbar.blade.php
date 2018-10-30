@@ -1,10 +1,11 @@
-<header class="header {{ isset($fixed) ? 'header--fixed' : '' }} p-0">
+<header class="header p-0 {{ isset($fixed) ? 'header--fixed' : '' }}">
   <div class="container">
 
     <div class="d-flex">
       {{-- Navigationbar Logo --}}
-      <a href="{{ home() }}" class="py-2 header-brand">
-        <img class="header-brand-img" src="{{ @$application->site->logo }}" width="auto" height="40px" alt="{{ @$application->site->title }}">
+      <a href="{{ home() }}" class="py-2 text-primary header-brand">
+        @include('Theme::partials.brand')
+        {{-- <img class="header-brand-img" src="{{ @$application->site->logo }}" width="auto" height="40px" alt="{{ @$application->site->title }}"> --}}
       </a>
       {{-- Navigationbar Logo --}}
 
@@ -18,7 +19,6 @@
         </a>
       </div>
       {{-- Navigation Menu --}}
-
     </div>
   </div>
 </header>

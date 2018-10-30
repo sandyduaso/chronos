@@ -199,6 +199,12 @@ class TimesheetRepository extends Repository
         ]);
     }
 
+    /**
+     * Chart department generator.
+     *
+     * @param string $departments
+     * @return array
+     */
     public function charts($departments)
     {
         $charts['totallates'] = ['Total No. of Lates'];
@@ -244,7 +250,6 @@ class TimesheetRepository extends Repository
         }
 
         $employees = collect($employees)->sortByDesc('hours-late')->map(function ($item) {
-            // $this->punchcard()->toTime
             $item['hours-late'] = (string) ($item['hours-late']);
             return [
                 'hours-late' => $item['hours-late'],
@@ -282,6 +287,12 @@ class TimesheetRepository extends Repository
         $punchcard = $this->punchcard();
 
         $dataset = $dataset->map(function ($item) use ($punchcard) {
+            $item['card_id'] = $item['card_id'] ?? $item[settings('timesheet_card_id', 'card_id')];
+            $item['department'] = $item['department'] ?? $item[settings('timesheet_department', 'department')];
+            $item['time_in'] = $item['time_in'] ?? $item[settings('timesheet_time_in', 'time_in')];
+            $item['time_out'] = $item['time_out'] ?? $item[settings('timesheet_time_out', 'time_out')];
+            $item['firstname'] = $item['firstname'] ?? $item[settings('timesheet_firstname', 'firstname')];
+            $item['lastname'] = $item['lastname'] ?? $item[settings('timesheet_lastname', 'lastname')];
             $item['time_in'] = $item['time_in'] ?? '00:00:00';
             $item['time_out'] = $item['time_out'] ?? '00:00:00';
 

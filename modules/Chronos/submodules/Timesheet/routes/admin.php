@@ -5,6 +5,9 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Timesheet\Repositories\TimesheetRepository;
 
 Route::middleware(['breadcrumbs:\Timesheet\Models\Timesheet'])->group(function () {
+    # TimesheetSettingsController
+    Route::get('timesheets/settings', 'TimesheetSettingsController@index')->name('timesheets.settings');
+
     # TimesheetSoftDeleteResource
     Route::softDeletes('timesheets', 'TimesheetController');
 

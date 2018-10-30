@@ -12,37 +12,7 @@ use Theme\Requests\ThemeRequest;
 
 class ThemeController extends AdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $active = Theme::theme(settings('active_theme', 'default'));
-        $resources = Theme::themes(false);
-
-        return view("Theme::theme.index")->with(compact('resources', 'active'));
-    }
-
-    /**
-     * Display the preview of a given theme.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string  $theme
-     * @return \Illuminate\Http\Response
-     */
-    public function preview(Request $request, $theme)
-    {
-        $resource = Theme::theme($theme);
-
-        if (view()->exists("{$resource->hintpath}::theme.preview")) {
-            return view("{$resource->hintpath}::theme.preview")->with(compact('resource'));
-        }
-
-        return view("Theme::theme.preview")->with(compact('resource'));
-    }
+    use Resources\ThemeResourceAdminTrait;
 
     /**
      * Store a newly created resource in storage.

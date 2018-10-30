@@ -22,23 +22,33 @@
             <div class="card-header border-0">
               <div class="container-fluid p-0">
                 <div class="row">
-                  <div class="col-sm-12 col-lg-4">
-                    @include('Theme::partials.search')
-                  </div>
+
+                  @if (isset($actions) && in_array('search', $actions))
+                    <div class="col-sm-12 col-lg-4">
+                      @include('Theme::partials.search')
+                    </div>
+                  @endif
+
                   <div class="col-sm-12 col-lg my-2">
                     {{-- Bulk Commands --}}
                     <div class="btn-toolbar justify-content-lg-end justify-content-between" role="toolbar" aria-label="{{ __('Bulk Commands') }}">
                       <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons">
                         <button class="btn btn-sm btn-secondary" data-toggle="collapse" data-target=".table-select"><i class="fe fe-check-square"></i></button>
                       </div>
+
                       @if (isset($actions) && $actions || ! isset($actions))
                         <div class="btn-group ml-3" role="group">
-                          <button data-modal-toggle type="button" class="btn btn-secondary" disabled data-toggle="modal" data-target="#export-confirmbox" title="{{ __('Select users to export') }}">
-                            <i class="fe fe-download-cloud"></i>
-                          </button>
-                          <button data-modal-toggle type="button" class="btn btn-secondary" disabled data-toggle="modal" data-target="#delete-confirmbox" title="{{ __('Select users to deactivate') }}">
-                            <i class="fe fe-user-x"></i>
-                          </button>
+                          @if (in_array('export', $actions))
+                            <button data-modal-toggle type="button" class="btn btn-secondary" disabled data-toggle="modal" data-target="#export-confirmbox" title="{{ __('Select '.$text['plural'].' to export') }}">
+                              <i class="fe fe-download-cloud"></i>
+                            </button>
+                          @endif
+
+                          @if (in_array('destroy', $actions))
+                            <button data-modal-toggle type="button" class="btn btn-secondary" disabled data-toggle="modal" data-target="#delete-confirmbox" title="{{ __('Select '.$text['plural'].' to deactivate') }}">
+                              <i class="fe fe-trash"></i>
+                            </button>
+                          @endif
                         </div>
                       @endif
 
@@ -46,12 +56,14 @@
                         @include('Theme::partials.perpage')
                       </div>
 
-                      <div class="btn-group ml-3" role="group">
-                        <a role="button" href="{{ route('users.trashed') }}" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{ __('View deactivated users') }}">
-                          <i class="fa fa-archive"></i>
-                          <i class="fe fe-arrow-right"></i>
-                        </a>
-                      </div>
+                      @if (isset($actions) && in_array('trashed', $actions))
+                        <div class="btn-group ml-3" role="group">
+                          <a role="button" href="{{ route($text['plural'].'.trashed') }}" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{ __('View archived '.$text['plural']) }}">
+                            <i class="fa fa-archive"></i>
+                            <i class="fe fe-arrow-right"></i>
+                          </a>
+                        </div>
+                      @endif
                     </div>
                     {{-- Bulk Commands --}}
                   </div>
@@ -66,7 +78,7 @@
             @endif
 
             <div class="table-responsive">
-              <table data-with-selection class="table table-borderless card-table table-sm--disabled table-striped table-vcenter">
+              <table data-with-selection class="table table-borderless card-table table-striped table-vcenter">
                 <thead>
                   <tr>
                     <th class="table-select collapse">
@@ -160,31 +172,35 @@
   </div>
 @endsection
 
-@push('after:footer')
-  {{-- Export --}}
-  @if (isset($actions) && $actions || ! isset($actions))
-    @include('Theme::partials.modal', [
-      'id' => 'export-confirmbox',
-      'icon' => 'fe fe-download-cloud display-1 icon-border icon-faded d-inline-block',
-      'lead' => __('Select format to download.'),
-      'text' => __('Export data to a specific file type.'),
-      'method' => 'POST',
-      'button' => __('Download'),
-      'action' => route("{$text['plural']}.export"),
-      'context' => 'primary',
-      'include' => 'Theme::fields.export',
-    ])
+@if (isset($actions) && $actions || ! isset($actions))
+  @push('after:footer')
+    @if (in_array('export', $actions))
+      {{-- Export --}}
+      @include('Theme::partials.modal', [
+        'id' => 'export-confirmbox',
+        'icon' => 'fe fe-download-cloud display-1 icon-border icon-faded d-inline-block',
+        'lead' => __('Select format to download.'),
+        'text' => __('Export data to a specific file type.'),
+        'method' => 'POST',
+        'button' => __('Download'),
+        'action' => route("{$text['plural']}.export"),
+        'context' => 'primary',
+        'include' => 'Theme::fields.export',
+      ])
+    @endif
 
-    {{-- Move to Trash --}}
-    @include('Theme::partials.modal', [
-      'id' => 'delete-confirmbox',
-      'icon' => 'fe fe-trash display-1 icon-border icon-faded d-inline-block',
-      'lead' => __("You are about to move to trash the selected {$text['plural']}."),
-      'text' => 'To restore the data, got to the Trashed page. Are you sure yout want to continue?',
-      'method' => 'DELETE',
-      'action' => route("{$text['plural']}.destroy"),
-      'button' => __('Move to trash'),
-      'context' => 'warning',
-    ])
-  @endif
-@endpush
+    @if (in_array('destroy', $actions))
+      {{-- Move to Trash --}}
+      @include('Theme::partials.modal', [
+        'id' => 'delete-confirmbox',
+        'icon' => 'fe fe-trash display-1 icon-border icon-faded d-inline-block',
+        'lead' => __("You are about to move to trash the selected {$text['plural']}."),
+        'text' => 'To restore the data, got to the Trashed page. Are you sure yout want to continue?',
+        'method' => 'DELETE',
+        'action' => route("{$text['plural']}.destroy"),
+        'button' => __('Move to trash'),
+        'context' => 'warning',
+      ])
+    @endif
+  @endpush
+@endif

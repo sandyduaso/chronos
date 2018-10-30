@@ -2,7 +2,7 @@
 
 use User\Models\User;
 
-Route::group(['prefix' => 'users'], function () {
+Route::prefix('users')->middleware(['breadcrumbs:\Role\Models\Role'])->group(function () {
     /**
      * Roles
      *

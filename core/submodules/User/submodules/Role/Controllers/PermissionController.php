@@ -22,14 +22,4 @@ class PermissionController extends AdminController
 
         parent::__construct();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view("Theme::permissions.create");
-    }
 }

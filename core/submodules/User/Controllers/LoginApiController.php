@@ -20,7 +20,7 @@ class LoginApiController extends ApiController
      */
     public function __construct()
     {
-        // $this->middleware('auth.guest', ['except' => 'logout']);
+        $this->middleware('auth.guest', ['except' => 'logout']);
     }
 
     /**

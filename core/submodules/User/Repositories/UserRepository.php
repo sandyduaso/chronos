@@ -3,6 +3,7 @@
 namespace User\Repositories;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
 use Pluma\Support\Repository\Repository;
 use Role\Models\Role;
@@ -113,5 +114,26 @@ class UserRepository extends Repository
         }
 
         return $user;
+    }
+
+    /**
+     * Upload the specified file as user's avatar.
+     *
+     * @param UploadedFile $file
+     * @return mixed
+     */
+    public function upload(UploadedFile $file)
+    {
+        $folderName = settings('user:avatar_path', 'users/avatars/').date('Y-m-d');
+        $uploadPath = storage_path($folderName);
+        $name = str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        $fileName = $name.'-'.date('YmdHis').'.'.$file->getClientOriginalExtension();
+        $fullFilePath = "$uploadPath/$fileName";
+
+        if ($file->move($uploadPath, $fileName)) {
+            return "$folderName/$fileName";
+        }
+
+        return null;
     }
 }

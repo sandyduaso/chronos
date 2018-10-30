@@ -12,7 +12,7 @@ return [
     'employee' => [
         'name' => 'employee',
         'order' => 53,
-        'is_hidden' => true,
+        'is_hidden' => false,
         'slug' => route('employees.index'),
         'always_viewable' => false,
         'icon' => 'mdi mdi-clipboard-account',
@@ -29,6 +29,14 @@ return [
                 'code' => 'employees.index',
                 'icon' => 'mdi mdi-worker',
                 'always_viewable' => false,
+                'routes' => [
+                    'name' => 'employees.index',
+                    'children' => [
+                        'employees.create',
+                        'employees.edit',
+                        'employees.show',
+                    ]
+                ],
                 'labels' => [
                     'title' => __('Employees'),
                     'description' => __('View the list of all employees'),

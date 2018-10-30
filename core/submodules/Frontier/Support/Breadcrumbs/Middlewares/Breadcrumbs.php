@@ -21,7 +21,7 @@ class Breadcrumbs
             $tableName = with(new $table)->getTable();
             $id = $request->route(str_singular($tableName));
             $crumb = $table::find($id);
-            if ($crumb) {
+            if ($crumb instanceof $table) {
                 $crumb = $crumb->crumb;
                 // Store on the route request
                 $request->route()->setParameter('breadcrumb', $crumb);

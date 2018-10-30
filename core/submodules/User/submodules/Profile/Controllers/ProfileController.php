@@ -2,24 +2,30 @@
 
 namespace Profile\Controllers;
 
+use Catalogue\Models\Catalogue;
 use Frontier\Controllers\GeneralController;
-use User\Models\User;
-use User\Repositories\UserRepository;
+use Illuminate\Http\Request;
+use Profile\Models\User;
+use Profile\Requests\ProfileRequest;
+use Profile\Support\Traits\ProfileResourcePublicTrait;
+use User\Requests\UserRequest;
 
 class ProfileController extends GeneralController
 {
-    use Resources\ProfileResourceAdminTrait;
+    use ProfileResourcePublicTrait;
 
     /**
-     * Inject the resource model to the repository instance.
+     * Display the specified resource.
      *
-     * @param \Pluma\Models\Model $model
+     * @param  Illuminate\Http\Request $request
+     * @param  string  $handle
+     * @return Illuminate\Http\Response
      */
-    public function __construct(User $model)
+    public function show(Request $request, $handle)
     {
-        $this->repository = new UserRepository($model);
+        $resource = User::whereUsername(ltrim($handle, '@'))->firstOrFail();
 
-        parent::__construct();
+        return view("Theme::profiles.show")->with(compact('resource'));
     }
 
     /**

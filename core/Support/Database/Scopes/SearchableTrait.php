@@ -87,8 +87,10 @@ trait SearchableTrait
      */
     protected function sortAndOrder($builder, $params)
     {
-        if (isset($params['order'])) {
-            $builder = $builder->orderBy($params['sort'], $params['order']);
+        if (isset($params['sort']) && isset($params['order'])) {
+            if (array_key_exists($params['sort'], Schema::getColumnListing($this->getTable()))) {
+                $builder = $builder->orderBy($params['sort'], $params['order']);
+            }
         }
 
         return $builder;

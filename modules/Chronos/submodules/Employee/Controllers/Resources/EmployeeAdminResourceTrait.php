@@ -18,6 +18,18 @@ trait EmployeeAdminResourceTrait
             ->search($request->all())
             ->paginate();
 
-        return view('User::admin.index')->with(compact('resources'));
+        return view('Employee::admin.index')->with(compact('resources'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $resources = $this->repository;
+
+        return view('Employee::admin.create')->with(compact('resources'));
     }
 }

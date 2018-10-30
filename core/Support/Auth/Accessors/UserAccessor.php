@@ -36,7 +36,7 @@ trait UserAccessor
                 $this->rolenames[$role->name] = $role->name;
             }
         } else {
-            $this->rolenames[] = __('Guest');
+            return __('Guest');
         }
 
         return implode(" / ", $this->rolenames);

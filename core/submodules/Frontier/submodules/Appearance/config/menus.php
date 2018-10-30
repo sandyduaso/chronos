@@ -13,7 +13,7 @@ return [
         'order' => 500,
         'slug' => '#',
         'always_viewable' => false,
-        'is_hidden' => true,
+        'is_hidden' => false,
         'icon' => 'mdi mdi-palette',
         'labels' => [
             'title' => __('Appearance'),
