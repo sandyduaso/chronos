@@ -6,6 +6,7 @@ return [
         'is_parent' => true,
         'order' => 30,
         'slug' => '#',
+        'is_hidden' => true,
         'always_viewable' => false,
         'icon' => 'mdi mdi-file',
         'labels' => [
