@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar sidebar-fixed active" data-sidebar>
   <header class="sidebar-header pt-4 px-0 pb-0">
-    <div class="sidebar-brand text-primary">
+    <div class="sidebar-brand">
       @include('Theme::partials.brand')
     </div>
   </header>
