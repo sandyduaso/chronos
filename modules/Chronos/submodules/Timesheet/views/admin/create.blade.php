@@ -80,7 +80,7 @@
 
           {{-- <div class="text-muted small text-divider">{{ __('or') }}</div> --}}
 
-          @if (session('data') || isset($resources) && $resources)
+          @if (($data ?? session('data')) || (isset($resources) && $resources))
             <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-search"></i></strong></span>
             <div class="card-body">
               <div class="alert alert-info p-4">
