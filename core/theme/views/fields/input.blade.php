@@ -18,10 +18,9 @@
 
   </div>
   @isset ($hint)
-    @if ($errors->has($field ?? $name))
-      @include('Theme::errors.span', ['field' => $field ?? $name])
-    @else
+    @if (! $errors->has($field ?? $name))
       @include('Theme::fields.hint', ['text' => $hint])
     @endif
   @endisset
+  @include('Theme::errors.span', ['field' => $field ?? $name])
 </div>

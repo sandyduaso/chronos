@@ -9,7 +9,9 @@ use User\Models\User;
 
 class EmployeeController extends AdminController
 {
-    use Resources\EmployeeAdminResourceTrait;
+    use Resources\EmployeeAdminResourceTrait,
+        Resources\EmployeeResourceExportTrait,
+        Resources\EmployeeImportResourceTrait;
 
     /**
      * The constructor of the controller.

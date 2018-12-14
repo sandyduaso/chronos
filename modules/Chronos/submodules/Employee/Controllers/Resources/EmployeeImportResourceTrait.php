@@ -17,7 +17,6 @@ trait EmployeeImportResourceTrait
         try {
             $this->repository->import($request->file('import'));
         } catch (\Exception $e) {
-            dd($e);
             return back()->withErrors($e);
         }
 
