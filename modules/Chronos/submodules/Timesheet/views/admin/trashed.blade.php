@@ -1,10 +1,7 @@
 @extends("Theme::layouts.admin")
 
 @section('head:title', __('Archived Timesheets'))
-
-@section('page:title')
-  <h1 class="page-title">{{ __('Archived Timesheets') }}</h1>
-@endsection
+@section('page:title', __('Archived Timesheets'))
 
 @section('page:content')
   <div class="container-fluid">

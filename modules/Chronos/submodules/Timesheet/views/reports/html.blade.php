@@ -37,7 +37,7 @@
               <td>{{ __('Tardy Offset') }}</td>
             </tr>
             @foreach ($employee['calendar'] as $j => $date)
-              <tr class="text-center {{ $date->weekend || $date->holiday ? 'bg-light text-muted' : '' }}">
+              <tr class="text-center {{ $date->holiday ? 'bg-success text-light is-holiday' : null }} {{ $date->weekend ? 'bg-dark text-light' : '' }}">
                 <td class="bg-muted">{{ $date->dayletter }}</td>
                 <td class="bg-muted" style="min-width:100px;">{!! $date->dated ?? '<span class="text-muted">00:00:00</span>' !!}</td>
                 <td><span data-x-contenteditable data-x-data-mask="99:99:99">{!! $date->time_in ?? '<span class="text-muted">00:00:00</span>' !!}</span></td>

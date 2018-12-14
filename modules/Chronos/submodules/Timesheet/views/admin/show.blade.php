@@ -6,7 +6,16 @@
 
 @section('page:header')
   @parent
+
+
   <div class="text-right">
+    {{-- legend --}}
+    <span class="pl-2">
+      <span>{{ __('Weekend') }}: <span title="{{ __('Weekend') }}" class="mx-1 colorinput-color colorinput-sm bg-dark rounded-circle" style="vertical-align:middle;width:10px;height:10px;"></span></span>
+      <span>{{ __('Holiday') }}: <span title="{{ __('Holiday') }}" class="mx-1 colorinput-color colorinput-sm bg-success rounded-circle" style="vertical-align:middle;width:10px;height:10px;"></span></span>
+    </span>
+    {{-- legend --}}
+
     <a href="{{ route('timesheets.edit', $resource->id) }}" role="button" class="btn btn-secondary">
       <i class="fe fe-edit">&nbsp;</i>
       {{ __('Edit') }}
