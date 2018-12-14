@@ -291,8 +291,29 @@
               </div>
             </div>
 
-
             @section('user.sidemenu')
+              <div class="row">
+                <div class="col-sm-12 order-lg-3 order-2">
+                  <div class="card">
+                    <div class="card-body">
+                      {{-- @field('select') --}}
+
+                      <div class="form-group mb-5">
+                        <label class="form-label" for="roles[]">{{ __('Roles') }}</label>
+                        <select id="roles" data-selectpicker type="text" name="roles[]" class="form-control {{ $errors->has('roles') ? 'is-invalid' : '' }}" aria-describedby="role[]">
+                          @foreach ($resources->roles() as $role)
+                            <option {{ (in_array($role->id, old('roles') ?? []) ? 'selected="selected"' : '') }} value="{{ $role->id }}">{{ $role->name }}</option>
+                          @endforeach
+                        </select>
+                        @if ($errors->has('roles'))
+                          <div class="invalid-feedback">{{ __($errors->first('roles')) }}</div>
+                        @endif
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
             @show
           </div>
         @show
