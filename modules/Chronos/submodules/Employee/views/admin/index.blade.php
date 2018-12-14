@@ -1,17 +1,51 @@
 @extends("Theme::layouts.admin")
 
+@push('after:css')
+  <link href="{{ theme('dist/data.min.css') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}" rel="stylesheet" media="screen">
+@endpush
+
+@push('before:js')
+  <script src="{{ theme('dist/data.min.js') }}?v={{ app()->environment() === 'development' ? date('his') : $application->version }}"></script>
+@endpush
+
 @section('head:title', __('Office / Employees'))
 @section('page:title', __('Office / Employees'))
 
 @section('page:header')
   @parent
-  <a role="button" href="{{ route('employees.create') }}" class="btn btn-primary btn-lg ml-auto"><i class="fe fe-user-plus"></i>&nbsp;{{ __('New Employee') }}</a>
+
+  <div class="d-block">
+    <a role="button" href="{{ route('employees.create') }}" class="btn btn-primary btn-lg ml-auto"><i class="fe fe-user-plus"></i>&nbsp;{{ __('New Employee') }}</a>
+
+    {{-- Import --}}
+    <button type="button" class="btn btn-secondary btn-lg ml-1" data-toggle="modal" data-target="#import-confirmbox" title="{{ __('Import employees from file') }}">
+      <i class="mdi mdi-database-import">&nbsp;</i>
+      {{ __('Import...') }}
+    </button>
+    @include('Theme::partials.modal', [
+      'id' => 'import-confirmbox',
+      // 'icon' => 'mdi mdi-database-import display-1 icon-faded d-inline-block',
+      'upload' => true,
+      'alignment' => 'text-left',
+      'lead' => __('Batch Employee Import'),
+      'text' => 'Upload a .csv file of employees to import to the application.',
+      'method' => 'POST',
+      'include' => 'Employee::fields.import',
+      'action' => route('employees.import'),
+      'button' => __('Import'),
+      'context' => 'primary',
+      'class' => 'modal-lg'
+    ])
+    {{-- Import --}}
+  </div>
 @endsection
 
 @section('page:content')
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+
+        @include('Theme::errors.all')
 
         @if ($resources->items())
           <div class="card">
@@ -60,7 +94,7 @@
             @endif
 
             <div class="table-responsive">
-              <table data-with-selection class="table table-borderless card-table table-sm--disabled table-striped table-vcenter">
+              <table data-with-selection class="table table-borderless card-table table-sm table-striped table-vcenter">
                 <thead>
                   <tr>
                     <th class="table-select collapse">
@@ -103,6 +137,24 @@
                         @endswitch
                       @else
                         <a href="{{ route('users.index', url_filter(['sort' => 'email', 'order' => 'asc'])) }}">{{ __('Email') }}</a>
+                      @endif
+                    </th>
+                    <th>
+                      @if (request()->get('sort') === 'department')
+                        @switch (request()->get('order'))
+                          @case('asc')
+                            <a href="{{ route('users.index', url_filter(['sort' => 'department', 'order' => 'desc'])) }}">{{ __('Department') }} <i class="fa fa-sort-alpha-down"></i></a>
+                            @break
+
+                          @case('desc')
+                            <a href="{{ route('users.index', url_filter(['sort' => '', 'order' => ''])) }}">{{ __('Department') }} <i class="fa fa-sort-alpha-up"></i></a>
+                            @break
+
+                          @default
+                            <a href="{{ route('users.index', url_filter(['sort' => 'department', 'order' => 'asc'])) }}">{{ __('Department') }}</a>
+                        @endswitch
+                      @else
+                        <a href="{{ route('users.index', url_filter(['sort' => 'department', 'order' => 'asc'])) }}">{{ __('Department') }}</a>
                       @endif
                     </th>
                     <th>{{ __('Role') }}</th>
@@ -152,6 +204,7 @@
                         </a>
                       </td>
                       <td>{{ $resource->email }}</td>
+                      <td>{{ $resource->department }}</td>
                       <td>{{ $resource->displayrole }}</td>
                       <td title="{{ $resource->created_at }}">{{ $resource->created }}</td>
                       <td class="text-center justify-content-center">
@@ -207,7 +260,7 @@
     'text' => __('Export data to a specific file type.'),
     'method' => 'POST',
     'button' => __('Download'),
-    'action' => route('users.export'),
+    'action' => route('employees.export'),
     'context' => 'primary',
     'include' => 'Theme::fields.export',
   ])

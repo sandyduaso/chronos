@@ -2,7 +2,7 @@
   <div {{ $attr ?? null }} data-dropzone="{{ isset($options) ? json_encode($options ?? []) : null }}" class="file-upload dropzone">
     <div class="fallback">
       <div class="custom-file">
-        <input {{ isset($multiple) && $multiple ? 'name=file[]' : 'name=file' }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
+        <input {{ isset($multiple) && $multiple ? 'name='.($name??'file').'[]' : 'name='.($name??'file') }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
         <label class="custom-file-label">{{ __('Choose files...') }}</label>
       </div>
     </div>
@@ -13,11 +13,9 @@
       <label class="form-label">{{ $label }}</label>
     @endisset
     <div class="custom-file">
-      <input {{ $attr ?? null }} {{ isset($multiple) && $multiple ? 'name=file[]' : 'name=file' }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
+      <input {{ $attr ?? null }} {{ isset($multiple) && $multiple ? 'name='.($name ?? 'file').'[]' : 'name='.($name ?? 'file') }} type="file" class="custom-file-input" {{ isset($multiple) && $multiple ? 'multiple' : null }} {{ isset($options['acceptedFiles']) ? 'accept='.$options['acceptedFiles'] : null }}>
       <label class="custom-file-label">{{ __('Choose files...') }}</label>
-      @if ($errors->has('file'))
-        <div class="small mt-2 text-danger">{{ __($errors->first('file')) }}</div>
-      @endif
+      @include('Theme::errors.span', ['field' => $field ?? $name ?? 'file'])
     </div>
   </div>
 @endif

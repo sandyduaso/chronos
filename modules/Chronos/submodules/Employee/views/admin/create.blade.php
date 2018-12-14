@@ -1,7 +1,6 @@
 @extends('Theme::layouts.admin')
 
 @section('head:title', __('Add Employee'))
-@section('main:title', '')
 
 @section('page:content')
   <div class="container-fluid">

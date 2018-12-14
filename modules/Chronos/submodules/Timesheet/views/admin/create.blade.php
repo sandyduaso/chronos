@@ -80,21 +80,60 @@
 
           {{-- <div class="text-muted small text-divider">{{ __('or') }}</div> --}}
 
-          @if (session('data') || isset($resources) && $resources)
+          @if (($data ?? session('data')) || (isset($resources) && $resources))
             <span class="text-divider bordered-circle"><strong class="text-muted p-3 px-4 rounded-circle"><i class="fe fe-search"></i></strong></span>
             <div class="card-body">
               <div class="alert alert-info p-4">
                 <div><strong>{{ __('Before Proceeding') }}</strong></div>
-                <p>{{ __('Prepare the data before importing. Please be mindful of the following:') }}</p>
-                <ol class="mb-0 pl-5">
+                <p>{{ __('Prepare the data before importing.') }}</p>
+                <p>{{ __('Make sure you have all the required headings below on the first row of your perview sheet (order not important).') }} <a href="{{ route('timesheets.settings') }}">{{ __('Edit Timesheet Setting') }}</a></p>
+
+                <div class="card-deck">
+                  {{-- {{ dd(session('headers')) }} --}}
+                  <div class="card card-sm p-2 {{ in_array(settings('timesheet_card_id', 'card_id'), session('headers')) ? 'bg-primary text-white' : null }}">
+                    <div class="d-flex justify-content-between">
+                      {{ settings('timesheet_card_id', 'card_id') }}
+                      @if (in_array(settings('timesheet_card_id', 'card_id'), session('headers')))
+                        <div><i class="fe fe-check"></i></div>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="card card-sm p-2 {{ in_array(settings('timesheet_card_id', 'card_id'), session('headers')) ? 'bg-primary text-white' : null }}">
+                    <div class="d-flex justify-content-between">
+                      {{ settings('timesheet_department', 'department') }}
+                      @if (in_array(settings('timesheet_card_id', 'card_id'), session('headers')))
+                        <div><i class="fe fe-check"></i></div>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="card card-sm p-2 {{ in_array(settings('timesheet_card_id', 'card_id'), session('headers')) ? 'bg-primary text-white' : null }}">
+                    <div class="d-flex justify-content-between">
+                      {{ settings('timesheet_time_in', 'time_in') }}
+                      @if (in_array(settings('timesheet_card_id', 'card_id'), session('headers')))
+                        <div><i class="fe fe-check"></i></div>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="card card-sm p-2 {{ in_array(settings('timesheet_card_id', 'card_id'), session('headers')) ? 'bg-primary text-white' : null }}">
+                    <div class="d-flex justify-content-between">
+                      {{ settings('timesheet_time_out', 'time_out') }}
+                      @if (in_array(settings('timesheet_card_id', 'card_id'), session('headers')))
+                        <div><i class="fe fe-check"></i></div>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                {{-- <ol class="mb-0 pl-5">
                   <li>{{ __('Make sure you have headings columns.') }}</li>
                   <li>{{ __('In your headings columns, make sure you have a `time_in` column. This must be exact. No other names like `timeIn` will be recognized.') }}</li>
                   <li>{{ __('Make sure you have a `time_out` column.') }}</li>
                   <li>{{ __('Make sure you have a `user_id`. If no `user_id` is found, a `card_id` column will be required.') }}</li>
                   <li>{{ __('All recognized columns are "time_in", "time_out", "card_id", "user_id", "department", "firstname", and "lastname" only (without quotations). Keywords must be exact with no trailing spaces in between.') }}</li>
                   <li>{{ __('All other columns present but not recognized will be stored as a json metadata.') }}</li>
-                </ol>
+                </ol> --}}
               </div>
+
+
 
               <legend>{{ __(session('name')) }}</legend>
               <div class="border mb-5" data-options='{"height": 400}' data-toggle="handsontable" data-target="[data-handsontable-input]" data-value="{{ json_encode(session('data') ?? $resources ?? []) }}"></div>

@@ -321,7 +321,7 @@ class TimesheetRepository extends Repository
                 'under_time' => date('H:i:s', strtotime($set['under_time'])),
                 'over_time' => date('H:i:s', strtotime($set['over_time'])),
                 'offset_hours' => date('H:i:s', strtotime($set['offset_hours'])),
-                'key' => $set['key'] ?? $set['user']->id ?? $set['card_id'] ?? null,
+                'key' => $set['key'] ?? (! is_null($set['user']) ? $set['user']->detail('card_id') : null) ?? $set['card_id'] ?? null,
                 'department' => $set['department'] ?? null,
                 'user_id' => $set['user'] ? $set['user']->id : null,
                 'timesheet_id' => $timesheet->id,
