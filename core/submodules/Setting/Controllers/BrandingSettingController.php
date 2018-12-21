@@ -18,9 +18,7 @@ class BrandingSettingController extends AdminController
      */
     public function index(Request $request)
     {
-        $catalogues = Catalogue::mediabox();
-
-        return view("Setting::settings.branding")->with(compact('catalogues'));
+        return view('Setting::settings.branding');
     }
 
     /**

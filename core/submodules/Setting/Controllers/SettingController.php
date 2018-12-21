@@ -11,19 +11,6 @@ use Setting\Requests\SettingRequest;
 class SettingController extends AdminController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        //
-
-        return view("Theme::settings.index");
-    }
-
-    /**
      * Display the General Settings Form.
      *
      * @param  \Illuminate\Http\Request $request
@@ -31,7 +18,7 @@ class SettingController extends AdminController
      */
     public function getGeneralForm(Request $request)
     {
-        return view("Theme::settings.general");
+        return view('Theme::settings.general');
     }
 
     /**
@@ -45,7 +32,7 @@ class SettingController extends AdminController
         $setting = Setting::where('key', 'social_links')->first();
         $resources = $setting ? unserialize($setting->value) : [];
 
-        return view("Theme::settings.social")->with(compact('resources'));
+        return view('Theme::settings.social')->with(compact('resources'));
     }
 
     /**
@@ -66,87 +53,5 @@ class SettingController extends AdminController
         }
 
         return back();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
-    {
-        //
-
-        return view("Theme::settings.edit");
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Setting\Requests\SettingRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(SettingRequest $request, $id)
-    {
-        //
-
-        return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
-    {
-        //
-
-        return redirect()->route('Setting.index');
-    }
-
-    /**
-     * Display a listing of the trashed resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function trash()
-    {
-        //
-
-        return view("Theme::settings.trash");
-    }
-
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param  \Setting\Requests\SettingRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore(SettingRequest $request, $id)
-    {
-        //
-
-        return back();
-    }
-
-    /**
-     * Delete the specified resource from storage permanently.
-     *
-     * @param  \Setting\Requests\SettingRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(SettingRequest $request, $id)
-    {
-        //
-
-        return redirect()->route('Setting.trash');
     }
 }

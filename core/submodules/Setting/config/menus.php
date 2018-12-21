@@ -9,20 +9,20 @@ return [
      */
     'settings' => [
         'name' => 'settings',
-        'is_parent' => true,
-        // 'is_group_link' => true,
+        'is_group_link' => true,
         'order' => 1000,
         'slug' => route('settings'),
         'always_viewable' => false,
-        'icon' => 'fe fe-sliders',
+        'icon' => 'mdi mdi-tune',
         'routes' => [
             'name' => 'settings',
             'children' => [
-                'settings.general',
                 'settings:display.index',
-                'settings.branding',
-                'settings.email',
+                'settings:datetime.index',
+                'settings:branding.index',
+                'settings:email.index',
                 'settings.social',
+                'group:settings.general',
             ]
         ],
         'labels' => [
@@ -36,10 +36,10 @@ return [
              *------------------------------------------------------------------
              *
              */
-            'general-settings-group' => [
-                'name' => 'general-settings-group',
-                'slug' => route('settings:display.index'),
-                'code' => 'settings:display.index',
+            'group:settings.general' => [
+                'name' => 'group:settings.general',
+                'slug' => route('settings:general.index'),
+                'code' => 'group:settings.general',
                 'is_group_link' => true,
                 'always_viewable' => false,
                 'order' => 1,
@@ -48,20 +48,19 @@ return [
                     'description' => __('Manage time date formats, site modes, and other general site settings.'),
                 ],
                 'routes' => [
-                    'name' => 'settings.general',
+                    'name' => 'settings',
                     'children' => [
-                        'settings.general',
                         'settings:display.index',
-                        'settings.datetime',
+                        'settings:datetime.index',
                     ]
                 ],
                 'children' => [
-                    'display-settings' => [
-                        'name' => 'display-settings',
+                    'settings:display.index' => [
+                        'name' => 'settings:display.index',
                         'slug' => route('settings:display.index'),
                         'code' => 'settings:display.index',
                         'route' => 'settings:display.index',
-                        'icon' => 'fa-table',
+                        'icon' => 'mdi mdi-table-settings',
                         'order' => 2,
                         'labels' => [
                             'title' => __('Displaying Data'),
@@ -69,12 +68,12 @@ return [
                         ],
                     ],
 
-                    'date-time-settings' => [
-                        'name' => 'date-time-settings',
-                        'slug' => route('settings.datetime'),
-                        'code' => 'settings.datetime',
-                        'route' => 'settings.datetime',
-                        'icon' => 'access_time',
+                    'settings:datetime.index' => [
+                        'name' => 'settings:datetime.index',
+                        'slug' => route('settings:datetime.index'),
+                        'code' => 'settings:datetime.index',
+                        'route' => 'settings:datetime.index',
+                        'icon' => 'mdi mdi-calendar-clock',
                         'order' => 3,
                         'labels' => [
                             'title' => __('Date &amp; Time'),
@@ -90,10 +89,11 @@ return [
              *------------------------------------------------------------------
              *
              */
-            'branding-settings-group' => [
-                'name' => 'branding-settings-group',
-                'slug' => route('settings.branding'),
-                'code' => 'settings.branding',
+            'group:settings.branding' => [
+                'name' => 'group:settings.branding',
+                'slug' => route('group:settings.branding'),
+                'code' => 'group:settings.branding',
+                'icon' => 'mdi mdi-leaf',
                 'is_group_link' => true,
                 'always_viewable' => false,
                 'order' => 2,
@@ -102,19 +102,19 @@ return [
                     'description' => __('Manage the branding options for the site.'),
                 ],
                 'routes' => [
-                    'name' => 'settings.branding',
+                    'name' => 'settings:branding.index',
                     'children' => [
-                        'settings.branding',
-                        'settings.email',
+                        'settings:branding.index',
+                        'settings:email.index',
                         'settings.social',
                     ]
                 ],
                 'children' => [
-                    'branding-settings' => [
-                        'name' => 'branding-settings',
-                        'slug' => route('settings.branding'),
-                        'code' => 'settings.branding',
-                        'route' => 'settings.branding',
+                    'settings:branding.index' => [
+                        'name' => 'settings:branding.index',
+                        'slug' => route('settings:branding.index'),
+                        'code' => 'settings:branding.index',
+                        'route' => 'settings:branding.index',
                         'icon' => 'fa-leaf',
                         'labels' => [
                             'title' => __('Site Branding'),
@@ -122,11 +122,11 @@ return [
                         ],
                     ],
 
-                    'email-settings' => [
-                        'name' => 'email-settings',
-                        'slug' => route('settings.email'),
-                        'code' => 'settings.email',
-                        'route' => 'settings.email',
+                    'settings:email.index' => [
+                        'name' => 'settings:email.index',
+                        'slug' => route('settings:email.index'),
+                        'code' => 'settings:email.index',
+                        'route' => 'settings:email.index',
                         'icon' => 'fa-envelope',
                         'labels' => [
                             'title' => __('Email Options'),
@@ -165,7 +165,7 @@ return [
             'system-settings-group' => [
                 'name' => 'system-settings-group',
                 'slug' => route('settings.system'),
-                'icon' => 'settings_applications',
+                'icon' => 'mdi mdi-settings-box',
                 'always_viewable' => false,
                 'order' => 1000,
                 'labels' => [
@@ -178,7 +178,7 @@ return [
                         'slug' => route('settings.system'),
                         'code' => 'settings.system',
                         'route' => 'settings.system',
-                        'icon' => 'settings_applications',
+                        'icon' => 'mdi mdi-settings-box',
                         'always_viewable' => false,
                         'order' => 100,
                         'labels' => [
@@ -192,7 +192,7 @@ return [
                         'slug' => route('settings.system.configuration'),
                         'code' => 'settings.system.configuration',
                         'route' => 'settings.system.configuration',
-                        'icon' => 'build',
+                        'icon' => 'mdi mdi-settings-box',
                         'always_viewable' => false,
                         'order' => 101,
                         'labels' => [

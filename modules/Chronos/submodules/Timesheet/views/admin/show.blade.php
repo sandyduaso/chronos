@@ -7,12 +7,10 @@
 @section('page:header')
   @parent
 
-
   <div class="text-right">
     {{-- legend --}}
     <span class="pl-2">
-      <span>{{ __('Weekend') }}: <span title="{{ __('Weekend') }}" class="mx-1 colorinput-color colorinput-sm bg-dark rounded-circle" style="vertical-align:middle;width:10px;height:10px;"></span></span>
-      <span>{{ __('Holiday') }}: <span title="{{ __('Holiday') }}" class="mx-1 colorinput-color colorinput-sm bg-success rounded-circle" style="vertical-align:middle;width:10px;height:10px;"></span></span>
+      <span>{{ __('Weekend') }}: <span title="{{ __('Weekend') }}" class="mx-1 colorinput-color colorinput-sm bg-darken rounded-circle" style="vertical-align:middle;width:10px;height:10px;"></span></span>
     </span>
     {{-- legend --}}
 
@@ -44,7 +42,7 @@
     <div class="row">
       <div class="col-lg-12">
         @include('Timesheet::charts.latesranking', [
-          'data' => json_encode($repository->charts($resource->department())),
+          'data' => json_encode($repository->charts($resource->department(), date('YmdHis', strtotime($resource->updated_at)))),
           'departments' => json_encode($resource->departments),
         ])
       </div>

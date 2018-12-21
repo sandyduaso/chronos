@@ -2,6 +2,8 @@
 
 namespace Setting\Support\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait Themable
 {
     /**
@@ -47,5 +49,17 @@ trait Themable
     public static function theme($theme)
     {
         return get_themes()->only($theme)->first();
+    }
+
+    /**
+     * Retrieves the specified theme or aborts a 404.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $builder
+     * @param  string $theme
+     * @return mixed
+     */
+    public function scopeThemeOrFail(Builder $builder, $theme)
+    {
+        return self::theme($theme) ?? abort(404);
     }
 }
