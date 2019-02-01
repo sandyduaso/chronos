@@ -3,7 +3,7 @@
 Route::middleware(['breadcrumbs:\Setting\Models\Setting'])->prefix('settings')->group(function () {
     # Settings Redirect
     Route::get('/', function () {
-        return redirect()->route('settings.display');
+        return redirect()->route('settings:display.index');
     })->name('settings');
 
     # Save Settings
@@ -11,25 +11,35 @@ Route::middleware(['breadcrumbs:\Setting\Models\Setting'])->prefix('settings')->
 
     # General
     Route::group(['prefix' => 'general'], function () {
+        // General
+        Route::get('/', function () {
+            return redirect()->route('settings:display.index');
+        })->name('settings:general.index');
+
         // Display
         Route::get('display', 'DisplaySettingController@index')->name('settings:display.index');
         Route::post('display', 'DisplaySettingController@store')->name('settings:display.store');
 
         // Date Time
-        Route::get('datetime', 'DateTimeSettingController@index')->name('settings.datetime');
-        Route::post('datetime', 'DateTimeSettingController@store')->name('settings.datetime.store');
+        Route::get('datetime', 'DateTimeSettingController@index')->name('settings:datetime.index');
+        Route::post('datetime', 'DateTimeSettingController@store')->name('settings:datetime.store');
     });
 
     // Branding
-    Route::get('branding', 'BrandingSettingController@index')->name('settings.branding');
-    Route::post('branding', 'BrandingSettingController@store')->name('settings.branding.store');
+    Route::prefix('branding')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('settings:branding.index');
+        })->name('group:settings.branding');
+        Route::get('general', 'BrandingSettingController@index')->name('settings:branding.index');
+        Route::post('branding', 'BrandingSettingController@store')->name('settings.branding.store');
 
-    // Email
-    Route::get('branding/email', 'EmailSettingController@index')->name('settings.email');
-    Route::post('branding/email', 'EmailSettingController@store')->name('settings.email.store');
+        // Email
+        Route::get('email', 'EmailSettingController@index')->name('settings:email.index');
 
-    // Social
-    Route::get('branding/social', 'SettingController@getSocialForm')->name('settings.social');
+        // Social
+        Route::get('social', 'SettingController@getSocialForm')->name('settings.social');
+    });
+
 
     // Theming
     // Route::get('theming', 'ThemingSettingController@index')->name('settings.theming');

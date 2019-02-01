@@ -85,3 +85,10 @@ noscript {
     cursor: pointer;
   }
 }
+
+:target:before {
+  content: "";
+  display: block;
+  height: 70px;
+  margin: -70px 0 0;
+}

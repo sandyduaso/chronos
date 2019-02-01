@@ -58,4 +58,18 @@ class SettingServiceProvider extends ServiceProvider
             return "<?php endif; ?>";
         });
     }
+
+    /**
+     * Boot the view composers.
+     *
+     * @return void
+     */
+    public function bootViewComposers()
+    {
+        $composers = require __DIR__.'/../config/composers.php';
+
+        foreach ($composers as $composer) {
+            view()->composer($composer['appears'], $composer['class']);
+        }
+    }
 }

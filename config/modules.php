@@ -29,6 +29,7 @@ return [
         // 'Calendar',
         'Note',
         'Form',
-        // 'Appearance',
+        // 'Setting',
+        'Appearance',
     ],
 ];

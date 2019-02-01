@@ -9,10 +9,7 @@
 @endpush
 
 @section('head:title', __('New Timesheet'))
-
-@section('page:title')
-  <h1 class="page-title">{{ __('New Timesheet') }}</h1>
-@endsection
+@section('page:title', __('New Timesheet'))
 
 @section('page:content')
   <div class="container-fluid">
@@ -86,7 +83,7 @@
               <div class="alert alert-info p-4">
                 <div><strong>{{ __('Before Proceeding') }}</strong></div>
                 <p>{{ __('Prepare the data before importing.') }}</p>
-                <p>{{ __('Make sure you have all the required headings below on the first row of your perview sheet (order not important).') }} <a href="{{ route('timesheets.settings') }}">{{ __('Edit Timesheet Setting') }}</a></p>
+                <p>{{ __('Make sure you have all the required headings below on the first row of your preview sheet (order not important).') }} <a target="_blank" href="{{ route('timesheets.settings') }}">{{ __('Edit Timesheet Setting') }}</a></p>
 
                 <div class="card-deck">
                   {{-- {{ dd(session('headers')) }} --}}

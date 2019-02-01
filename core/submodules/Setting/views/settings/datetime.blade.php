@@ -1,24 +1,25 @@
-@extends("Theme::layouts.admin")
+@extends('Theme::layouts.settings')
 
-@section("content")
+@section('form:title', __('Date & Time'))
 
-    <v-toolbar dark class="sticky secondary elevation-1">
+@section('form:content')
+  <p class="form-label">{{ __('Formatting') }}</p>
+  @field('input', ['name' => 'date_format', 'value' => settings('date_format'), 'label' => __('Global Date Format')])
+
+  @field('input', ['name' => 'items_per_page', 'type' => 'number', 'value' => settings('items_per_page'), 'label' => __('Items per Page')])
+
+  <p class="form-label">{{ __('Grid Display') }}</p>
+  @field('checkbox', ['name' => 'center_main_content', 'label' => __('Center the main content when possible.'), 'checked' => settings('center_main_content'), 'value' => settings('center_main_content', false)])
+@endsection
+
+
+    {{-- <v-toolbar dark class="sticky secondary elevation-1">
         <v-icon left dark>access_time</v-icon>
         <v-toolbar-title>{!! __('Date &amp; Time') !!}</v-toolbar-title>
     </v-toolbar>
 
     <v-container fluid grid-list-lg class="white">
 
-        @include("Theme::partials.banner")
-
-        <v-layout row wrap>
-            <v-flex md4 sm6>
-
-                @include("Setting::partials.settingsbar")
-
-            </v-flex>
-
-            <v-flex sm6 md4>
 
 
                 <form action="{{ route('settings.store') }}" method="POST">
@@ -82,36 +83,4 @@
 
             </v-flex>
         </v-layout>
-    </v-container>
-@endsection
-
-@push('pre-scripts')
-    <script>
-        mixins.push({
-            data () {
-                return {
-                    resource: {
-                        item: {
-                            items_per_page: '{{ old('items_per_page') ?? settings('items_per_page', 15) }}',
-                            excerpt_length: '{{ old('excerpt_length') ?? settings('excerpt_length', 30) }}',
-                        },
-                        radios: {
-                            membership: {
-                                items: {!! json_encode(config('auth.registration.modes', [])) !!},
-                                model: '{{ @$resource->site_membership ? $resource->site_membership : config('auth.registration.default', 2) }}',
-                            },
-                            date_format: {
-                                custom: 'm/d/Y',
-                                model: '{{ @$resource->date_format ? $resource->date_format : config('settings.date_format', 'F d, Y') }}'
-                            },
-                            time_format: {
-                                custom: 'H:i:s a',
-                                model: '{{ old('time_format') ?? settings('time_format') }}'
-                            }
-                        },
-                    },
-                };
-            },
-        });
-    </script>
-@endpush
+    </v-container> --}}

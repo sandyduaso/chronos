@@ -1,3 +1,14 @@
+@push('after:css')
+  <style>
+    .bg-darken {
+      background: rgba(24, 35, 43, 0.3);
+    }
+    .fw-bold {
+      font-weight: bold;
+    }
+  </style>
+@endpush
+
 @foreach ($resource->department() as $department => $employees)
   <a name="scroll-{{ str_slug($department) }}" class="d-block"></a>
   <div id="scroll-{{ str_slug($department) }}" class="card card-table card-sm small mb-4">
@@ -37,7 +48,7 @@
               <td>{{ __('Tardy Offset') }}</td>
             </tr>
             @foreach ($employee['calendar'] as $j => $date)
-              <tr class="text-center {{ $date->weekend || $date->holiday ? 'bg-light text-muted' : '' }}">
+              <tr class="text-center {{ $date->holiday ? 'bg-light text-dark is-holiday' : null }} {{ $date->weekend ? 'bg-darken fw-bold text-light' : '' }}">
                 <td class="bg-muted">{{ $date->dayletter }}</td>
                 <td class="bg-muted" style="min-width:100px;">{!! $date->dated ?? '<span class="text-muted">00:00:00</span>' !!}</td>
                 <td><span data-x-contenteditable data-x-data-mask="99:99:99">{!! $date->time_in ?? '<span class="text-muted">00:00:00</span>' !!}</span></td>
@@ -55,13 +66,13 @@
                 <tr class="text-center">
                   <td colspan="2" class="text-right">{{ __('Number of Lates') }}</td>
                   <td>
-                    <a title="{{ __('Late this number of times during this period.') }}">{{ $repository->punchcard()->totalLateCount($employee['calendar'], 'time_in') }}</a>
+                    <a title="{{ __('Late this number of times during this period.') }}">{{ $repository->punchcard()->totalLateCount($employee['calendar']->where('weekend', 0), 'time_in') }}</a>
                   </td>
                   <td colspan="4"></td>
-                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'tardy_time') }}</strong></td>
-                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'under_time') }}</strong></td>
-                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'over_time') }}</strong></td>
-                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'offset_hours') }}</strong></td>
+                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'tardy_time') }}</strong></td>
+                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'under_time') }}</strong></td>
+                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'over_time') }}</strong></td>
+                  <td><strong>{{ $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'offset_hours') }}</strong></td>
                 </tr>
               @endif
             @endforeach

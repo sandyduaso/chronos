@@ -4,6 +4,7 @@ namespace Timesheet\Repositories;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use Pluma\Support\Repository\Repository;
@@ -203,36 +204,39 @@ class TimesheetRepository extends Repository
      * Chart department generator.
      *
      * @param string $departments
+     * @param int $id
      * @return array
      */
-    public function charts($departments)
+    public function charts($departments, $id)
     {
-        $charts['totallates'] = ['Total No. of Lates'];
-        $x = [];
-        foreach ($departments as $name => $employees) {
-            foreach ($employees as $j => $employee) {
-                $charts['totallates'][$name][] = $this->punchcard()->totalLateCount($employee['calendar'], 'time_in');
-            }
-            $charts['totallates'][$name] = $y = array_sum($charts['totallates'][$name]);
-            $x[$name] = $y;
-        }
-        $orderedValues = $x;
-        sort($orderedValues);
-
-        $newX = [];
-        foreach ($x as $key => $value) {
-            foreach ($orderedValues as $orderedKey => $orderedValue) {
-                if ($value === $orderedValue) {
-                    $key = $orderedKey;
-                    break;
+        return Cache::rememberForever('charts:'.$id, function () use ($departments) {
+            $charts['totallates'] = ['Total No. of Lates'];
+            $x = [];
+            foreach ($departments as $name => $employees) {
+                foreach ($employees as $j => $employee) {
+                    $charts['totallates'][$name][] = $this->punchcard()->totalLateCount($employee['calendar'], 'time_in');
                 }
+                $charts['totallates'][$name] = $y = array_sum($charts['totallates'][$name]);
+                $x[$name] = $y;
             }
-            $newX[] = $key + 1;
-        }
+            $orderedValues = $x;
+            sort($orderedValues);
 
-        $charts['ranking'] = array_merge(['Ranking'], array_values($newX));
+            $newX = [];
+            foreach ($x as $key => $value) {
+                foreach ($orderedValues as $orderedKey => $orderedValue) {
+                    if ($value === $orderedValue) {
+                        $key = $orderedKey;
+                        break;
+                    }
+                }
+                $newX[] = $key + 1;
+            }
 
-        return [array_values($charts['totallates']), $charts['ranking']];
+            $charts['ranking'] = array_merge(['Ranking'], array_values($newX));
+
+            return [array_values($charts['totallates']), $charts['ranking']];
+        });
     }
 
     /**
