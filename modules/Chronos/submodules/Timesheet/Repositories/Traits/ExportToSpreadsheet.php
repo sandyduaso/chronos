@@ -250,25 +250,25 @@ trait ExportToSpreadsheet
                             ->setCellValueByColumnAndRow(
                                 $coordinates['footer'][0]+6,
                                 $c,
-                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'tardy_time')
+                                $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'tardy_time')
                             );
                         $activeSheet
                             ->setCellValueByColumnAndRow(
                                 $coordinates['footer'][0]+7,
                                 $c,
-                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'under_time')
+                                $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'under_time')
                             );
                         $activeSheet
                             ->setCellValueByColumnAndRow(
                                 $coordinates['footer'][0]+8,
                                 $c,
-                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'over_time')
+                                $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'over_time')
                             );
                         $activeSheet
                             ->setCellValueByColumnAndRow(
                                 $coordinates['footer'][0]+9,
                                 $c,
-                                $repository->punchcard()->totalFromKey($employee['calendar']->toArray(), 'offset_hours')
+                                $repository->punchcard()->totalFromKey($employee['calendar']->where('weekend', 0)->toArray(), 'offset_hours')
                             );
                     }
 
