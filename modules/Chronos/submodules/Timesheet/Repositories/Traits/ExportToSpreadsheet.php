@@ -213,11 +213,26 @@ trait ExportToSpreadsheet
                             $date->over_time ?? '00:00:00'
                         )
                         ->setCellValueByColumnAndRow(
-                            $currentEmpColumn++,
+                            $currentEmpColumn,
                             $currentEmpRow,
                             $date->offset_hours ?? '00:00:00'
                         );
+
+                        // highlight
+                        if ($date->weekend) {
+                            $activeSheet
+                                ->getStyleByColumnAndRow(1,$cER,$currentEmpColumn,$currentEmpRow)
+                                ->applyFromArray([
+                                    'fill' => [
+                                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                        'startColor' => [
+                                            'argb' => '10C399'],
+                                        ],
+                                ]);
+                        }
+
                     $currentEmpRow++;
+
 
                     // Footer
                     if ($employee['calendar']->last()->date === $date->date) {

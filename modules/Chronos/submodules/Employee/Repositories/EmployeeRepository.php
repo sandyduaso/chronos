@@ -41,13 +41,19 @@ class EmployeeRepository extends UserRepository
         });
 
         foreach ($dataset as $i => $user) {
-            $user = array_merge($user, ['type' => $this->usertype]);
-            $user = $this->model->updateOrCreate(
-                ['username' => $user['username']],
-                $user
-            );
+            // $user = array_merge($user, ['type' => $this->usertype]);
+            $user = $this->model->updateOrCreate([
+                'firstname' => $user['firstname'],
+                'lastname' => $user['lastname'],
+                'username' => $user['username'],
+                'email' => $user['email'],
+                'type' => $user['type'],
+            ]);
+            // dd($user);
+
         }
     }
+
 
     /**
      * Export from given format
